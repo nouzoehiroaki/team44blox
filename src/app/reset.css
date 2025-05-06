@@ -1,0 +1,68 @@
+@charset "utf-8";
+
+body, div, p, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, table, th, td, img, form, figure, fieldset, legend {
+  margin: 0;
+  padding: 0;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+img {
+  border: 0;
+  vertical-align: middle;
+}
+
+fieldset {
+  border: 0;
+}
+
+input:not([type="radio"]):not([type="checkbox"]),
+textarea,
+select,
+svg {
+  vertical-align: middle;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="date"]::-webkit-inner-spin-button { display: none; -webkit-appearance: none; }
+input[type="date"]::-webkit-calendar-picker-indicator { display: none; -webkit-appearance: none; }
+input[type="date"]::-ms-clear { display: none; }
+input[type="date"]::-webkit-clear-button { display: none;}
+
+i {
+  font-style: normal;
+}
+
+small {
+  font-size: inherit;
+}
+
+@-ms-viewport {
+  width: auto;
+}
+@viewport {
+  width: device-width;
+}
+
+address {
+  font-style: normal;
+}
+
+pre {
+  white-space: pre-wrap;
+}
