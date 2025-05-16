@@ -84,7 +84,11 @@ export default function Header() {
                 ABOUT
               </Link>
             </li>
-            <li><a href="#shop">SHOP</a></li>
+            <li>
+              <Link href="/shop" >
+                SHOP
+              </Link>
+            </li>
             <li><a href="#supported">SUPPORTED BY</a></li>
             <li><a href="#blog">BLOG</a></li>
           </ul>

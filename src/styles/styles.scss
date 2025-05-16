@@ -21,6 +21,7 @@ a{
 img{
   width: 100%;
   display: block;
+  height: auto;
 }
 section{
   display: flex;
@@ -41,7 +42,7 @@ header{
   width: 100%;
   background-color: transparent;
   z-index: 10;
-  transform: translateY(-100%); // 最初は上に隠れる
+  transform: translateY(-100%);
   opacity: 0;
   animation: slideDownHeader 1s ease-out forwards;
   animation-delay: 5s;
@@ -130,7 +131,33 @@ header{
       max-width: 500px;
     }
   }
+  .position{
+    position: absolute;
+    bottom:0;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    opacity: 0;
+    animation: display 1s ease-out forwards;
+    animation-delay: 1s;
+    a{
+      img{
+        max-width: 600px;
+      }
+      transition: 0.5s;
+      &:hover{
+        opacity: .5;
+      }
+    }
+    @keyframes display {
+      to {
+        opacity: 1;
+      }
+    }
+  }
 }
+
 .supported{
   height: 100vh;
   background-color: #000;
@@ -154,6 +181,15 @@ header{
     &.is-visible{
       opacity: 1;
     }
+  }
+  .use-about{
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    max-width: 500px;
+    width: 100%;
+    height: 500px;
+    position: absolute;
   }
 }
 .blog{
