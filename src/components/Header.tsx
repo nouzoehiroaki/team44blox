@@ -1,7 +1,14 @@
 "use client";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 export default function Header() {
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+  }, [menuOpen]);
+  const handleClose = () => setMenuOpen(false);
+
   useEffect(() => {
     // YouTubeのコードを生成
     const getYouTubeVideoCode = (url: string): string => {
@@ -71,21 +78,32 @@ export default function Header() {
   return (
     <div>
       <header>
-        <nav>
+        <button
+          id="btn03"
+          className={`${"btnTrigger"} ${menuOpen ? "active" : ""}`}
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label="メニューを開閉"
+          aria-expanded={menuOpen}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+        <nav className={`${menuOpen ? "show" : ""}`}>
           <ul>
             <li>
-              <Link href="/" >
+              <Link href="/" onClick={handleClose}>
                 TOP
               </Link>
             </li>
             <li><a href="https://www.youtube.com/watch?v=g8le8JTvcN0" className="modal-youtube">MUSIC</a></li>
             <li>
-              <Link href="/about" >
+              <Link href="/about" onClick={handleClose}>
                 ABOUT
               </Link>
             </li>
             <li>
-              <Link href="/shop" >
+              <Link href="/shop" onClick={handleClose}>
                 SHOP
               </Link>
             </li>
