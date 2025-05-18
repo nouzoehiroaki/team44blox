@@ -32,6 +32,8 @@ export default function About() {
     "/snipe02.jpg",
     "/yakko.jpg",
     "/aquarius.jpg",
+    "/apogee.jpg",
+    "/use-about.jpg"
   ];
 
   const [done, setDone] = useState(false);

@@ -286,7 +286,7 @@ header .btnTrigger.active span:nth-of-type(3) {
 @media screen and (max-width: 767px) {
   .member .profile {
     padding: 0 20px;
-    font-size: 14px;
+    font-size: 13px;
   }
 }
 .member .about-bg {
