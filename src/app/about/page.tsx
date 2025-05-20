@@ -9,34 +9,33 @@ export default function About() {
   const profileText =
     `千葉、茨城近辺を中心に自然発生するCREATIVE集団。\n HIPHOPカルチャーをベースに、地域世代をこえ、現在もその母体を広げ続けている`;
   const images = [
-    "/44.jpg",
-    "/44-2.png",
-    "/jbm.jpg",
-    "/bullcamp.jpg",
-    "/dabongs.png",
-    "/mikris.png",
-    "/mikris2.jpg",
-    "/mikris3.jpg",
+    "/44.webp",
+    "/44-2.webp",
+    "/apogee.webp",
+    "/aquarius.webp",
+    "/bangblacks.webp",
+    "/bullcamp.webp",
+    "/dabongs.webp",
+    "/dabo.webp",
+    "/deli.webp",
+    "/deli02.webp",
+    "/jbm.webp",
+    "/jobandope.webp",
+    "/kge.webp",
+    "/kge02.webp",
+    "/kge03.webp",
+    "/marsmanie.webp",
+    "/mikris.webp",
+    "/mikris3.webp",
     "/mikris4.jpg",
     "/mikris5.jpg",
-    "/deli.jpg",
-    "/mfin.png",
-    "/jobandope.jpg",
-    "/kge.jpg",
-    "/kge02.jpg",
-    "/kge03.jpg",
-    "/marsmanie.jpg",
-    "/deli02.jpg",
-    "/dabo.jpg",
-    "/smithcn.png",
-    "/smithcn02.jpg",
-    "/snipe.jpg",
-    "/snipe02.jpg",
-    "/yakko.jpg",
-    "/aquarius.jpg",
-    "/apogee.jpg",
-    "/use-about.jpg",
-    "/bangblacks.jpg"
+    "/mfin.webp",
+    "/sesame.webp",
+    "/smithcn.webp",
+    "/smithcn02.webp",
+    "/snipe.webp",
+    "/snipe02.webp",
+    "/yakko.webp",
   ];
 
   const [done, setDone] = useState(false);
@@ -127,7 +126,7 @@ export default function About() {
             <motion.div
               key="bg"
               className="about-bg"
-              style={{ backgroundImage: "url('/about-bg.jpg')" }}
+              style={{ backgroundImage: "url('/about-bg.webp')" }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1.2, delay: 0.1 }}
@@ -185,7 +184,7 @@ export default function About() {
                 <a href="https://www.instagram.com/marsmanie/" target="_blank" rel="noopener noreferrer">MARS MANIE</a>
                 <a href="https://www.instagram.com/madmikris/" target="_blank" rel="noopener noreferrer">MIKRIS</a>
                 <a href="https://www.instagram.com/margeolochi/" target="_blank" rel="noopener">大蛇</a>
-                <a href="https://stat.ameba.jp/user_images/20100501/22/akasakidojyo/c0/00/j/o0640048010520679308.jpg?caw=1125" target="_blank" rel="noopener">SESAME</a>
+                <a href="https://m.media-amazon.com/images/I/81RRbVKGkhL._AC_SX679_.jpg" target="_blank" rel="noopener">SESAME</a>
                 <a href="https://www.instagram.com/smithcnrrr/" target="_blank" rel="noopener">SMITH-C.N</a>
                 <a href="https://www.instagram.com/sna_channel_high_cheese/" target="_blank" rel="noopener">SNIPE</a>
                 <a href="https://www.instagram.com/mangkang_bm/" target="_blank" rel="noopener">T.MANGKANG</a>
