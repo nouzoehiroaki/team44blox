@@ -108,7 +108,7 @@ export default function Header() {
               </Link>
             </li>
             <li><a href="#supported">SUPPORTED BY</a></li>
-            <li><a href="#blog">BLOG</a></li>
+            <li><a href="#blog">NEWS</a></li>
           </ul>
         </nav>
       </header>

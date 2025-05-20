@@ -17,6 +17,8 @@ export default function About() {
     "/mikris.png",
     "/mikris2.jpg",
     "/mikris3.jpg",
+    "/mikris4.jpg",
+    "/mikris5.jpg",
     "/deli.jpg",
     "/mfin.png",
     "/jobandope.jpg",
@@ -33,7 +35,8 @@ export default function About() {
     "/yakko.jpg",
     "/aquarius.jpg",
     "/apogee.jpg",
-    "/use-about.jpg"
+    "/use-about.jpg",
+    "/bangblacks.jpg"
   ];
 
   const [done, setDone] = useState(false);
@@ -182,7 +185,7 @@ export default function About() {
                 <a href="https://www.instagram.com/marsmanie/" target="_blank" rel="noopener noreferrer">MARS MANIE</a>
                 <a href="https://www.instagram.com/madmikris/" target="_blank" rel="noopener noreferrer">MIKRIS</a>
                 <a href="https://www.instagram.com/margeolochi/" target="_blank" rel="noopener">大蛇</a>
-                <a href="https://stat.ameba.jp/user_images/20100501/22/akasakidojyo/c0/00/j/o0640048010520679308.jpg?caw=1125">SESAME</a>
+                <a href="https://stat.ameba.jp/user_images/20100501/22/akasakidojyo/c0/00/j/o0640048010520679308.jpg?caw=1125" target="_blank" rel="noopener">SESAME</a>
                 <a href="https://www.instagram.com/smithcnrrr/" target="_blank" rel="noopener">SMITH-C.N</a>
                 <a href="https://www.instagram.com/sna_channel_high_cheese/" target="_blank" rel="noopener">SNIPE</a>
                 <a href="https://www.instagram.com/mangkang_bm/" target="_blank" rel="noopener">T.MANGKANG</a>
