@@ -4,6 +4,7 @@ import "../../styles/styles.css"
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useMotionValue } from "framer-motion";
 import { TypingText } from "@/components/TypingText";
+import Link from "next/link";
 
 export default function About() {
   const profileText =
@@ -184,7 +185,9 @@ export default function About() {
                 <a href="https://www.instagram.com/marsmanie/" target="_blank" rel="noopener noreferrer">MARS MANIE</a>
                 <a href="https://www.instagram.com/madmikris/" target="_blank" rel="noopener noreferrer">MIKRIS</a>
                 <a href="https://www.instagram.com/margeolochi/" target="_blank" rel="noopener">大蛇</a>
-                <a href="/sesame/">SESAME</a>
+                <Link href="/sesame">
+                  SESAME
+                </Link>
                 <a href="https://www.instagram.com/smithcnrrr/" target="_blank" rel="noopener">SMITH-C.N</a>
                 <a href="https://www.instagram.com/sna_channel_high_cheese/" target="_blank" rel="noopener">SNIPE</a>
                 <a href="https://www.instagram.com/mangkang_bm/" target="_blank" rel="noopener">T.MANGKANG</a>

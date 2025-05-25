@@ -30,7 +30,7 @@ export default function Shop() {
                 <Image src="/jah-god.png" className="jahgod" alt="Jah God" width={500} height={443} />
               </picture>
               <div className='position'>
-                <a href="https://shop.lb-2.com/" className="btn btn-flat fc" target="_blank" rel="noopener"><span>See more!</span></a>
+                <a href="https://shop.lb-2.com/" className="btn btn-flat fc" target="_blank" rel="noopener"><span>shop.lb-2.com</span></a>
               </div>
             </div>
           </SplideSlide>
@@ -41,7 +41,7 @@ export default function Shop() {
                 <Image src="/madskill.jpg" className="madskill" alt="Mad Skill" width={400} height={400} />
               </picture>
               <div className='position'>
-                <a href="https://thedoghousemusic.stores.jp/" className="btn btn-flat tdhm" target="_blank" rel="noopener"><span>See more!</span></a>
+                <a href="https://thedoghousemusic.stores.jp/" className="btn btn-flat tdhm" target="_blank" rel="noopener"><span>thedoghousemusic.stores.jp</span></a>
               </div>
             </div>
           </SplideSlide>

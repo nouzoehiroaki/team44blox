@@ -269,7 +269,8 @@ header .btnTrigger.active span:nth-of-type(3) {
   overflow: hidden;
 }
 .shop .box .position a.btn-flat {
-  padding: 1.5rem 6rem;
+  padding: 20px 0;
+  text-align: center;
   color: #fff;
   border-radius: 0;
   background: #000;
