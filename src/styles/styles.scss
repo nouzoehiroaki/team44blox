@@ -66,6 +66,9 @@ header{
           color: #ffdc00;
           display: inline-block;
           transition: 0.5s;
+          @media screen and (max-width: 420px) {
+            font-size: 12px;
+          }
           &:hover{
             color: transparent;
             text-shadow: 0 0 5px #ffdc00;
@@ -207,6 +210,23 @@ header{
   height: 100vh;
   background-color: #fff;
   position: relative;
+  &.sesame{
+    background-color: #000;
+    @media screen and (max-width: 767px) {
+      flex-wrap: wrap;
+      height: 100%;
+      margin-top: 30%;
+      gap: 40px;
+    }
+    h2{
+      color: #f1c83c;
+      width: 100%;
+      text-align: center;
+    }
+    .box{
+      padding-bottom: 0;
+    }
+  }
   .splide__arrow {
     background-color: #ffdc00;
     width: 3em;
@@ -221,6 +241,11 @@ header{
     img{
       &.madskill,&.jahgod{
         max-width: 400px;
+        height: auto;
+        margin: auto;
+      }
+      &.sesame{
+        max-width: 500px;
         height: auto;
         margin: auto;
       }
