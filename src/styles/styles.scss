@@ -207,43 +207,72 @@ header{
   height: 100vh;
   background-color: #fff;
   position: relative;
-  .flex{
-    gap: 30px;
-    justify-content: center;
-    align-items: center;
-    @media screen and (max-width: 767px) {
-      flex-wrap: wrap;
-    }
-    .box{
-      max-width: 500px;
-      @media screen and (max-width: 767px) {
-        max-width: 100%;
-        padding: 0 20px;
-      }
-    }
+  .splide__arrow {
+    background-color: #ffdc00;
+    width: 3em;
+    height: 3em;
   }
-  .position{
-    position: absolute;
-    bottom:0;
-    left: 50%;
-    transform: translateX(-50%);
-    -webkit-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    opacity: 0;
-    animation: display 1s ease-out forwards;
-    animation-delay: 1s;
-    a{
-      img{
-        max-width: 600px;
-      }
-      transition: 0.5s;
-      &:hover{
-        opacity: .5;
+  .box{
+    padding-bottom: 80px;
+    @media screen and (max-width: 767px) {
+      max-width: 100%;
+      padding: 0 20px 80px;
+    }
+    img{
+      &.madskill,&.jahgod{
+        max-width: 400px;
+        height: auto;
+        margin: auto;
       }
     }
-    @keyframes display {
-      to {
-        opacity: 1;
+    .position{
+      position: absolute;
+      bottom:0;
+      left: 50%;
+      transform: translateX(-50%);
+      -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+      width: 100%;
+      overflow: hidden;
+      a{
+        &.btn-flat {
+          padding: 1.5rem 6rem;
+          color: #fff;
+          border-radius: 0;
+          background: #000;
+          display: block;
+          span {
+            position: relative;
+          }
+          &:before {
+            position: absolute;
+            top: 0;
+            left: 30px;
+            width: 150%;
+            height: 500%;
+            content: '';
+            -webkit-transition: all .5s ease-in-out;
+            transition: all .5s ease-in-out;
+            -webkit-transform: translateX(-98%) translateY(-70%) rotate(135deg);
+            transform: translateX(-98%) translateY(-70%) rotate(135deg);
+          }
+          &.tdhm{
+            &:before {
+              background: #c10f22;
+            }
+          }
+          &.fc{
+            &:before {
+              background: #ffdc00;
+            }
+          }
+          &:hover{
+            &:before {
+              -webkit-transform: translateX(-9%) translateY(-25%) rotate(135deg);
+              transform: translateX(-9%) translateY(-25%) rotate(135deg);
+            }
+          }
+        }
       }
     }
   }
@@ -253,7 +282,7 @@ header{
   height: 100vh;
   background-color: #000;
   position: relative;
-  color: #ffdc00;;
+  color: #ffdc00;
 
 }
 

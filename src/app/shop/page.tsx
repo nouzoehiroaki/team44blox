@@ -1,49 +1,51 @@
+'use client';
+import '@splidejs/splide/dist/css/splide.min.css';
 import "../../styles/svg.css";
 import "../../styles/styles.css"
 //import { useEffect } from "react";
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import type { SplideProps } from '@splidejs/react-splide';
 import Image from 'next/image'
 
 export default function Shop() {
+  // Splide の基本オプション
+  const options: SplideProps['options'] = {
+    type: 'fade',      // ループ
+    perPage: 1,        // 1枚ずつ表示
+    autoplay: true,    // 自動再生
+    interval: 3500,    // ミリ秒
+    speed: 800,        // アニメーション速度
+    gap: '1.5rem',     // スライド間余白
+    arrows: true,
+    pagination: false,
+  };
   return (
     <div>
       <section className="shop fixed">
-        <div className="flex">
-          <div className="box">
-            <picture>
-              <source srcSet="/44blox.webp" type="image/webp" />
-              <Image
-                src="/44blox.png"
-                alt=""
-                width={500}
-                height={443}
-              />
-            </picture>
-          </div>
-          <div className="box">
-            <picture>
-              <source srcSet="/jah-god.webp" type="image/webp" />
-              <Image
-                src="/jah-god.png"
-                alt=""
-                width={500}
-                height={443}
-              />
-            </picture>
-          </div>
-        </div>
-        <div className="position">
-          <a href="https://shop.lb-2.com/" target="_blank">
-            <picture>
-              <source srcSet="/lb-online.webp" type="image/webp" />
-              <Image
-                src="/lb-online.jpg"
-                alt=""
-                width={2000}
-                height={337}
-              />
-            </picture>
-          </a>
-        </div>
+        <Splide aria-label="Shop items" options={options}>
+          <SplideSlide>
+            <div className="box">
+              <picture>
+                <source srcSet="/jah-god.webp" type="image/webp" />
+                <Image src="/jah-god.png" className="jahgod" alt="Jah God" width={500} height={443} />
+              </picture>
+              <div className='position'>
+                <a href="https://shop.lb-2.com/" className="btn btn-flat fc" target="_blank" rel="noopener"><span>See more!</span></a>
+              </div>
+            </div>
+          </SplideSlide>
+          <SplideSlide>
+            <div className="box">
+              <picture>
+                <source srcSet="/madskill.webp" type="image/webp" />
+                <Image src="/madskill.jpg" className="madskill" alt="Mad Skill" width={400} height={400} />
+              </picture>
+              <div className='position'>
+                <a href="https://thedoghousemusic.stores.jp/" className="btn btn-flat tdhm" target="_blank" rel="noopener"><span>See more!</span></a>
+              </div>
+            </div>
+          </SplideSlide>
+        </Splide>
       </section>
     </div>
   );

@@ -210,49 +210,63 @@ header .btnTrigger.active span:nth-of-type(3) {
   background-color: #fff;
   position: relative;
 }
-.shop .flex {
-  gap: 30px;
-  justify-content: center;
-  align-items: center;
+.shop .splide__arrow {
+  background-color: #ffdc00;
+  width: 3em;
+  height: 3em;
+}
+.shop .box {
+  padding-bottom: 80px;
 }
 @media screen and (max-width: 767px) {
-  .shop .flex {
-    flex-wrap: wrap;
-  }
-}
-.shop .flex .box {
-  max-width: 500px;
-}
-@media screen and (max-width: 767px) {
-  .shop .flex .box {
+  .shop .box {
     max-width: 100%;
-    padding: 0 20px;
+    padding: 0 20px 80px;
   }
 }
-.shop .position {
+.shop .box img.madskill, .shop .box img.jahgod {
+  max-width: 400px;
+  height: auto;
+  margin: auto;
+}
+.shop .box .position {
   position: absolute;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
-  opacity: 0;
-  animation: display 1s ease-out forwards;
-  animation-delay: 1s;
+  width: 100%;
+  overflow: hidden;
 }
-.shop .position a {
-  transition: 0.5s;
+.shop .box .position a.btn-flat {
+  padding: 1.5rem 6rem;
+  color: #fff;
+  border-radius: 0;
+  background: #000;
+  display: block;
 }
-.shop .position a img {
-  max-width: 600px;
+.shop .box .position a.btn-flat span {
+  position: relative;
 }
-.shop .position a:hover {
-  opacity: 0.5;
+.shop .box .position a.btn-flat:before {
+  position: absolute;
+  top: 0;
+  left: 30px;
+  width: 150%;
+  height: 500%;
+  content: "";
+  transition: all 0.5s ease-in-out;
+  transform: translateX(-98%) translateY(-70%) rotate(135deg);
 }
-@keyframes display {
-  to {
-    opacity: 1;
-  }
+.shop .box .position a.btn-flat.tdhm:before {
+  background: #c10f22;
+}
+.shop .box .position a.btn-flat.fc:before {
+  background: #ffdc00;
+}
+.shop .box .position a.btn-flat:hover:before {
+  transform: translateX(-9%) translateY(-25%) rotate(135deg);
 }
 
 .supported {
