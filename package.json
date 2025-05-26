@@ -12,6 +12,7 @@
   "dependencies": {
     "@splidejs/react-splide": "^0.7.12",
     "@splidejs/splide": "^4.1.4",
+    "microcms-js-sdk": "^3.2.0",
     "motion": "^12.12.1",
     "next": "15.3.1",
     "react": "^19.0.0",

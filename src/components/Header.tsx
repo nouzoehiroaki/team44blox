@@ -108,7 +108,11 @@ export default function Header() {
               </Link>
             </li>
             <li><a href="#supported">SUPPORTED BY</a></li>
-            <li><a href="#blog">NEWS</a></li>
+            <li>
+              <Link href="/news" onClick={handleClose}>
+                NEWS
+              </Link>
+            </li>
           </ul>
         </nav>
       </header>

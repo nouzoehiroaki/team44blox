@@ -412,10 +412,54 @@ header{
     }
   }
 }
-.blog{
-  height: 100vh;
-  background-color: #fff;
+.news{
+  background-color: #000;
   position: relative;
+  color: #fff;
+  padding-top: 200px;
+  font-weight: bold;
+  .container{
+    max-width: 768px;
+    margin: auto;
+    padding: 0 20px;
+    h1{
+      font-size: 30px;
+      margin-bottom: 50px;
+    }
+    ul{
+      li{
+        border-bottom:1px solid #ffdc00;
+        padding-bottom: 10px;
+        margin-bottom: 40px;
+      }
+    }
+  }
+}
+.content{
+  margin-top: 200px;
+  font-weight: bold;
+  color: #fff;
+  .container{
+    max-width: 1000px;
+    margin: auto;
+    padding: 0 20px;
+    h1{
+      font-size: 30px;
+      margin-bottom: 50px;
+    }
+    h2{
+      font-size: 25px;
+      margin-bottom: 30px;
+    }
+    p{
+      margin-bottom: 20px;
+    }
+    img{
+      max-width: 500px;
+      display: block;
+      margin-bottom: 20px;
+    }
+  }
 }
 
 .ed-modal {
