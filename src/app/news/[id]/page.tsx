@@ -1,15 +1,16 @@
 import { client } from "../../../../libs/client";
 import "../../../styles/styles.css";
 
-type PageProps = {
-  params: Promise<{ id: string }>  // ← ここがポイント
-};
+type Params = { id: string };
 
-export default async function NewsDetail(props: PageProps) {
-  // Promise を展開
-  const { id } = await props.params;
+export default async function NewsDetail({
+  params,
+}: {
+  // 🟢 Next 15 の新仕様: Promise で来るので await する
+  params: Promise<Params>;
+}) {
+  const { id } = await params;
 
-  // MicroCMS などから記事を取得
   const data = await client.get({
     endpoint: "news",
     contentId: id,
@@ -28,7 +29,6 @@ export default async function NewsDetail(props: PageProps) {
   );
 }
 
-// 動的パスをビルド時に列挙
 export async function generateStaticParams() {
   const { contents } = await client.get({ endpoint: "news" });
   return contents.map((item: { id: string }) => ({ id: item.id }));
