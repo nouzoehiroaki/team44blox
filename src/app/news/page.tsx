@@ -4,7 +4,7 @@ import { client } from "../../../libs/client"; // ルートエイリアスがな
 import "../../styles/styles.css"
 
 // ❶ ISR をしたい場合は revalidate を指定（秒）
-export const revalidate = 3600; // 60 秒ごとに再生成
+export const revalidate = 60; // 60 秒ごとに再生成
 
 export default async function NewsPage() {
   const data = await client.get({ endpoint: "news" });

@@ -1,20 +1,18 @@
 import { client } from "../../../../libs/client";
-import "../../../styles/styles.css"
+import "../../../styles/styles.css";
 
-// 動的パスをビルド時に列挙
-export async function generateStaticParams() {
-  const { contents } = await client.get({ endpoint: "news" });
-  return contents.map((item: { id: string }) => ({ id: item.id }));
-}
+type PageProps = {
+  params: Promise<{ id: string }>  // ← ここがポイント
+};
 
-export default async function NewsDetail({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function NewsDetail(props: PageProps) {
+  // Promise を展開
+  const { id } = await props.params;
+
+  // MicroCMS などから記事を取得
   const data = await client.get({
     endpoint: "news",
-    contentId: params.id,
+    contentId: id,
   });
 
   return (
@@ -28,4 +26,10 @@ export default async function NewsDetail({
       <div />
     </article>
   );
+}
+
+// 動的パスをビルド時に列挙
+export async function generateStaticParams() {
+  const { contents } = await client.get({ endpoint: "news" });
+  return contents.map((item: { id: string }) => ({ id: item.id }));
 }
