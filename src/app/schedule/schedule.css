@@ -9,7 +9,7 @@
   text-align: center;
   font-size: 2.5rem;
   font-weight: bold;
-  margin-bottom: 2rem;
+  margin: 2rem 0;
   color: #333;
 }
 
@@ -187,6 +187,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
+  max-width: 500px;
 }
 
 .flyer-image:hover {
