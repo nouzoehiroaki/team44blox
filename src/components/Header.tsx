@@ -113,6 +113,11 @@ export default function Header() {
                 NEWS
               </Link>
             </li>
+            <li>
+              <Link href="/schedule" onClick={handleClose}>
+                SCHEDULE
+              </Link>
+            </li>
           </ul>
         </nav>
       </header>
