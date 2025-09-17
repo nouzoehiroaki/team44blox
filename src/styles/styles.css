@@ -299,13 +299,6 @@ header .btnTrigger.active span:nth-of-type(3) {
   transform: translateX(-9%) translateY(-25%) rotate(135deg);
 }
 
-.supported {
-  height: 100vh;
-  background-color: #000;
-  position: relative;
-  color: #ffdc00;
-}
-
 .member {
   height: 100vh;
   background: #000;
@@ -535,14 +528,29 @@ header .btnTrigger.active span:nth-of-type(3) {
   height: 100%;
 }
 
-#footer {
-  position: relative;
-  z-index: 2;
-}
-#footer small {
-  background: #333;
-  color: #fff;
-  display: block;
+footer {
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
   text-align: center;
-  padding: 20px;
+  width: 100%;
+  bottom: -15px;
+  opacity: 0;
+  animation: slideDownHeader02 1s ease-out forwards;
+  animation-delay: 5s;
+}
+@keyframes slideDownHeader02 {
+  to {
+    bottom: 15px;
+    opacity: 1;
+  }
+}
+footer small {
+  color: #f1c83c;
+  display: block;
+  font-size: 12px;
+  font-weight: 300;
 }/*# sourceMappingURL=styles.css.map */
