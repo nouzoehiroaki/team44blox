@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 type TypingTextProps = {
   text: string;
-  speed?: number; // 1文字あたりの表示速度（ms）
+  speed?: number;
   className?: string;
   onComplete?: () => void;
 };
@@ -18,7 +18,7 @@ export function TypingText({ text, speed = 100, className, onComplete }: TypingT
       setDisplayed(text.slice(0, idx));
       if (idx === text.length) {
         clearInterval(timer);
-        onComplete?.();       // <- ここで通知
+        onComplete?.();
       }
     }, speed);
     return () => clearInterval(timer);

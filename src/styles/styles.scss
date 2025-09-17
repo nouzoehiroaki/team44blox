@@ -304,14 +304,6 @@ header{
   }
 }
 
-.supported{
-  height: 100vh;
-  background-color: #000;
-  position: relative;
-  color: #ffdc00;
-
-}
-
 .member{
   height: 100vh;
   background: #000;
@@ -412,6 +404,7 @@ header{
     }
   }
 }
+
 .news{
   background-color: #000;
   position: relative;
@@ -435,6 +428,7 @@ header{
     }
   }
 }
+
 .content{
   margin-top: 200px;
   font-weight: bold;
@@ -532,14 +526,30 @@ header{
   }
 }
 
-#footer {
-  position: relative;
-  z-index: 2;
+footer {
+  position: fixed;
+  bottom:15px;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  text-align: center;
+  width: 100%;
+
+  bottom:-15px;
+  opacity: 0;
+  animation: slideDownHeader02 1s ease-out forwards;
+  animation-delay: 5s;
+  @keyframes slideDownHeader02 {
+    to {
+      bottom:15px;
+      opacity: 1;
+    }
+  }
   small {
-    background: #333;
-    color: #fff;
+    color: #f1c83c;
     display: block;
-    text-align: center;
-    padding: 20px;
+    font-size: 12px;
+    font-weight: 300;
   }  
 }

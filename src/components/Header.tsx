@@ -107,7 +107,11 @@ export default function Header() {
                 SHOP
               </Link>
             </li>
-            <li><a href="#supported">SUPPORTED BY</a></li>
+            <li>
+              <Link href="/supportedby" onClick={handleClose}>
+                SUPPORTED BY
+              </Link>
+            </li>
             <li>
               <Link href="/news" onClick={handleClose}>
                 NEWS
