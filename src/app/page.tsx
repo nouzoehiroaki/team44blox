@@ -2,6 +2,7 @@
 import "../styles/svg.css";
 import "../styles/styles.css"
 import { useEffect } from "react";
+import Image from 'next/image'
 
 export default function Home() {
   useEffect(() => {
@@ -64,6 +65,12 @@ export default function Home() {
             </svg>
           </h1>
           <div className="shine-overlay"></div>
+        </div>
+        <div className="beatkumiai">
+          <picture>
+            <source srcSet="/beatkumiai.webp" type="image/webp" />
+            <Image src="/beatkumiai.png" className="sesame" alt="Mad Skill" width={400} height={400} />
+          </picture>
         </div>
       </section>
     </div>

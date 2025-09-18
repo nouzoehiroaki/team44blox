@@ -26,8 +26,8 @@ export default function Shop() {
           <SplideSlide>
             <div className="box">
               <picture>
-                <source srcSet="/jah-god.webp" type="image/webp" />
-                <Image src="/jah-god.png" className="jahgod" alt="Jah God" width={500} height={443} />
+                <source srcSet="/lb-shop.webp" type="image/webp" />
+                <Image src="/lb-shop.jpg" className="jahgod" alt="Jah God" width={500} height={443} />
               </picture>
               <div className='position'>
                 <a href="https://shop.lb-2.com/" className="btn btn-flat fc" target="_blank" rel="noopener"><span>shop.lb-2.com</span></a>
@@ -37,8 +37,8 @@ export default function Shop() {
           <SplideSlide>
             <div className="box">
               <picture>
-                <source srcSet="/madskill.webp" type="image/webp" />
-                <Image src="/madskill.jpg" className="madskill" alt="Mad Skill" width={400} height={400} />
+                <source srcSet="/mikris-shop.webp" type="image/webp" />
+                <Image src="/mikris-shop.jpg" className="madskill" alt="Mad Skill" width={400} height={400} />
               </picture>
               <div className='position'>
                 <a href="https://thedoghousemusic.stores.jp/" className="btn btn-flat tdhm" target="_blank" rel="noopener"><span>thedoghousemusic.stores.jp</span></a>

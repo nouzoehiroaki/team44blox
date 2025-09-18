@@ -166,7 +166,7 @@ header .btnTrigger.active span:nth-of-type(3) {
   background-image: url(../images/main.webp);
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: auto;
   position: relative;
   height: 100vh;
 }
@@ -202,6 +202,17 @@ header .btnTrigger.active span:nth-of-type(3) {
 @keyframes fadeOutAfter {
   to {
     opacity: 0;
+  }
+}
+.first-view .beatkumiai {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  max-width: 200px;
+}
+@media screen and (max-width: 585px) {
+  .first-view .beatkumiai {
+    max-width: 150px;
   }
 }
 
@@ -406,16 +417,41 @@ header .btnTrigger.active span:nth-of-type(3) {
 }
 
 .news {
-  background-color: #000;
-  position: relative;
   color: #fff;
-  padding-top: 200px;
+  padding: 200px 0;
   font-weight: bold;
+  position: relative;
+}
+.news::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  height: 100vh;
+}
+.news::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url(../images/news-bg.jpg);
+  background-image: url(../images/news-bg.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto;
+  height: 100vh;
+  z-index: -1;
 }
 .news .container {
   max-width: 768px;
   margin: auto;
   padding: 0 20px;
+  position: relative;
 }
 .news .container h1 {
   font-size: 30px;
@@ -428,14 +464,41 @@ header .btnTrigger.active span:nth-of-type(3) {
 }
 
 .content {
-  margin-top: 200px;
+  padding: 200px 0;
   font-weight: bold;
   color: #fff;
+  position: relative;
+}
+.content::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  height: 100vh;
+}
+.content::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url(../images/news-bg.jpg);
+  background-image: url(../images/news-bg.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto;
+  height: 100vh;
+  z-index: -1;
 }
 .content .container {
   max-width: 1000px;
   margin: auto;
   padding: 0 20px;
+  position: relative;
 }
 .content .container h1 {
   font-size: 30px;
