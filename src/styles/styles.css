@@ -170,6 +170,11 @@ header .btnTrigger.active span:nth-of-type(3) {
   position: relative;
   height: 100vh;
 }
+@media screen and (max-width: 585px) {
+  .first-view {
+    background-size: contain;
+  }
+}
 .first-view::before {
   content: "";
   position: absolute;
