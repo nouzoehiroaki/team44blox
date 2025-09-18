@@ -34,6 +34,7 @@ export default function About() {
     "/sesame.webp",
     "/smithcn.webp",
     "/smithcn02.webp",
+    "/smithcn03.webp",
     "/snipe.webp",
     "/snipe02.webp",
     "/yakko.webp",
