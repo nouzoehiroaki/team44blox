@@ -452,6 +452,11 @@ header .btnTrigger.active span:nth-of-type(3) {
   height: 100vh;
   z-index: -1;
 }
+@media screen and (max-width: 585px) {
+  .news::after {
+    background-size: cover;
+  }
+}
 .news .container {
   max-width: 768px;
   margin: auto;
@@ -498,6 +503,11 @@ header .btnTrigger.active span:nth-of-type(3) {
   background-size: auto;
   height: 100vh;
   z-index: -1;
+}
+@media screen and (max-width: 585px) {
+  .content::after {
+    background-size: cover;
+  }
 }
 .content .container {
   max-width: 1000px;
