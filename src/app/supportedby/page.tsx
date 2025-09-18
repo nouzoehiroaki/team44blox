@@ -5,7 +5,7 @@ export default function SupportedBy() {
   return (
     <div>
       <section className="supportedBy fixed">
-        <h1>協賛募集中</h1>
+        <h1>Coming soon...</h1>
       </section>
     </div>
   );
