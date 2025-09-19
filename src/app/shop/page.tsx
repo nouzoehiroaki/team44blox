@@ -107,6 +107,29 @@ export default function Shop() {
               </div>
             </div>
           </SplideSlide>
+          <SplideSlide>
+            <div className="box">
+              <div className="tomiken">
+                <picture>
+                  <source srcSet="/tomiken.webp" type="image/webp" />
+                  <Image src="/tomiken.png" className="" alt="Mad Skill" width={400} height={400} />
+                </picture>
+              </div>
+              <div className="mailman">
+                <picture>
+                  <source srcSet="/mailman.webp" type="image/webp" />
+                  <Image src="/mailman.png" className="" alt="Mad Skill" width={400} height={400} />
+                </picture>
+              </div>
+              <picture>
+                <source srcSet="/kge-shop.webp" type="image/webp" />
+                <Image src="/kge-shop.jpg" className="madskill" alt="Mad Skill" width={400} height={400} />
+              </picture>
+              <div className='position'>
+                <a href="https://pylorhythm.official.ec/" className="btn btn-flat pylo" target="_blank" rel="noopener"><span>pylorhythm.official.ec</span></a>
+              </div>
+            </div>
+          </SplideSlide>
         </Splide>
         <div className='coment'>
           <AnimatePresence mode="wait">
