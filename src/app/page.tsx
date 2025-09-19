@@ -69,7 +69,7 @@ export default function Home() {
         <div className="beatkumiai">
           <picture>
             <source srcSet="/beatkumiai.webp" type="image/webp" />
-            <Image src="/beatkumiai.png" className="sesame" alt="Mad Skill" width={400} height={400} />
+            <Image src="/beatkumiai.png" className="" alt="Mad Skill" width={400} height={400} />
           </picture>
         </div>
       </section>
