@@ -269,6 +269,9 @@ header .btnTrigger.active span:nth-of-type(3) {
 .shop.sesame .box {
   padding-bottom: 0;
 }
+.shop .splide {
+  max-width: 800px;
+}
 .shop .splide__arrow {
   background-color: #ffdc00;
   width: 4em;
@@ -364,6 +367,9 @@ header .btnTrigger.active span:nth-of-type(3) {
 }
 .shop .box .position a.btn-flat.fc:before {
   background: #ffdc00;
+}
+.shop .box .position a.btn-flat.pylo:before {
+  background: #0951a2;
 }
 .shop .box .position a.btn-flat:hover:before {
   transform: translateX(-9%) translateY(-25%) rotate(135deg);

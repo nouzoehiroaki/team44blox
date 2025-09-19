@@ -254,6 +254,9 @@ header{
       padding-bottom: 0;
     }
   }
+  .splide{
+    max-width: 800px;
+  }
   .splide__arrow {
     background-color: #ffdc00;
     width: 4em;
@@ -346,6 +349,11 @@ header{
           &.fc{
             &:before {
               background: #ffdc00;
+            }
+          }
+          &.pylo{
+            &:before {
+              background: #0951a2;
             }
           }
           &:hover{
