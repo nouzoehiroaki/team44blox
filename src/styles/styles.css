@@ -231,6 +231,25 @@ header .btnTrigger.active span:nth-of-type(3) {
   background-color: #fff;
   position: relative;
 }
+.shop .lantern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.shop .lantern img {
+  max-width: 420px;
+}
+@media screen and (max-width: 767px) {
+  .shop .lantern img {
+    max-width: 270px;
+  }
+}
+@media screen and (max-width: 585px) {
+  .shop .lantern img {
+    max-width: 190px;
+  }
+}
 .shop.sesame {
   background-color: #000;
 }
@@ -252,16 +271,51 @@ header .btnTrigger.active span:nth-of-type(3) {
 }
 .shop .splide__arrow {
   background-color: #ffdc00;
-  width: 3em;
-  height: 3em;
+  width: 4em;
+  height: 4em;
+  top: 24%;
+  border-radius: unset;
+}
+@media screen and (max-width: 585px) {
+  .shop .splide__arrow {
+    top: 40%;
+  }
 }
 .shop .box {
   padding-bottom: 80px;
+  position: relative;
 }
 @media screen and (max-width: 767px) {
   .shop .box {
     max-width: 100%;
     padding: 0 20px 80px;
+  }
+}
+.shop .box .tomiken {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.shop .box .tomiken img {
+  max-width: 100px;
+}
+@media screen and (max-width: 585px) {
+  .shop .box .tomiken img {
+    max-width: 50px;
+  }
+}
+.shop .box .mailman {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+}
+.shop .box .mailman img {
+  max-width: 85px;
+}
+@media screen and (max-width: 585px) {
+  .shop .box .mailman img {
+    max-width: 44px;
   }
 }
 .shop .box img.madskill, .shop .box img.jahgod {
@@ -313,6 +367,26 @@ header .btnTrigger.active span:nth-of-type(3) {
 }
 .shop .box .position a.btn-flat:hover:before {
   transform: translateX(-9%) translateY(-25%) rotate(135deg);
+}
+.shop .coment {
+  position: absolute;
+  bottom: 13%;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  font-size: 20px;
+  font-weight: bold;
+  padding: 0 20px;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+@media screen and (max-width: 585px) {
+  .shop .coment {
+    font-size: 13px;
+    bottom: 9%;
+  }
 }
 
 .member {

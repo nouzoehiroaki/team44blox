@@ -222,6 +222,21 @@ header{
   height: 100vh;
   background-color: #fff;
   position: relative;
+  .lantern{
+    position: absolute;
+    top:0;
+    left: 0;
+    z-index: 1;
+    img{
+      max-width: 420px;
+      @media screen and (max-width: 767px) {
+        max-width: 270px;
+      }
+      @media screen and (max-width: 585px) {
+        max-width: 190px;
+      }
+    }
+  }
   &.sesame{
     background-color: #000;
     @media screen and (max-width: 767px) {
@@ -241,14 +256,43 @@ header{
   }
   .splide__arrow {
     background-color: #ffdc00;
-    width: 3em;
-    height: 3em;
+    width: 4em;
+    height: 4em;
+    top:24%;
+    border-radius: unset;
+    @media screen and (max-width: 585px) {
+     top:40%;
+    }
   }
   .box{
     padding-bottom: 80px;
+    position: relative;
     @media screen and (max-width: 767px) {
       max-width: 100%;
       padding: 0 20px 80px;
+    }
+    .tomiken{
+      position: absolute;
+      bottom:0;
+      right: 0;
+      img{
+        max-width: 100px;
+        @media screen and (max-width: 585px) {
+          max-width: 50px;
+        }
+      }
+    }
+    .mailman{
+      position: absolute;
+      bottom:0;
+      left: 0;
+      z-index: 0;
+      img{
+        max-width: 85px;
+        @media screen and (max-width: 585px) {
+          max-width: 44px;
+        }
+      }
     }
     img{
       &.madskill,&.jahgod{
@@ -312,6 +356,24 @@ header{
           }
         }
       }
+    }
+  }
+  .coment{
+    position: absolute;
+    bottom:13%;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0 20px;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    @media screen and (max-width: 585px) {
+        font-size: 13px;
+        bottom: 9%;
     }
   }
 }
