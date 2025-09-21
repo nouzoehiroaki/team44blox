@@ -7,7 +7,12 @@ import "../../styles/styles.css"
 export const revalidate = 60; // 60 秒ごとに再生成
 
 export default async function NewsPage() {
-  const data = await client.get({ endpoint: "news" });
+  const data = await client.get({
+    endpoint: "news",
+    queries: {
+      limit: 30  // 取得件数を30件に指定
+    }
+  });
 
   return (
     <div>

@@ -53,6 +53,9 @@ export default function SchedulePage() {
     try {
       const response = await client.getList({
         endpoint: 'calendar-fryer',
+        queries: {
+          limit: 30  // 取得件数を30件に指定
+        }
       });
       //console.log('取得したイベントデータ:', response.contents);
       // 各イベントの日付形式を確認
