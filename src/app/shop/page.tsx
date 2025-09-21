@@ -42,7 +42,7 @@ export default function Shop() {
 
   // Splide の基本オプション
   const options: SplideProps['options'] = {
-    type: 'fade',      // ループ
+    type: 'fade',
     perPage: 1,        // 1枚ずつ表示
     autoplay: true,    // 自動再生
     interval: 3500,    // ミリ秒
