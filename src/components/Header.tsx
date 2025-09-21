@@ -17,31 +17,31 @@ export default function Header() {
   const youtubeContents = [
     {
       url: "https://www.youtube.com/watch?v=g8le8JTvcN0",
-      title: "TEAM44BLOX(DELI / MARS MANIE / JBM / BASS DA BONGZ / MIKRIS / 大蛇) - UNITY (Prod.DJ WATARAI)",
+      title: "TEAM44BLOX - UNITY Prod. DJ WATARAI",
     },
     {
       url: "https://www.youtube.com/watch?v=vr26W2tA8aM",
-      title: "JBM The Kong~One Way feat. TAD'S A.C. MusicVideo",
+      title: "JBM The Kong - One Way feat. TAD'S A.C.",
     },
     {
       url: "https://www.youtube.com/watch?v=viHus4CRUxc",
-      title: "MIKRIS - Umbrella ( Feat. H. Teflon )",
+      title: "MIKRIS - Umbrella feat. H.Teflon",
     },
     {
       url: "https://www.youtube.com/watch?v=XvA-oVoj1ww",
-      title: "MARS MANIE - STAND UP! (2005)",
+      title: "MARS MANIE - STAND UP!(2005)",
     },
     {
       url: "https://www.youtube.com/watch?v=C2C4FY2QMNY",
-      title: "KGE THE SHADOWMEN TRANCE 注意報 feat. 鎮座DOPENESS pro by grooveman Spot",
+      title: "KGE THE SHADOWMEN - TRANCE 注意報 feat. 鎮座DOPENESS prod. grooveman Spot",
     },
     {
       url: "https://www.youtube.com/watch?v=fNC1wRw3wYg",
-      title: "WASH / 大＜オロチ＞蛇 feat. MIGALSKIE, DIEZEL Produced by. HIMUKI",
+      title: "WASH / 大＜オロチ＞蛇 feat. MIGALSKIE, DIEZEL prod. HIMUKI",
     },
     {
       url: "https://www.youtube.com/watch?v=B0c6NnEILr4",
-      title: "DABONGZ / B.O.B FEAT MARS MANIE,KGE,G-SPICE,JBM,GOCCI",
+      title: "DABONGZ / B.O.B feat. MARS MANIE,KGE,G-SPICE,JBM,GOCCI",
     },
     {
       url: "https://www.youtube.com/watch?v=DRtmNZdaklU",
@@ -53,11 +53,11 @@ export default function Header() {
     },
     {
       url: "https://www.youtube.com/watch?v=OgbB0cl-xHw",
-      title: "Team 44 Blox / Right Here",
+      title: "Team 44 Blox - Right Here",
     },
     {
       url: "https://www.youtube.com/watch?v=UFpI_NGgZB4",
-      title: "JUST GO Ft. Kumi Koda / JHETT a.k.a YAKKO",
+      title: "JHETT a.k.a YAKKO - JUST GO feat. Kumi Koda",
     },
     {
       url: "https://www.youtube.com/watch?v=MuQIStPVXA4",
@@ -65,7 +65,7 @@ export default function Header() {
     },
     {
       url: "https://www.youtube.com/watch?v=5dL5xYJzhx4",
-      title: "Jean Flexx ASN Remix Feat SNIPE",
+      title: "Jean Flexx ASN Remix feat. SNIPE",
     },
     {
       url: "https://www.youtube.com/watch?v=2hZtPIp8KnM",
@@ -82,7 +82,7 @@ export default function Header() {
     type: 'fade',
     perPage: 1,
     arrows: true,
-    pagination: true,
+    pagination: false,
     speed: 800,
     gap: 0,
     autoplay: true,

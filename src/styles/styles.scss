@@ -665,6 +665,22 @@ header{
           height: 100%;
         }
       }
+      .video-info{
+        margin-top: 10px;
+        text-align: center;
+        color: #fff;
+        font-size: 8px;
+      }
+      .splide__arrow{
+        width: 3em;
+        height: 3em;
+        background-color: rgb(255, 220, 0);
+        @media screen and (max-width: 767px) {
+          top: unset;
+          transform: unset;
+          bottom: -30px;
+        }
+      }
     }    
   }
 }
