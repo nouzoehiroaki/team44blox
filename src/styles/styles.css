@@ -685,6 +685,24 @@ header .btnTrigger.active span:nth-of-type(3) {
   left: 0;
   height: 100%;
 }
+.ed-modal #modalOverlay .modalContent .video-info {
+  margin-top: 10px;
+  text-align: center;
+  color: #fff;
+  font-size: 8px;
+}
+.ed-modal #modalOverlay .modalContent .splide__arrow {
+  width: 3em;
+  height: 3em;
+  background-color: rgb(255, 220, 0);
+}
+@media screen and (max-width: 767px) {
+  .ed-modal #modalOverlay .modalContent .splide__arrow {
+    top: unset;
+    transform: unset;
+    bottom: -30px;
+  }
+}
 
 footer {
   position: fixed;
