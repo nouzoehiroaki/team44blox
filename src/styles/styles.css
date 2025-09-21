@@ -669,7 +669,7 @@ header .btnTrigger.active span:nth-of-type(3) {
 .ed-modal #modalOverlay .modalContent .ed-closeModal:hover {
   opacity: 1;
 }
-.ed-modal #modalOverlay .modalContent .video {
+.ed-modal #modalOverlay .modalContent .video-wrapper {
   width: 100%;
   position: relative;
   height: 0;
@@ -678,7 +678,7 @@ header .btnTrigger.active span:nth-of-type(3) {
   filter: drop-shadow(0px 2px 5px #313131);
   animation: fadeIn 1.2s ease 0s 1 normal;
 }
-.ed-modal #modalOverlay .modalContent .video iframe {
+.ed-modal #modalOverlay .modalContent .video-wrapper iframe {
   width: 100%;
   position: absolute;
   top: 0;
