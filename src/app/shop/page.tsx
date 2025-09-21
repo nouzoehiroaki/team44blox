@@ -50,6 +50,7 @@ export default function Shop() {
     gap: '1.5rem',     // スライド間余白
     arrows: true,
     pagination: false,
+    rewind: true,
   };
   return (
     <div>
