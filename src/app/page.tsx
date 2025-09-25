@@ -71,6 +71,9 @@ export default function Home() {
             <source srcSet="/beatkumiai.webp" type="image/webp" />
             <Image src="/beatkumiai.png" className="" alt="Mad Skill" width={400} height={400} />
           </picture>
+          {/* <div className="logo-matdesignz">
+            <img className="matdesignz" src="/maddesignz.png" alt="" />
+          </div> */}
         </div>
       </section>
     </div>
