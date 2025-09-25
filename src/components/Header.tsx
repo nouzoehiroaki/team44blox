@@ -85,7 +85,7 @@ export default function Header() {
     pagination: false,
     speed: 800,
     gap: 0,
-    autoplay: true,
+    autoplay: false,
     rewind: true,
   };
 
@@ -94,6 +94,23 @@ export default function Header() {
     const getYouTubeVideoCode = (url: string): string => {
       const param = new URL(url).searchParams.get("v");
       return param ?? "";
+    };
+
+    // 現在のアクティブな動画を一時停止する関数
+    const pauseOtherVideos = (splideInstance: any) => {
+      const currentIndex = splideInstance.index;
+      const allSlides = splideInstance.Components.Slides.get(); // 全スライドを取得
+
+      allSlides.forEach((slide: any, index: number) => {
+        // 現在のスライド以外の場合
+        if (index !== currentIndex) {
+          const iframe = slide.slide.querySelector('iframe');
+          if (iframe && iframe.contentWindow) {
+            // YouTube IFrame Player APIのpostMessageを使って一時停止
+            iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+          }
+        }
+      });
     };
 
     // スライダー付きモーダルを作って表示
@@ -127,7 +144,7 @@ export default function Header() {
                   <div class="youtube-slide-content">
                     <div class="video-wrapper">
                       <iframe 
-                        src="https://www.youtube.com/embed/${getYouTubeVideoCode(content.url)}${index === 0 ? '?autoplay=1' : ''}" 
+                        src="https://www.youtube.com/embed/${getYouTubeVideoCode(content.url)}?enablejsapi=1${index === 0 ? '&autoplay=1' : ''}" 
                         frameborder="0" 
                         allowfullscreen
                         loading="${index === 0 ? 'eager' : 'lazy'}">
@@ -147,7 +164,19 @@ export default function Header() {
 
         // Splide初期化（動的インポート）
         import('@splidejs/splide').then(({ Splide }) => {
-          new Splide(splideElement, splideOptions).mount();
+          const splideInstance = new Splide(splideElement, splideOptions);
+
+          // arrow ボタンがクリックされた時の処理
+          splideInstance.on('moved', (newIndex: number) => {
+            pauseOtherVideos(splideInstance);
+          });
+
+          // または move イベント（移動開始時）を使用
+          // splideInstance.on('move', (newIndex: number, oldIndex: number) => {
+          //   pauseOtherVideos(splideInstance);
+          // });
+
+          splideInstance.mount();
         });
       }
 
