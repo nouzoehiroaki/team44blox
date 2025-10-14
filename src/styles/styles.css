@@ -229,6 +229,7 @@ header .btnTrigger.active span:nth-of-type(3) {
 
 .shop {
   height: 100vh;
+  height: 100dvh;
   background-color: #fff;
   position: relative;
 }
