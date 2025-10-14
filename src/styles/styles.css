@@ -169,6 +169,7 @@ header .btnTrigger.active span:nth-of-type(3) {
   background-size: auto;
   position: relative;
   height: 100vh;
+  height: 100dvh;
 }
 @media screen and (max-width: 585px) {
   .first-view {
@@ -228,6 +229,7 @@ header .btnTrigger.active span:nth-of-type(3) {
 
 .shop {
   height: 100vh;
+  height: 100dvh;
   background-color: #fff;
   position: relative;
 }
