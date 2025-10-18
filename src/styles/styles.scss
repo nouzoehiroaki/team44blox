@@ -542,13 +542,34 @@ header{
     }
   }
   .container{
-    max-width: 768px;
+    max-width: 1042px;
     margin: auto;
     padding: 0 20px;
     position: relative;
     h1{
       font-size: 30px;
       margin-bottom: 50px;
+      text-align: center;
+    }
+    .wrap{
+      display: flex;
+      justify-content: space-between;
+      @media screen and (max-width: 767px) {
+        flex-wrap: wrap;
+      }
+      .category-section{
+        width: 48%;
+        @media screen and (max-width: 767px) {
+          width: 100%;
+          margin-bottom: 80px;
+        }
+        h2{
+          &.category-title{
+            margin-bottom: 30px;
+            font-size: 25px;
+          }
+        }
+      }
     }
     ul{
       li{
