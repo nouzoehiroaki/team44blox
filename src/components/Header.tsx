@@ -24,8 +24,8 @@ export default function Header() {
       title: "JBM The Kong - One Way feat. TAD'S A.C.",
     },
     {
-      url: "https://www.youtube.com/watch?v=viHus4CRUxc",
-      title: "MIKRIS - Umbrella feat. H.Teflon",
+      url: "https://www.youtube.com/watch?v=UewoyOVOYq4",
+      title: "MIKRIS - Malaysia Prod By. MASS-HOLE",
     },
     {
       url: "https://www.youtube.com/watch?v=XvA-oVoj1ww",
@@ -36,20 +36,16 @@ export default function Header() {
       title: "KGE THE SHADOWMEN - TRANCE 注意報 feat. 鎮座DOPENESS prod. grooveman Spot",
     },
     {
-      url: "https://www.youtube.com/watch?v=fNC1wRw3wYg",
-      title: "WASH / 大＜オロチ＞蛇 feat. MIGALSKIE, DIEZEL prod. HIMUKI",
+      url: "https://www.youtube.com/watch?v=ueXC3qVt7sw",
+      title: "大蛇 - 群青 Scratch by DJ CGE",
     },
     {
       url: "https://www.youtube.com/watch?v=B0c6NnEILr4",
-      title: "DABONGZ / B.O.B feat. MARS MANIE,KGE,G-SPICE,JBM,GOCCI",
+      title: "DABONGZ - B.O.B feat. MARS MANIE,KGE,G-SPICE,JBM,GOCCI",
     },
     {
-      url: "https://www.youtube.com/watch?v=DRtmNZdaklU",
-      title: "DELI - PASS DA POPCORN feat.NIPPS, K-B(THE HIMALAYA), Mr.Nice(GORE-TEX)",
-    },
-    {
-      url: "https://www.youtube.com/watch?v=MrTIBFUv8Bc",
-      title: "DABO - LexasGuchi レクサスグッチ",
+      url: "https://www.youtube.com/watch?v=duR6mG_JArY",
+      title: "NITRO MICROPHONE UNDERGROUND - SHUTTA",
     },
     {
       url: "https://www.youtube.com/watch?v=OgbB0cl-xHw",
@@ -73,7 +69,7 @@ export default function Header() {
     },
     {
       url: "https://www.youtube.com/watch?v=5AHLpUG4ack",
-      title: "GOCCI prod. by DJ VIBLAM | Red Bull 64 Bars",
+      title: "GOCCI prod. by DJ VIBLAM - Red Bull 64 Bars",
     }
   ];
 
