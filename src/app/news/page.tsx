@@ -1,10 +1,21 @@
 // app/news/page.tsx
 import Link from "next/link";
+import Image from "next/image";
 import { client } from "../../../libs/client"; // ルートエイリアスがなければ相対パスに変更
 import "../../styles/styles.css"
 
 // ❶ ISR をしたい場合は revalidate を指定（秒）
 export const revalidate = 60; // 60 秒ごとに再生成
+
+type Tag = {
+  id: string;
+  name: string;
+  icon?: {
+    url: string;
+    width: number;
+    height: number;
+  };
+}
 
 type Category = {
   id: string;
@@ -17,6 +28,7 @@ type NewsItem = {
   title: string;
   category?: Category;
   content?: string;
+  tag?: Tag[] | string[];
 }
 
 type NewsResponse = {
@@ -28,6 +40,31 @@ type CategoryResponse = {
   contents: Category[];
 }
 
+type TagResponse = {
+  contents: Tag[];
+}
+
+// タグとアイコンのマッピング（microCMSでアイコン画像を管理しない場合）
+const tagIconMap: Record<string, string> = {
+  'JBM': '/icons/jbm-icon.jpg',
+  'MIKRIS': '/icons/mikris-icon.jpg',
+  'DELI': '/icons/deli-icon.jpg',
+  '大蛇': '/icons/olochi-icon.jpg',
+  'MARS MANIE': '/icons/mars-icon.jpg',
+  'DABO': '/icons/dabo-icon.jpg',
+  'GOCCI': '/icons/gocci-icon.jpg',
+  'SMITH-CN': '/icons/smith-cn-icon.jpg',
+
+
+};
+
+// タグ情報を正規化する関数
+function normalizeTag(tag: Tag | string): { id: string; name: string; icon?: { url: string; width: number; height: number; } } {
+  if (typeof tag === 'string') {
+    return { id: tag, name: tag };
+  }
+  return tag;
+}
 
 
 export default async function NewsPage() {
@@ -35,6 +72,7 @@ export default async function NewsPage() {
     endpoint: "news",
     queries: {
       limit: 100, // 全件取得のため増やす
+      fields: 'id,title,category,content,tag'
     }
   });
 
@@ -56,7 +94,7 @@ export default async function NewsPage() {
   }, {});
 
   // カテゴリーなしの記事を処理
-  const uncategorizedNews = newsByCategory['uncategorized'] || [];
+  // const uncategorizedNews = newsByCategory['uncategorized'] || [];
 
   return (
     <div>
@@ -75,8 +113,42 @@ export default async function NewsPage() {
                   <ul className="news-list">
                     {categoryNews.map((item) => (
                       <li key={item.id}>
-                        <Link href={`/news/${item.id}`}>
-                          <span className="news-title">{item.title}</span>
+                        <Link href={`/news/${item.id}`} className="news-link">
+                          <span className="news-item-content">
+                            <span className="news-title">{item.title}</span>
+                            {item.tag && item.tag.length > 0 && (
+                              <span className="tag-icons">
+                                {item.tag.map((tag, index) => {
+                                  const normalizedTag = normalizeTag(tag);
+                                  const key = `${item.id}-tag-${normalizedTag.id}-${index}`;
+
+                                  return (
+                                    <span key={key} className="tag-icon-wrapper">
+                                      {normalizedTag.icon ? (
+                                        <Image
+                                          src={normalizedTag.icon.url}
+                                          alt={normalizedTag.name}
+                                          width={20}
+                                          height={20}
+                                          className="tag-icon"
+                                        />
+                                      ) : (
+                                        tagIconMap[normalizedTag.name] && (
+                                          <Image
+                                            src={tagIconMap[normalizedTag.name]}
+                                            alt={normalizedTag.name}
+                                            width={20}
+                                            height={20}
+                                            className="tag-icon"
+                                          />
+                                        )
+                                      )}
+                                    </span>
+                                  );
+                                })}
+                              </span>
+                            )}
+                          </span>
                         </Link>
                       </li>
                     ))}

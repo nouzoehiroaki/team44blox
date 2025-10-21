@@ -569,6 +569,27 @@ header{
             font-size: 25px;
           }
         }
+        .news-list{
+          .news-link{
+            span{
+              &.tag-icons{
+                display: flex;
+                gap: 8px;
+                .tag-icon-wrapper{
+                  margin-top: 10px;
+                  display: block;
+                  img{
+                    &.tag-icon{
+                      width: 30px;
+                      height: auto;
+                      border-radius: 100%;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
     ul{
