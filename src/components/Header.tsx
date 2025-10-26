@@ -247,8 +247,8 @@ export default function Header() {
               </Link>
             </li>
             <li>
-              <Link href="/supportedby" onClick={handleClose}>
-                SUPPORTED BY
+              <Link href="/pickup" onClick={handleClose}>
+                PICK UP
               </Link>
             </li>
             <li>
