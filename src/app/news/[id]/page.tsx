@@ -6,7 +6,6 @@ type Params = { id: string };
 export default async function NewsDetail({
   params,
 }: {
-  // 🟢 Next 15 の新仕様: Promise で来るので await する
   params: Promise<Params>;
 }) {
   const { id } = await params;

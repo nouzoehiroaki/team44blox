@@ -1,28 +1,13 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { createClient } from 'microcms-js-sdk';
-
-//import { client } from "../../../libs/client";
 import './schedule.css';
 import "../../styles/styles.css"
-
-// interface FlyerEvent {
-//   id: string;
-//   date: string;
-//   images: {
-//     url: string;
-//     width?: number;
-//     height?: number;
-//   }[] | {
-//     url: string;
-//     width?: number;
-//     height?: number;
-//   };
-// }
 
 interface FlyerEvent {
   id: string;
   date: string;
+  title: string;
   images: {
     url: string;
     width?: number;
@@ -57,16 +42,6 @@ export default function SchedulePage() {
           limit: 30  // 取得件数を30件に指定
         }
       });
-      //console.log('取得したイベントデータ:', response.contents);
-      // 各イベントの日付形式を確認
-      // response.contents.forEach((event: any, index: number) => {
-      //   console.log(`イベント ${index + 1}:`, {
-      //     id: event.id,
-      //     date: event.date,
-      //     dateType: typeof event.date,
-      //     images: event.images
-      //   });
-      // });
       setEvents(response.contents as FlyerEvent[]);
     } catch (error) {
       console.error('イベントの取得に失敗しました:', error);
@@ -89,26 +64,12 @@ export default function SchedulePage() {
 
     const days: CalendarDay[] = [];
     const currentDate = new Date(startDate);
-    //console.log('カレンダー生成中...');
-    //console.log('利用可能なイベント:', events);
 
     for (let i = 0; i < 42; i++) {
       const dateStr = currentDate.toISOString().split('T')[0];
-      //const dayEvents = events.filter(event => event.date === dateStr);
       const dayEvents = events.filter(event => {
         const eventDateNormalized = normalizeDate(event.date);
         const isMatch = eventDateNormalized === dateStr;
-
-        // デバッグ用ログ（6月30日付近のみ）
-        // if (dateStr.includes('2024-06-30') || eventDateNormalized.includes('2024-06-30')) {
-        //   console.log('日付比較:', {
-        //     カレンダー日付: dateStr,
-        //     イベント日付: event.date,
-        //     正規化後: eventDateNormalized,
-        //     マッチ: isMatch
-        //   });
-        // }
-
         return isMatch;
       });
 
@@ -119,16 +80,6 @@ export default function SchedulePage() {
         events: dayEvents
       });
 
-      // 6月30日の情報をログ出力
-      // if (dateStr === '2024-06-30') {
-      //   console.log('6月30日の詳細:', {
-      //     date: dateStr,
-      //     hasEvents: dayEvents.length > 0,
-      //     eventsCount: dayEvents.length,
-      //     events: dayEvents
-      //   });
-      // }
-
       currentDate.setDate(currentDate.getDate() + 1);
     }
 
@@ -136,12 +87,6 @@ export default function SchedulePage() {
   };
 
   const handleDateClick = (day: CalendarDay) => {
-    // console.log('クリックされた日:', {
-    //   date: day.date.toISOString().split('T')[0],
-    //   hasEvents: day.hasEvents,
-    //   eventsCount: day.events.length,
-    //   events: day.events
-    // });
     if (day.hasEvents) {
       setSelectedEvents(day.events);
       setShowModal(true);
@@ -179,17 +124,6 @@ export default function SchedulePage() {
   return (
     <div className="schedule-container">
       <h1 className="schedule-title">SCHEDULE</h1>
-      {/* <div style={{ margin: '10px 0', padding: '10px', background: '#f0f0f0', fontSize: '12px' }}>
-        <strong>デバッグ情報:</strong>
-        <br />
-        取得したイベント数: {events.length}
-        <br />
-        {events.length > 0 && (
-          <>
-            最初のイベントの日付: {events[0]?.date} (型: {typeof events[0]?.date})
-          </>
-        )}
-      </div> */}
       <div className="calendar">
         <div className="calendar-header">
           <button onClick={prevMonth} className="nav-btn">‹</button>
@@ -228,48 +162,10 @@ export default function SchedulePage() {
             <div className="flyer-gallery">
               {selectedEvents.map((event, eventIndex) => (
                 <div key={event.id} className="event-group">
-                  {/* デバッグ情報を表示 */}
-                  {/* <div style={{ background: '#f0f0f0', padding: '10px', margin: '10px 0', fontSize: '12px' }}>
-                    <strong>イベントデータ構造:</strong>
-                    <pre>{JSON.stringify(event, null, 2)}</pre>
-                  </div> */}
-                  {/* {event.images.map((image: { url: string | Blob | undefined; }, imageIndex: number) => (
-                    <img
-                      key={`${event.id}-${imageIndex}`}
-                      src={image.url}
-                      alt={`フライヤー ${eventIndex + 1}-${imageIndex + 1}`}
-                      className="flyer-image"
-                    />
-                  ))} */}
-                  {/* images が配列かどうかをチェック */}
-
-                  {/* {Array.isArray(event.images) ? (
-                    event.images.map((image, imageIndex) => (
-                      <img
-                        key={`${event.id}-${imageIndex}`}
-                        src={image.url}
-                        alt={`フライヤー ${eventIndex + 1}-${imageIndex + 1}`}
-                        className="flyer-image"
-                      />
-                    ))
-                  ) : (
-                    <div>
-                      <p>images が配列ではありません:</p>
-                      <pre>{JSON.stringify(event.images, null, 2)}</pre>
-                      {event.images && event.images.url && (
-                        <img
-                          src={event.images.url}
-                          alt={`フライヤー ${eventIndex + 1}`}
-                          className="flyer-image"
-                        />
-                      )}
-                    </div>
-                  )} */}
-
                   {event.images && event.images.url && (
                     <img
                       src={event.images.url}
-                      alt={`フライヤー ${eventIndex + 1}`}
+                      alt={event.title}
                       className="flyer-image"
                     />
                   )}
