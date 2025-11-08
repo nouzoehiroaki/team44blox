@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://team44blox.com/
+
+# Sitemaps
+Sitemap: https://team44blox.com/sitemap.xml
