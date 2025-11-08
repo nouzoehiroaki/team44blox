@@ -57,7 +57,7 @@ export default function Shop() {
         <div className="lantern">
           <picture>
             <source srcSet="/lantern.webp" type="image/webp" />
-            <Image src="/lantern.png" className="" alt="Mad Skill" width={400} height={400} />
+            <Image src="/lantern.png" className="" alt="Team 44 Blox" width={400} height={400} />
           </picture>
         </div>
         <Splide aria-label="Shop items" options={options}>
@@ -66,18 +66,18 @@ export default function Shop() {
               <div className="tomiken">
                 <picture>
                   <source srcSet="/tomiken.webp" type="image/webp" />
-                  <Image src="/tomiken.png" className="" alt="Mad Skill" width={400} height={400} />
+                  <Image src="/tomiken.png" className="" alt="DJ TOMIKEN" width={400} height={400} />
                 </picture>
               </div>
               <div className="mailman">
                 <picture>
                   <source srcSet="/mailman.webp" type="image/webp" />
-                  <Image src="/mailman.png" className="" alt="Mad Skill" width={400} height={400} />
+                  <Image src="/mailman.png" className="" alt="DJ MAILMAN" width={400} height={400} />
                 </picture>
               </div>
               <picture>
                 <source srcSet="/lb-shop.webp" type="image/webp" />
-                <Image src="/lb-shop.jpg" className="jahgod" alt="Jah God" width={500} height={443} />
+                <Image src="/lb-shop.jpg" className="jahgod" alt="LB ONLINE" width={500} height={443} />
               </picture>
               <div className='position'>
                 <a href="https://shop.lb-2.com/" className="btn btn-flat fc" target="_blank" rel="noopener"><span>shop.lb-2.com</span></a>
@@ -89,18 +89,18 @@ export default function Shop() {
               <div className="tomiken">
                 <picture>
                   <source srcSet="/tomiken.webp" type="image/webp" />
-                  <Image src="/tomiken.png" className="" alt="Mad Skill" width={400} height={400} />
+                  <Image src="/tomiken.png" className="" alt="DJ TOMIKEN" width={400} height={400} />
                 </picture>
               </div>
               <div className="mailman">
                 <picture>
                   <source srcSet="/mailman.webp" type="image/webp" />
-                  <Image src="/mailman.png" className="" alt="Mad Skill" width={400} height={400} />
+                  <Image src="/mailman.png" className="" alt="DJ MAILMAN" width={400} height={400} />
                 </picture>
               </div>
               <picture>
                 <source srcSet="/mikris-shop.webp" type="image/webp" />
-                <Image src="/mikris-shop.jpg" className="madskill" alt="Mad Skill" width={400} height={400} />
+                <Image src="/mikris-shop.jpg" className="madskill" alt="THE DOG HOUSE MUSIC STORE" width={400} height={400} />
               </picture>
               <div className='position'>
                 <a href="https://thedoghousemusic.stores.jp/" className="btn btn-flat tdhm" target="_blank" rel="noopener"><span>thedoghousemusic.stores.jp</span></a>
@@ -112,18 +112,18 @@ export default function Shop() {
               <div className="tomiken">
                 <picture>
                   <source srcSet="/tomiken.webp" type="image/webp" />
-                  <Image src="/tomiken.png" className="" alt="Mad Skill" width={400} height={400} />
+                  <Image src="/tomiken.png" className="" alt="DJ TOMIKEN" width={400} height={400} />
                 </picture>
               </div>
               <div className="mailman">
                 <picture>
                   <source srcSet="/mailman.webp" type="image/webp" />
-                  <Image src="/mailman.png" className="" alt="Mad Skill" width={400} height={400} />
+                  <Image src="/mailman.png" className="" alt="DJ MAILMAN" width={400} height={400} />
                 </picture>
               </div>
               <picture>
                 <source srcSet="/kge-shop.webp" type="image/webp" />
-                <Image src="/kge-shop.jpg" className="madskill" alt="Mad Skill" width={400} height={400} />
+                <Image src="/kge-shop.jpg" className="madskill" alt="シャドメンのサイン付きCD屋さん" width={400} height={400} />
               </picture>
               <div className='position'>
                 <a href="https://pylorhythm.official.ec/" className="btn btn-flat pylo" target="_blank" rel="noopener"><span>pylorhythm.official.ec</span></a>

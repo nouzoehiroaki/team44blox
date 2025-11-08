@@ -1,10 +1,10 @@
 // app/news/page.tsx
 import Link from "next/link";
 import Image from "next/image";
-import { client } from "../../../libs/client"; // ルートエイリアスがなければ相対パスに変更
+import { client } from "../../../libs/client";
 import "../../styles/styles.css"
 
-// ❶ ISR をしたい場合は revalidate を指定（秒）
+// ISR
 export const revalidate = 60; // 60 秒ごとに再生成
 
 type Tag = {
