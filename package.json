@@ -11,11 +11,12 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
+    "@next/third-parties": "^16.0.1",
     "@splidejs/react-splide": "^0.7.12",
     "@splidejs/splide": "^4.1.4",
     "microcms-js-sdk": "^3.2.0",
     "motion": "^12.12.1",
-    "next": "^15.6.0-canary.10",
+    "next": "^16.0.1",
     "next-sitemap": "^4.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

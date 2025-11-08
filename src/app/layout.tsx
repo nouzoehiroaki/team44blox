@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "./reset.css";
@@ -41,6 +42,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
+      {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID} />
+      )}
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Header />
         {children}
