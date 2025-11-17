@@ -55,7 +55,7 @@ const tagIconMap: Record<string, string> = {
   'GOCCI': '/icons/gocci-icon.jpg',
   'SMITH-CN': '/icons/smith-cn-icon.jpg',
   'SNIPE': '/icons/snipe-icon.jpg',
-  'KGE': '/icons/kge-icon.jpg',
+  'KGE': '/icons/kge.jpg',
   'T-MANGKANG': '/icons/t-mangkang-icon.jpg',
   'BASS': '/icons/bass-icon.jpg',
 };
