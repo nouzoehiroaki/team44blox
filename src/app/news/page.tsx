@@ -58,6 +58,7 @@ const tagIconMap: Record<string, string> = {
   'KGE': '/icons/kge.jpg',
   'T-MANGKANG': '/icons/t-mangkang-icon.jpg',
   'BASS': '/icons/bass-icon.jpg',
+  'MAILMAN': '/icons/mailman-icon.jpg',
 };
 
 // タグ情報を正規化する関数
