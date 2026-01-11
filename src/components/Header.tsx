@@ -248,7 +248,7 @@ export default function Header() {
             </li>
             <li>
               <Link href="/pickup" onClick={handleClose}>
-                PICK UP
+               FAV CLIPS
               </Link>
             </li>
             <li>
