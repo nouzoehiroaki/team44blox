@@ -92,7 +92,7 @@ export default async function PickupPage() {
         <div id="news" className="news fixed">
           <div className="container">
             <div className="inner">
-              <h1 className="pageTitle">PICK UP</h1>
+              <h1 className="pageTitle">FAV CLIPS</h1>
               <p className="noContent">現在、表示するコンテンツはありません。</p>
             </div>
           </div>
@@ -104,7 +104,7 @@ export default async function PickupPage() {
       <div id="news" className="news fixed">
         <div className="container">
           <div className="inner">
-            <h1 className="pageTitle">PICK UP</h1>
+            <h1 className="pageTitle">FAV CLIPS</h1>
 
             <div className="pickupGrid">
               {pickupData.contents.map((item) => (
