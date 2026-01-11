@@ -33,6 +33,10 @@ export const metadata: Metadata = {
     images: "/og.png",
   },
   viewport: "width=device-width, initial-scale=1",
+  metadataBase: new URL("https://team44blox.com"),
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function RootLayout({
