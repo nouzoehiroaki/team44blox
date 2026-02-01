@@ -1,8 +1,7 @@
 // app/news/page.tsx
-import Link from "next/link";
-import Image from "next/image";
 import { client } from "../../../libs/client";
 import "../../styles/styles.css"
+import NewsTabs from "../../components/NewsTabs";
 
 // ISR
 export const revalidate = 60; // 60 秒ごとに再生成
@@ -40,10 +39,6 @@ type CategoryResponse = {
   contents: Category[];
 }
 
-type TagResponse = {
-  contents: Tag[];
-}
-
 // タグとアイコンのマッピング（microCMSでアイコン画像を管理しない場合）
 const tagIconMap: Record<string, string> = {
   'JBM': '/icons/jbm-icon.jpg',
@@ -59,16 +54,42 @@ const tagIconMap: Record<string, string> = {
   'T-MANGKANG': '/icons/t-mangkang-icon.jpg',
   'BASS': '/icons/bass-icon.jpg',
   'MAILMAN': '/icons/mailman-icon.jpg',
+  'TEAM44BLOX': '/icons/44-icon.png',
 };
 
-// タグ情報を正規化する関数
-function normalizeTag(tag: Tag | string): { id: string; name: string; icon?: { url: string; width: number; height: number; } } {
-  if (typeof tag === 'string') {
-    return { id: tag, name: tag };
-  }
-  return tag;
-}
-
+// 外部リンクのダミーデータ（ハードコーディング）
+const externalLinks = [
+  {
+    title: "MARS MANIEオフィシャルブログ『Run da StreetZ』",
+    url: "https://ameblo.jp/marsmanie/",
+    artistIcons: ["MARS MANIE"],
+  },
+  {
+    title: "THE DOG HOUSE MUSIC STORE",
+    url: "https://thedoghousemusic.stores.jp/",
+    artistIcons: ["MIKRIS"],
+  },
+  {
+    title: "Live and Music Bar BLACK BOX",
+    url: "https://black---box.com/",
+    artistIcons: ["JBM"],
+  },
+  {
+    title: "KGE THE SHADOWMEN OFFICIAL WEB SITE",
+    url: "https://kgetheshadowmen.com/",
+    artistIcons: ["KGE"],
+  },
+  {
+    title: "大蛇 オフィシャル",
+    url: "https://www.olochi.jp/",
+    artistIcons: ["大蛇"],
+  },
+  {
+    title: "NITRO MICROPHONE UNDERGROUND",
+    url: "https://nitromicrophoneunderground.com/",
+    artistIcons: ["DELI", "DABO"],
+  },
+];
 
 export default async function NewsPage() {
   const newsData: NewsResponse = await client.get({
@@ -96,70 +117,17 @@ export default async function NewsPage() {
     return acc;
   }, {});
 
-  // カテゴリーなしの記事を処理
-  // const uncategorizedNews = newsByCategory['uncategorized'] || [];
-
   return (
     <div>
       <div id="news" className="news fixed">
         <div className="container">
           <h1>NEWS</h1>
-          <div className="wrap">
-            {/* カテゴリー別に表示 */}
-            {categoryData.contents.map((category) => {
-              const categoryNews = newsByCategory[category.id] || [];
-              if (categoryNews.length === 0) return null;
-
-              return (
-                <div key={category.id} className="category-section">
-                  <h2 className="category-title">{category.name}</h2>
-                  <ul className="news-list">
-                    {categoryNews.map((item) => (
-                      <li key={item.id}>
-                        <Link href={`/news/${item.id}`} className="news-link">
-                          <span className="news-item-content">
-                            <span className="news-title">{item.title}</span>
-                            {item.tag && item.tag.length > 0 && (
-                              <span className="tag-icons">
-                                {item.tag.map((tag, index) => {
-                                  const normalizedTag = normalizeTag(tag);
-                                  const key = `${item.id}-tag-${normalizedTag.id}-${index}`;
-
-                                  return (
-                                    <span key={key} className="tag-icon-wrapper">
-                                      {normalizedTag.icon ? (
-                                        <Image
-                                          src={normalizedTag.icon.url}
-                                          alt={normalizedTag.name}
-                                          width={20}
-                                          height={20}
-                                          className="tag-icon"
-                                        />
-                                      ) : (
-                                        tagIconMap[normalizedTag.name] && (
-                                          <Image
-                                            src={tagIconMap[normalizedTag.name]}
-                                            alt={normalizedTag.name}
-                                            width={20}
-                                            height={20}
-                                            className="tag-icon"
-                                          />
-                                        )
-                                      )}
-                                    </span>
-                                  );
-                                })}
-                              </span>
-                            )}
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
+          <NewsTabs
+            categories={categoryData.contents}
+            newsByCategory={newsByCategory}
+            tagIconMap={tagIconMap}
+            externalLinks={externalLinks}
+          />
         </div>
       </div>
     </div>
