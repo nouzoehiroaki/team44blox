@@ -126,7 +126,7 @@ export default function Header() {
       `;
       document.body.appendChild(modal);
 
-      // Splideコンテナに動的にスライダーを挿入
+      // Splideコンテナに動的にスライダー挿入
       const container = modal.querySelector("#youtube-slider-container");
       if (container) {
         // スライダー構造を作成
