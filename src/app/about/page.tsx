@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function About() {
   const profileText =
-    `千葉、茨城近辺を中心に自然発生するCREATIVE集団。\n HIPHOPカルチャーをベースに、地域世代をこえ、現在もその母体を広げ続けている`;
+    `千葉、茨城など常磐線沿線を中心に結成されたHIPHOP SQUAD。\n TEAM 44 BLOXのメンバー紹介ページ。`;
   const images = [
     "/44.webp",
     "/44-2.webp",
