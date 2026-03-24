@@ -15,7 +15,6 @@
 
 .calendar {
   background: white;
-  border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
@@ -25,7 +24,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-image: url(../../images/44-2025.jpg);
+  background-image: url(../../images/44-2025.webp);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover  ;
   color: white;
 }
 
@@ -99,8 +102,8 @@
 }
 
 .calendar-day.has-events {
-  background-color: #eff6ff;
-  border: 2px solid #3b82f6;
+  background-color: #ffdc00c9;
+  border: 2px solid #000;
 }
 
 .calendar-day.has-events:hover {
@@ -117,7 +120,7 @@
 .event-indicator {
   width: 8px;
   height: 8px;
-  background: #3b82f6;
+  background-color: #000;
   border-radius: 50%;
   margin-top: 4px;
 }
