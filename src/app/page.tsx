@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { createClient } from 'microcms-js-sdk';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import type { SplideProps } from '@splidejs/react-splide';
+import Link from "next/link";
 
 interface FlyerEvent {
   id: string;
@@ -26,6 +27,15 @@ const client = createClient({
 
 export default function Home() {
   const [weeklyEvents, setWeeklyEvents] = useState<FlyerEvent[]>([]);
+  const [modalImage, setModalImage] = useState<string | null>(null);
+
+  const openModal = (imageUrl: string) => {
+    setModalImage(imageUrl);
+  };
+
+  const closeModal = () => {
+    setModalImage(null);
+  };
 
   const splideOptions: SplideProps['options'] = {
     type: 'fade',
@@ -168,11 +178,24 @@ export default function Home() {
                       src={event.images.url}
                       alt={event.title}
                       className="weekly-events-image"
+                      onClick={() => openModal(event.images.url)}
                     />
                   )}
                 </SplideSlide>
               ))}
             </Splide>
+          </div>
+        )}
+
+        {modalImage && (
+          <div className="weekly-events-modal" onClick={closeModal}>
+            <div className="weekly-events-modal-content" onClick={(e) => e.stopPropagation()}>
+              <button className="weekly-events-modal-close" onClick={closeModal}>×</button>
+              <img src={modalImage} alt="Event Flyer" className="weekly-events-modal-image" />
+              <Link href="/schedule" className="weekly-events-modal-link">
+                SCHEDULE
+              </Link>
+            </div>
           </div>
         )}
       </section>
