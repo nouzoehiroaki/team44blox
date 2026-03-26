@@ -228,6 +228,46 @@ header{
     //   }
     // }
   }
+  .weekly-events{
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 2;
+    max-width: 200px;
+    opacity: 0;
+    animation: fadeInWeekly 0.5s ease forwards;
+    animation-delay: 5s;
+    @media screen and (max-width: 585px) {
+      max-width: 110px;
+      bottom: 40px;
+      left: 10px;
+    }
+    .weekly-events-title {
+      color: #ffdc00;
+      font-size: 14px;
+      margin-bottom: 10px;
+      text-align: center;
+      @media screen and (max-width: 585px) {
+        font-size: 10px;
+        margin-bottom: 5px;
+      }
+    }
+    .splide {
+      border-radius: 4px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      .weekly-events-image {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+    }
+  }
+  @keyframes fadeInWeekly {
+    to {
+      opacity: 1;
+    }
+  }
 }
 
 .placed{

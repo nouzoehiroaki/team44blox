@@ -123,6 +123,7 @@ header .btnTrigger {
     margin-right: 20px;
     margin-top: 20px;
     z-index: 2;
+    -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
     transition: all 0.5s;
   }
@@ -148,13 +149,16 @@ header .btnTrigger span:nth-of-type(3) {
   bottom: 0;
 }
 header .btnTrigger.active {
+  -webkit-transform: rotate(360deg);
   transform: rotate(360deg);
   transition: all 0.5s;
 }
 header .btnTrigger.active span:nth-of-type(1) {
+  -webkit-transform: translateY(20px) rotate(-45deg);
   transform: translateY(20px) rotate(-45deg);
 }
 header .btnTrigger.active span:nth-of-type(2) {
+  -webkit-transform: translateY(0) rotate(45deg);
   transform: translateY(0) rotate(45deg);
 }
 header .btnTrigger.active span:nth-of-type(3) {
@@ -219,6 +223,50 @@ header .btnTrigger.active span:nth-of-type(3) {
 @media screen and (max-width: 585px) {
   .first-view .beatkumiai {
     max-width: 150px;
+  }
+}
+.first-view .weekly-events {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 2;
+  max-width: 200px;
+  opacity: 0;
+  animation: fadeInWeekly 0.5s ease forwards;
+  animation-delay: 5s;
+}
+@media screen and (max-width: 585px) {
+  .first-view .weekly-events {
+    max-width: 110px;
+    bottom: 40px;
+    left: 10px;
+  }
+}
+.first-view .weekly-events .weekly-events-title {
+  color: #ffdc00;
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+@media screen and (max-width: 585px) {
+  .first-view .weekly-events .weekly-events-title {
+    font-size: 10px;
+    margin-bottom: 5px;
+  }
+}
+.first-view .weekly-events .splide {
+  border-radius: 4px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+.first-view .weekly-events .splide .weekly-events-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+@keyframes fadeInWeekly {
+  to {
+    opacity: 1;
   }
 }
 
@@ -361,7 +409,9 @@ header .btnTrigger.active span:nth-of-type(3) {
   width: 150%;
   height: 500%;
   content: "";
+  -webkit-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
+  -webkit-transform: translateX(-98%) translateY(-70%) rotate(135deg);
   transform: translateX(-98%) translateY(-70%) rotate(135deg);
 }
 .shop .box .position a.btn-flat.tdhm:before {
@@ -374,6 +424,7 @@ header .btnTrigger.active span:nth-of-type(3) {
   background: #0951a2;
 }
 .shop .box .position a.btn-flat:hover:before {
+  -webkit-transform: translateX(-9%) translateY(-25%) rotate(135deg);
   transform: translateX(-9%) translateY(-25%) rotate(135deg);
 }
 .shop .coment {
@@ -404,9 +455,6 @@ header .btnTrigger.active span:nth-of-type(3) {
   position: relative;
   color: #fff;
   cursor: alias;
-  /* オーバーレイ */
-  /* カスタムカーソル本体 */
-  /* PCのみ既定カーソルを非表示にしたい場合 */
 }
 .member .profile {
   color: #f1c83c;
@@ -449,6 +497,9 @@ header .btnTrigger.active span:nth-of-type(3) {
     height: 100px;
   }
 }
+.member {
+  /* オーバーレイ */
+}
 .member .modal-overlay {
   position: fixed;
   inset: 0;
@@ -479,6 +530,9 @@ header .btnTrigger.active span:nth-of-type(3) {
   font-weight: 600;
   display: block;
 }
+.member {
+  /* カスタムカーソル本体 */
+}
 .member .custom-cursor {
   position: fixed;
   top: 0;
@@ -497,6 +551,9 @@ header .btnTrigger.active span:nth-of-type(3) {
   .member .custom-cursor {
     display: none;
   }
+}
+.member {
+  /* PCのみ既定カーソルを非表示にしたい場合 */
 }
 @media (pointer: fine) {
   .member .member {

@@ -1,10 +1,91 @@
 "use client";
 import "../styles/svg.css";
 import "../styles/styles.css"
-import { useEffect } from "react";
+import '@splidejs/splide/dist/css/splide.min.css';
+import { useEffect, useState } from "react";
 import Image from 'next/image'
+import { createClient } from 'microcms-js-sdk';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import type { SplideProps } from '@splidejs/react-splide';
+
+interface FlyerEvent {
+  id: string;
+  date: string;
+  title: string;
+  images: {
+    url: string;
+    width?: number;
+    height?: number;
+  };
+}
+
+const client = createClient({
+  serviceDomain: 'theam44blox',
+  apiKey: process.env.NEXT_PUBLIC_MICROCMS_API_KEY || '',
+});
 
 export default function Home() {
+  const [weeklyEvents, setWeeklyEvents] = useState<FlyerEvent[]>([]);
+
+  const splideOptions: SplideProps['options'] = {
+    type: 'fade',
+    perPage: 1,
+    autoplay: true,
+    interval: 4000,
+    speed: 800,
+    arrows: false,
+    pagination: false,
+    rewind: true,
+  };
+
+  const toLocalDateString = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const getWeekRange = () => {
+    const today = new Date();
+    const dayOfWeek = today.getDay();
+    // 月曜日を週の始まりとする（日曜日は7として扱う）
+    const daysFromMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - daysFromMonday);
+    monday.setHours(0, 0, 0, 0);
+
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    sunday.setHours(23, 59, 59, 999);
+
+    return { monday, sunday };
+  };
+
+  const fetchWeeklyEvents = async () => {
+    try {
+      const response = await client.getList({
+        endpoint: 'calendar-fryer',
+        queries: {
+          limit: 30
+        }
+      });
+
+      const { monday, sunday } = getWeekRange();
+      const mondayStr = toLocalDateString(monday);
+      const sundayStr = toLocalDateString(sunday);
+
+      const filtered = (response.contents as FlyerEvent[]).filter(event => {
+        const eventDate = toLocalDateString(new Date(event.date));
+        return eventDate >= mondayStr && eventDate <= sundayStr;
+      });
+
+      setWeeklyEvents(filtered);
+    } catch (error) {
+      console.error('イベントの取得に失敗しました:', error);
+    }
+  };
+
   useEffect(() => {
     const logo = document.querySelector('.logo svg');
     if (logo) {
@@ -12,7 +93,10 @@ export default function Home() {
         logo.classList.add('active');
       }, 300);
     }
+
+    fetchWeeklyEvents();
   }, []);
+
   return (
     <div>
       <section className="first-view fixed">
@@ -71,10 +155,26 @@ export default function Home() {
             <source srcSet="/beatkumiai.webp" type="image/webp" />
             <Image src="/beatkumiai.png" className="" alt="BEAT組合" width={400} height={400} />
           </picture>
-          {/* <div className="logo-matdesignz">
-            <img className="matdesignz" src="/maddesignz.png" alt="" />
-          </div> */}
         </div>
+
+        {weeklyEvents.length > 0 && (
+          <div className="weekly-events">
+            <h3 className="weekly-events-title">This Week's Events</h3>
+            <Splide aria-label="This Week's Events" options={splideOptions}>
+              {weeklyEvents.map((event) => (
+                <SplideSlide key={event.id}>
+                  {event.images && event.images.url && (
+                    <img
+                      src={event.images.url}
+                      alt={event.title}
+                      className="weekly-events-image"
+                    />
+                  )}
+                </SplideSlide>
+              ))}
+            </Splide>
+          </div>
+        )}
       </section>
     </div>
   );

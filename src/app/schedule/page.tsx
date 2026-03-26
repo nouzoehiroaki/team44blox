@@ -18,6 +18,7 @@ interface FlyerEvent {
 interface CalendarDay {
   date: Date;
   isCurrentMonth: boolean;
+  isToday: boolean;
   hasEvents: boolean;
   events: FlyerEvent[];
 }
@@ -48,9 +49,16 @@ export default function SchedulePage() {
     }
   };
 
+  const toLocalDateString = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   const normalizeDate = (dateString: string): string => {
     const date = new Date(dateString);
-    return date.toISOString().split('T')[0];
+    return toLocalDateString(date);
   };
 
   const generateCalendar = (date: Date) => {
@@ -64,9 +72,11 @@ export default function SchedulePage() {
 
     const days: CalendarDay[] = [];
     const currentDate = new Date(startDate);
+    const today = new Date();
+    const todayStr = toLocalDateString(today);
 
     for (let i = 0; i < 42; i++) {
-      const dateStr = currentDate.toISOString().split('T')[0];
+      const dateStr = toLocalDateString(currentDate);
       const dayEvents = events.filter(event => {
         const eventDateNormalized = normalizeDate(event.date);
         const isMatch = eventDateNormalized === dateStr;
@@ -76,6 +86,7 @@ export default function SchedulePage() {
       days.push({
         date: new Date(currentDate),
         isCurrentMonth: currentDate.getMonth() === month,
+        isToday: dateStr === todayStr,
         hasEvents: dayEvents.length > 0,
         events: dayEvents
       });
@@ -144,7 +155,7 @@ export default function SchedulePage() {
             {calendarDays.map((day, index) => (
               <div
                 key={index}
-                className={`calendar-day ${!day.isCurrentMonth ? 'other-month' : ''} ${day.hasEvents ? 'has-events' : ''}`}
+                className={`calendar-day ${!day.isCurrentMonth ? 'other-month' : ''} ${day.hasEvents ? 'has-events' : ''} ${day.isToday ? 'is-today' : ''}`}
                 onClick={() => handleDateClick(day)}
               >
                 <span className="day-number">{day.date.getDate()}</span>
