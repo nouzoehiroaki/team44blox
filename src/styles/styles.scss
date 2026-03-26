@@ -260,12 +260,80 @@ header{
         width: 100%;
         height: auto;
         display: block;
+        cursor: pointer;
+        transition: opacity 0.2s;
+        &:hover {
+          opacity: 0.8;
+        }
       }
     }
   }
   @keyframes fadeInWeekly {
     to {
       opacity: 1;
+    }
+  }
+}
+
+// Weekly Events Modal
+.weekly-events-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  .weekly-events-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    text-align: center;
+  }
+  .weekly-events-modal-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 30px;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: color 0.3s;
+    &:hover {
+      color: #ffdc00;
+    }
+  }
+  .weekly-events-modal-image {
+    max-width: 100%;
+    max-height: 75vh;
+    display: block;
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    margin: 0 auto;
+  }
+  .weekly-events-modal-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 40px;
+    background: #ffdc00;
+    color: #000;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.3s, color 0.3s;
+    &:hover {
+      background: #fff;
+    }
+    @media screen and (max-width: 585px) {
+      font-size: 12px;
+      padding: 10px 30px;
     }
   }
 }
