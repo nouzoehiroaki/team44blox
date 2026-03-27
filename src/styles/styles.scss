@@ -740,6 +740,15 @@ header{
           @media screen and (max-width: 767px) {
             font-size: 14px;
           }
+
+          .new-badge {
+            vertical-align: middle;
+            background: rgb(0, 0, 0, 0.5);
+            margin-left: 5px;
+            display: inline-block;
+            max-width: 45px;
+            transform: skew(10deg, -10deg);
+          }
         }
 
         .tag-icons {
