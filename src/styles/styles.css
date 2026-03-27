@@ -756,6 +756,14 @@ header .btnTrigger.active span:nth-of-type(3) {
     font-size: 14px;
   }
 }
+.news .container .news-tabs-container .tabs-content .news-title .new-badge {
+  vertical-align: middle;
+  background: rgba(0, 0, 0, 0.5);
+  margin-left: 5px;
+  display: inline-block;
+  max-width: 45px;
+  transform: skew(10deg, -10deg);
+}
 .news .container .news-tabs-container .tabs-content .tag-icons {
   display: flex;
   gap: 8px;

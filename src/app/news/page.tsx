@@ -28,6 +28,7 @@ type NewsItem = {
   category?: Category;
   content?: string;
   tag?: Tag[] | string[];
+  publishedAt?: string;
 }
 
 type NewsResponse = {
@@ -96,7 +97,7 @@ export default async function NewsPage() {
     endpoint: "news",
     queries: {
       limit: 100, // 全件取得のため増やす
-      fields: 'id,title,category,content,tag'
+      fields: 'id,title,category,content,tag,publishedAt'
     }
   });
 

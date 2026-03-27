@@ -26,6 +26,7 @@ type NewsItem = {
   category?: Category;
   content?: string;
   tag?: Tag[] | string[];
+  publishedAt?: string;
 };
 
 type ExternalLink = {
@@ -46,6 +47,21 @@ function normalizeTag(tag: Tag | string): { id: string; name: string; icon?: { u
     return { id: tag, name: tag };
   }
   return tag;
+}
+
+function isNewArticle(publishedAt?: string): boolean {
+  if (!publishedAt) return false;
+  try {
+    const publishedDate = new Date(publishedAt);
+    if (isNaN(publishedDate.getTime())) return false;
+    const now = new Date();
+    const diffTime = now.getTime() - publishedDate.getTime();
+    if (diffTime < 0) return false;
+    const diffDays = diffTime / (1000 * 60 * 60 * 24);
+    return diffDays <= 7;
+  } catch {
+    return false;
+  }
 }
 
 export default function NewsTabs({ categories, newsByCategory, tagIconMap, externalLinks }: NewsTabsProps) {
@@ -77,7 +93,18 @@ export default function NewsTabs({ categories, newsByCategory, tagIconMap, exter
           <li key={item.id}>
             <Link href={`/news/${item.id}`} className="news-link">
               <span className="news-item-content">
-                <span className="news-title">{item.title}</span>
+                <span className="news-title">
+                   {item.title}
+                  {isNewArticle(item.publishedAt) && <span className="new-badge">
+                    <Image
+                        src={"/icons/new2.gif"}
+                        alt={"New"}
+                        width={20}
+                        height={20}
+                        className="new-icon"
+                      />
+                </span>}
+                </span>
                 {item.tag && item.tag.length > 0 && (
                   <span className="tag-icons">
                     {item.tag.map((tag, index) => {
