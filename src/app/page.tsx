@@ -28,6 +28,7 @@ const client = createClient({
 export default function Home() {
   const [weeklyEvents, setWeeklyEvents] = useState<FlyerEvent[]>([]);
   const [modalImage, setModalImage] = useState<string | null>(null);
+  const [showProductOverlay, setShowProductOverlay] = useState(false);
 
   const openModal = (imageUrl: string) => {
     setModalImage(imageUrl);
@@ -35,6 +36,10 @@ export default function Home() {
 
   const closeModal = () => {
     setModalImage(null);
+  };
+
+  const closeProductOverlay = () => {
+    setShowProductOverlay(false);
   };
 
   const splideOptions: SplideProps['options'] = {
@@ -97,14 +102,33 @@ export default function Home() {
   };
 
   useEffect(() => {
+    let isMounted = true;
+    let logoTimer: NodeJS.Timeout | undefined;
+    let overlayTimer: NodeJS.Timeout | undefined;
+
     const logo = document.querySelector('.logo svg');
     if (logo) {
-      setTimeout(() => {
-        logo.classList.add('active');
+      logoTimer = setTimeout(() => {
+        if (isMounted) {
+          logo.classList.add('active');
+        }
       }, 300);
     }
 
     fetchWeeklyEvents();
+
+    // ヘッダー出現タイミング(5秒後)に商品オーバーレイを表示
+    overlayTimer = setTimeout(() => {
+      if (isMounted) {
+        setShowProductOverlay(true);
+      }
+    }, 5500);
+
+    return () => {
+      isMounted = false;
+      if (logoTimer) clearTimeout(logoTimer);
+      if (overlayTimer) clearTimeout(overlayTimer);
+    };
   }, []);
 
   return (
@@ -195,6 +219,28 @@ export default function Home() {
               <Link href="/schedule" className="weekly-events-modal-link">
                 SCHEDULE
               </Link>
+            </div>
+          </div>
+        )}
+
+        {/* 商品オーバーレイ */}
+        {showProductOverlay && (
+          <div className="product-overlay">
+            <div className="product-overlay-content">
+              <button className="product-overlay-close" onClick={closeProductOverlay}>×</button>
+              <div className="product-overlay-inner">
+                <div className="product-overlay-image">
+                  {/* プロトタイプ用のプレースホルダー画像 */}
+                  <div className="product-placeholder">
+                    <img src="/towel.jpg" alt="" />
+                  </div>
+                </div>
+                <div className="product-overlay-info">
+                  <h3 className="product-overlay-title">NEW ITEM</h3>
+                  <p className="product-overlay-description">TEAM44BLOX FACETOWEL</p>
+                  <a href="https://shop.lb-2.com/items/142339254" className="product-overlay-btn" target="_blank" rel="noopener noreferrer">VIEW DETAILS</a>
+                </div>
+              </div>
             </div>
           </div>
         )}
