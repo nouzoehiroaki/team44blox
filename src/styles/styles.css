@@ -383,7 +383,7 @@ header .btnTrigger.active span:nth-of-type(3) {
 }
 .product-overlay .product-overlay-close {
   position: absolute;
-  top: 10px;
+  top: -5px;
   right: 15px;
   background: none;
   border: none;
