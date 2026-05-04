@@ -7,7 +7,7 @@ import type { NewsItem, NewsResponse, CategoryResponse } from "@/types/news";
 // ISR
 export const revalidate = 60; // 60 秒ごとに再生成
 
-// タグとアイコンのマッピング（microCMSでアイコン画像を管理しない場合）
+// タグとアイコンのマッピング
 const tagIconMap: Record<string, string> = {
   'JBM': '/icons/jbm-icon.jpg',
   'MIKRIS': '/icons/mikris-icon.jpg',
@@ -69,7 +69,7 @@ export default async function NewsPage() {
   });
 
   const categoryData: CategoryResponse = await client.get({
-    endpoint: "categories", // カテゴリーのエンドポイント名に合わせて変更してください
+    endpoint: "categories",
     queries: {
       limit: 100
     }

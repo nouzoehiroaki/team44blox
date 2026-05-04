@@ -1,5 +1,5 @@
 import { div } from "motion/react-client";
-import { client } from "../../../libs/client"; // ルートエイリアスがなければ相対パスに変更
+import { client } from "../../../libs/client";
 import "../../styles/styles.css"
 import './pickup.css';
 
@@ -27,7 +27,6 @@ function SafeContent({ content, title }: { content: string; title: string }) {
     );
   }
 
-  // 動画が見つからない場合はメッセージを表示
   return (
     <div className="noVideo">
       <p>動画コンテンツが見つかりません</p>

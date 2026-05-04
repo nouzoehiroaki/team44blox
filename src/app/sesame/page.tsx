@@ -1,7 +1,6 @@
 'use client';
 import "../../styles/svg.css";
 import "../../styles/styles.css"
-//import { useEffect } from "react";
 import { Carousel, CarouselSlide } from "@/components/ui/Carousel";
 import Image from 'next/image'
 

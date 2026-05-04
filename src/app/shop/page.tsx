@@ -1,9 +1,8 @@
 'use client';
 import "../../styles/svg.css";
 import "../../styles/styles.css"
-//import { useEffect } from "react";
 import { Carousel, CarouselSlide } from "@/components/ui/Carousel";
-import { motion, AnimatePresence, useMotionValue } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { TypingText } from "@/components/TypingText";
 import Image from 'next/image'
 import { useState } from 'react';
