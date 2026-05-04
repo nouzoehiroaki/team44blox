@@ -1,48 +1,18 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { createClient } from 'microcms-js-sdk';
 import './schedule.css';
 import "../../styles/styles.css"
 import type { FlyerEvent, CalendarDay } from "@/types/events";
 import { Modal } from "@/components/ui/Modal";
-
-const client = createClient({
-  serviceDomain: 'theam44blox',
-  apiKey: process.env.NEXT_PUBLIC_MICROCMS_API_KEY || '',
-});
+import { useFlyerEvents } from "@/hooks/useFlyerEvents";
+import { toLocalDateString, normalizeDate } from "@/lib/dateUtils";
 
 export default function SchedulePage() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [calendarDays, setCalendarDays] = useState<CalendarDay[]>([]);
   const [selectedEvents, setSelectedEvents] = useState<FlyerEvent[]>([]);
   const [showModal, setShowModal] = useState(false);
-  const [events, setEvents] = useState<FlyerEvent[]>([]);
-
-  const fetchEvents = async () => {
-    try {
-      const response = await client.getList({
-        endpoint: 'calendar-fryer',
-        queries: {
-          limit: 30  // 取得件数を30件に指定
-        }
-      });
-      setEvents(response.contents as FlyerEvent[]);
-    } catch (error) {
-      console.error('イベントの取得に失敗しました:', error);
-    }
-  };
-
-  const toLocalDateString = (date: Date): string => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
-
-  const normalizeDate = (dateString: string): string => {
-    const date = new Date(dateString);
-    return toLocalDateString(date);
-  };
+  const events = useFlyerEvents();
 
   const generateCalendar = (date: Date) => {
     const year = date.getFullYear();
@@ -99,10 +69,6 @@ export default function SchedulePage() {
   const nextMonth = () => {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
   };
-
-  useEffect(() => {
-    fetchEvents();
-  }, []);
 
   useEffect(() => {
     generateCalendar(currentDate);

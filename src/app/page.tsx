@@ -1,21 +1,26 @@
 "use client";
 import "../styles/svg.css";
 import "../styles/styles.css"
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from 'next/image'
-import { createClient } from 'microcms-js-sdk';
 import Link from "next/link";
-import type { FlyerEvent } from "@/types/events";
 import { Modal } from "@/components/ui/Modal";
 import { Carousel, CarouselSlide } from "@/components/ui/Carousel";
-
-const client = createClient({
-  serviceDomain: 'theam44blox',
-  apiKey: process.env.NEXT_PUBLIC_MICROCMS_API_KEY || '',
-});
+import { useFlyerEvents } from "@/hooks/useFlyerEvents";
+import { toLocalDateString, getWeekRange } from "@/lib/dateUtils";
 
 export default function Home() {
-  const [weeklyEvents, setWeeklyEvents] = useState<FlyerEvent[]>([]);
+  const allEvents = useFlyerEvents();
+  const weeklyEvents = useMemo(() => {
+    const { monday, sunday } = getWeekRange();
+    const mondayStr = toLocalDateString(monday);
+    const sundayStr = toLocalDateString(sunday);
+    return allEvents.filter(event => {
+      const eventDate = toLocalDateString(new Date(event.date));
+      return eventDate >= mondayStr && eventDate <= sundayStr;
+    });
+  }, [allEvents]);
+
   const [modalImage, setModalImage] = useState<string | null>(null);
   const [showProductOverlay, setShowProductOverlay] = useState(false);
 
@@ -31,54 +36,6 @@ export default function Home() {
     setShowProductOverlay(false);
   };
 
-  const toLocalDateString = (date: Date): string => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
-
-  const getWeekRange = () => {
-    const today = new Date();
-    const dayOfWeek = today.getDay();
-    // 月曜日を週の始まりとする（日曜日は7として扱う）
-    const daysFromMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-
-    const monday = new Date(today);
-    monday.setDate(today.getDate() - daysFromMonday);
-    monday.setHours(0, 0, 0, 0);
-
-    const sunday = new Date(monday);
-    sunday.setDate(monday.getDate() + 6);
-    sunday.setHours(23, 59, 59, 999);
-
-    return { monday, sunday };
-  };
-
-  const fetchWeeklyEvents = async () => {
-    try {
-      const response = await client.getList({
-        endpoint: 'calendar-fryer',
-        queries: {
-          limit: 30
-        }
-      });
-
-      const { monday, sunday } = getWeekRange();
-      const mondayStr = toLocalDateString(monday);
-      const sundayStr = toLocalDateString(sunday);
-
-      const filtered = (response.contents as FlyerEvent[]).filter(event => {
-        const eventDate = toLocalDateString(new Date(event.date));
-        return eventDate >= mondayStr && eventDate <= sundayStr;
-      });
-
-      setWeeklyEvents(filtered);
-    } catch (error) {
-      console.error('イベントの取得に失敗しました:', error);
-    }
-  };
-
   useEffect(() => {
     let isMounted = true;
     let logoTimer: NodeJS.Timeout | undefined;
@@ -92,8 +49,6 @@ export default function Home() {
         }
       }, 300);
     }
-
-    fetchWeeklyEvents();
 
     // ヘッダー出現タイミング(5秒後)に商品オーバーレイを表示
     overlayTimer = setTimeout(() => {
