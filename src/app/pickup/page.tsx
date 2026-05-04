@@ -4,36 +4,9 @@ import "../../styles/styles.css"
 import './pickup.css';
 
 import type { PickupResponse } from "@/types/pickup";
+import { extractYouTubeEmbedUrl } from "@/lib/youtubeUtils";
 
 export const revalidate = 60;
-
-function extractYouTubeEmbedUrl(content: string): string | null {
-  if (!content) return null;
-  // iframeタグからYouTube埋め込みURLを抽出
-  const iframeMatch = content.match(/<iframe[^>]*src=["']([^"']+)["'][^>]*>/i);
-  if (iframeMatch && iframeMatch[1]) {
-    const url = iframeMatch[1];
-
-    if (url.includes('youtube.com/embed/') || url.includes('youtube-nocookie.com/embed/')) {
-      try {
-        const urlObj = new URL(url);
-        if (urlObj.hostname === 'www.youtube.com' ||
-          urlObj.hostname === 'youtube.com' ||
-          urlObj.hostname === 'www.youtube-nocookie.com') {
-          return url;
-        }
-      } catch {
-        return null;
-      }
-    }
-  }
-  // 通常のYouTube URLがある場合、埋め込み用に変換
-  const youtubeMatch = content.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
-  if (youtubeMatch && youtubeMatch[1]) {
-    return `https://www.youtube.com/embed/${youtubeMatch[1]}`;
-  }
-  return null;
-}
 
 // 安全なHTMLコンテンツをレンダリングするコンポーネント
 function SafeContent({ content, title }: { content: string; title: string }) {
