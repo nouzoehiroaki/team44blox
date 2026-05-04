@@ -3,37 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-
-type Tag = {
-  id: string;
-  name: string;
-  icon?: {
-    url: string;
-    width: number;
-    height: number;
-  };
-};
-
-type Category = {
-  id: string;
-  name: string;
-  slug?: string;
-};
-
-type NewsItem = {
-  id: string;
-  title: string;
-  category?: Category;
-  content?: string;
-  tag?: Tag[] | string[];
-  publishedAt?: string;
-};
-
-type ExternalLink = {
-  title: string;
-  url: string;
-  artistIcons: string[];
-};
+import type { Tag, Category, NewsItem, ExternalLink } from "@/types/news";
 
 type NewsTabsProps = {
   categories: Category[];
