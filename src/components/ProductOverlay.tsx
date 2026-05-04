@@ -1,4 +1,5 @@
 "use client";
+import { CloseButton } from "@/components/ui/CloseButton";
 
 type ProductOverlayProps = {
   isOpen: boolean;
@@ -11,7 +12,7 @@ export function ProductOverlay({ isOpen, onClose }: ProductOverlayProps) {
   return (
     <div className="product-overlay">
       <div className="product-overlay-content">
-        <button className="product-overlay-close" onClick={onClose}>×</button>
+        <CloseButton onClick={onClose} className="product-overlay-close" label="×" />
         <div className="product-overlay-inner">
           <div className="product-overlay-image">
             <div className="product-placeholder">

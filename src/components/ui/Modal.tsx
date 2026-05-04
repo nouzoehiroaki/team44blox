@@ -1,4 +1,5 @@
 "use client";
+import { CloseButton } from "@/components/ui/CloseButton";
 
 type ModalProps = {
   isOpen: boolean;
@@ -24,7 +25,7 @@ export function Modal({
   return (
     <div className={overlayClassName} onClick={onClose}>
       <div className={contentClassName} onClick={(e) => e.stopPropagation()}>
-        <button className={closeClassName} onClick={onClose}>{closeLabel}</button>
+        <CloseButton onClick={onClose} className={closeClassName} label={closeLabel} />
         {children}
       </div>
     </div>
