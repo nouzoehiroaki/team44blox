@@ -25,7 +25,7 @@ const tagIconMap: Record<string, string> = {
   'TEAM44BLOX': '/icons/44-icon.png',
 };
 
-// 外部リンクのダミーデータ（ハードコーディング）
+// 外部リンクデータ
 const externalLinks = [
   {
     title: "MARS MANIEオフィシャルブログ『Run da StreetZ』",
