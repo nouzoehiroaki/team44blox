@@ -3,11 +3,10 @@ import "../styles/svg.css";
 import "../styles/styles.css"
 import { useEffect, useMemo, useState } from "react";
 import Image from 'next/image'
-import Link from "next/link";
-import { Modal } from "@/components/ui/Modal";
-import { Carousel, CarouselSlide } from "@/components/ui/Carousel";
 import { useFlyerEvents } from "@/hooks/useFlyerEvents";
 import { toLocalDateString, getWeekRange } from "@/lib/dateUtils";
+import { WeeklyEventsSlider } from "@/components/WeeklyEventsSlider";
+import { ProductOverlay } from "@/components/ProductOverlay";
 
 export default function Home() {
   const allEvents = useFlyerEvents();
@@ -21,20 +20,7 @@ export default function Home() {
     });
   }, [allEvents]);
 
-  const [modalImage, setModalImage] = useState<string | null>(null);
   const [showProductOverlay, setShowProductOverlay] = useState(false);
-
-  const openModal = (imageUrl: string) => {
-    setModalImage(imageUrl);
-  };
-
-  const closeModal = () => {
-    setModalImage(null);
-  };
-
-  const closeProductOverlay = () => {
-    setShowProductOverlay(false);
-  };
 
   useEffect(() => {
     let isMounted = true;
@@ -44,17 +30,12 @@ export default function Home() {
     const logo = document.querySelector('.logo svg');
     if (logo) {
       logoTimer = setTimeout(() => {
-        if (isMounted) {
-          logo.classList.add('active');
-        }
+        if (isMounted) logo.classList.add('active');
       }, 300);
     }
 
-    // ヘッダー出現タイミング(5秒後)に商品オーバーレイを表示
     overlayTimer = setTimeout(() => {
-      if (isMounted) {
-        setShowProductOverlay(true);
-      }
+      if (isMounted) setShowProductOverlay(true);
     }, 5500);
 
     return () => {
@@ -124,61 +105,8 @@ export default function Home() {
           </picture>
         </div>
 
-        {weeklyEvents.length > 0 && (
-          <div className="weekly-events">
-            <h3 className="weekly-events-title">This Week's Events</h3>
-            <Carousel ariaLabel="This Week's Events" options={{ interval: 4000 }}>
-              {weeklyEvents.map((event) => (
-                <CarouselSlide key={event.id}>
-                  {event.images && event.images.url && (
-                    <img
-                      src={event.images.url}
-                      alt={event.title}
-                      className="weekly-events-image"
-                      onClick={() => openModal(event.images.url)}
-                    />
-                  )}
-                </CarouselSlide>
-              ))}
-            </Carousel>
-          </div>
-        )}
-
-        <Modal
-          isOpen={!!modalImage}
-          onClose={closeModal}
-          overlayClassName="weekly-events-modal"
-          contentClassName="weekly-events-modal-content"
-          closeClassName="weekly-events-modal-close"
-          closeLabel="×"
-        >
-          <img src={modalImage ?? ""} alt="Event Flyer" className="weekly-events-modal-image" />
-          <Link href="/schedule" className="weekly-events-modal-link">
-            SCHEDULE
-          </Link>
-        </Modal>
-
-        {/* 商品オーバーレイ */}
-        {showProductOverlay && (
-          <div className="product-overlay">
-            <div className="product-overlay-content">
-              <button className="product-overlay-close" onClick={closeProductOverlay}>×</button>
-              <div className="product-overlay-inner">
-                <div className="product-overlay-image">
-                  {/* プロトタイプ用のプレースホルダー画像 */}
-                  <div className="product-placeholder">
-                    <img src="/towel.jpg" alt="" />
-                  </div>
-                </div>
-                <div className="product-overlay-info">
-                  <h3 className="product-overlay-title">NEW ITEM</h3>
-                  <p className="product-overlay-description">TEAM44BLOX FACETOWEL</p>
-                  <a href="https://shop.lb-2.com/items/142339254" className="product-overlay-btn" target="_blank" rel="noopener noreferrer">VIEW DETAILS</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        <WeeklyEventsSlider events={weeklyEvents} />
+        <ProductOverlay isOpen={showProductOverlay} onClose={() => setShowProductOverlay(false)} />
       </section>
     </div>
   );
