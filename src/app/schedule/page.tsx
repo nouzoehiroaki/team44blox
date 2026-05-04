@@ -3,25 +3,7 @@ import { useState, useEffect } from 'react';
 import { createClient } from 'microcms-js-sdk';
 import './schedule.css';
 import "../../styles/styles.css"
-
-interface FlyerEvent {
-  id: string;
-  date: string;
-  title: string;
-  images: {
-    url: string;
-    width?: number;
-    height?: number;
-  };
-}
-
-interface CalendarDay {
-  date: Date;
-  isCurrentMonth: boolean;
-  isToday: boolean;
-  hasEvents: boolean;
-  events: FlyerEvent[];
-}
+import type { FlyerEvent, CalendarDay } from "@/types/events";
 
 const client = createClient({
   serviceDomain: 'theam44blox',

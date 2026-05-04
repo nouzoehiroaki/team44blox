@@ -8,17 +8,7 @@ import { createClient } from 'microcms-js-sdk';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import type { SplideProps } from '@splidejs/react-splide';
 import Link from "next/link";
-
-interface FlyerEvent {
-  id: string;
-  date: string;
-  title: string;
-  images: {
-    url: string;
-    width?: number;
-    height?: number;
-  };
-}
+import type { FlyerEvent } from "@/types/events";
 
 const client = createClient({
   serviceDomain: 'theam44blox',
