@@ -2,43 +2,10 @@
 import { client } from "../../../libs/client";
 import "../../styles/styles.css"
 import NewsTabs from "../../components/NewsTabs";
+import type { NewsItem, NewsResponse, CategoryResponse } from "@/types/news";
 
 // ISR
 export const revalidate = 60; // 60 秒ごとに再生成
-
-type Tag = {
-  id: string;
-  name: string;
-  icon?: {
-    url: string;
-    width: number;
-    height: number;
-  };
-}
-
-type Category = {
-  id: string;
-  name: string;
-  slug?: string;
-}
-
-type NewsItem = {
-  id: string;
-  title: string;
-  category?: Category;
-  content?: string;
-  tag?: Tag[] | string[];
-  publishedAt?: string;
-}
-
-type NewsResponse = {
-  contents: NewsItem[];
-  totalCount: number;
-}
-
-type CategoryResponse = {
-  contents: Category[];
-}
 
 // タグとアイコンのマッピング（microCMSでアイコン画像を管理しない場合）
 const tagIconMap: Record<string, string> = {
@@ -58,7 +25,7 @@ const tagIconMap: Record<string, string> = {
   'TEAM44BLOX': '/icons/44-icon.png',
 };
 
-// 外部リンクのダミーデータ（ハードコーディング）
+// 外部リンクデータ
 const externalLinks = [
   {
     title: "MARS MANIEオフィシャルブログ『Run da StreetZ』",

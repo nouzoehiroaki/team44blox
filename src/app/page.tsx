@@ -1,105 +1,26 @@
 "use client";
 import "../styles/svg.css";
 import "../styles/styles.css"
-import '@splidejs/splide/dist/css/splide.min.css';
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from 'next/image'
-import { createClient } from 'microcms-js-sdk';
-import { Splide, SplideSlide } from '@splidejs/react-splide';
-import type { SplideProps } from '@splidejs/react-splide';
-import Link from "next/link";
-
-interface FlyerEvent {
-  id: string;
-  date: string;
-  title: string;
-  images: {
-    url: string;
-    width?: number;
-    height?: number;
-  };
-}
-
-const client = createClient({
-  serviceDomain: 'theam44blox',
-  apiKey: process.env.NEXT_PUBLIC_MICROCMS_API_KEY || '',
-});
+import { useFlyerEvents } from "@/hooks/useFlyerEvents";
+import { toLocalDateString, getWeekRange } from "@/lib/dateUtils";
+import { WeeklyEventsSlider } from "@/components/WeeklyEventsSlider";
+import { ProductOverlay } from "@/components/ProductOverlay";
 
 export default function Home() {
-  const [weeklyEvents, setWeeklyEvents] = useState<FlyerEvent[]>([]);
-  const [modalImage, setModalImage] = useState<string | null>(null);
+  const allEvents = useFlyerEvents();
+  const weeklyEvents = useMemo(() => {
+    const { monday, sunday } = getWeekRange();
+    const mondayStr = toLocalDateString(monday);
+    const sundayStr = toLocalDateString(sunday);
+    return allEvents.filter(event => {
+      const eventDate = toLocalDateString(new Date(event.date));
+      return eventDate >= mondayStr && eventDate <= sundayStr;
+    });
+  }, [allEvents]);
+
   const [showProductOverlay, setShowProductOverlay] = useState(false);
-
-  const openModal = (imageUrl: string) => {
-    setModalImage(imageUrl);
-  };
-
-  const closeModal = () => {
-    setModalImage(null);
-  };
-
-  const closeProductOverlay = () => {
-    setShowProductOverlay(false);
-  };
-
-  const splideOptions: SplideProps['options'] = {
-    type: 'fade',
-    perPage: 1,
-    autoplay: true,
-    interval: 4000,
-    speed: 800,
-    arrows: false,
-    pagination: false,
-    rewind: true,
-  };
-
-  const toLocalDateString = (date: Date): string => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
-
-  const getWeekRange = () => {
-    const today = new Date();
-    const dayOfWeek = today.getDay();
-    // 月曜日を週の始まりとする（日曜日は7として扱う）
-    const daysFromMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-
-    const monday = new Date(today);
-    monday.setDate(today.getDate() - daysFromMonday);
-    monday.setHours(0, 0, 0, 0);
-
-    const sunday = new Date(monday);
-    sunday.setDate(monday.getDate() + 6);
-    sunday.setHours(23, 59, 59, 999);
-
-    return { monday, sunday };
-  };
-
-  const fetchWeeklyEvents = async () => {
-    try {
-      const response = await client.getList({
-        endpoint: 'calendar-fryer',
-        queries: {
-          limit: 30
-        }
-      });
-
-      const { monday, sunday } = getWeekRange();
-      const mondayStr = toLocalDateString(monday);
-      const sundayStr = toLocalDateString(sunday);
-
-      const filtered = (response.contents as FlyerEvent[]).filter(event => {
-        const eventDate = toLocalDateString(new Date(event.date));
-        return eventDate >= mondayStr && eventDate <= sundayStr;
-      });
-
-      setWeeklyEvents(filtered);
-    } catch (error) {
-      console.error('イベントの取得に失敗しました:', error);
-    }
-  };
 
   useEffect(() => {
     let isMounted = true;
@@ -109,19 +30,12 @@ export default function Home() {
     const logo = document.querySelector('.logo svg');
     if (logo) {
       logoTimer = setTimeout(() => {
-        if (isMounted) {
-          logo.classList.add('active');
-        }
+        if (isMounted) logo.classList.add('active');
       }, 300);
     }
 
-    fetchWeeklyEvents();
-
-    // ヘッダー出現タイミング(5秒後)に商品オーバーレイを表示
     overlayTimer = setTimeout(() => {
-      if (isMounted) {
-        setShowProductOverlay(true);
-      }
+      if (isMounted) setShowProductOverlay(true);
     }, 5500);
 
     return () => {
@@ -191,59 +105,8 @@ export default function Home() {
           </picture>
         </div>
 
-        {weeklyEvents.length > 0 && (
-          <div className="weekly-events">
-            <h3 className="weekly-events-title">This Week's Events</h3>
-            <Splide aria-label="This Week's Events" options={splideOptions}>
-              {weeklyEvents.map((event) => (
-                <SplideSlide key={event.id}>
-                  {event.images && event.images.url && (
-                    <img
-                      src={event.images.url}
-                      alt={event.title}
-                      className="weekly-events-image"
-                      onClick={() => openModal(event.images.url)}
-                    />
-                  )}
-                </SplideSlide>
-              ))}
-            </Splide>
-          </div>
-        )}
-
-        {modalImage && (
-          <div className="weekly-events-modal" onClick={closeModal}>
-            <div className="weekly-events-modal-content" onClick={(e) => e.stopPropagation()}>
-              <button className="weekly-events-modal-close" onClick={closeModal}>×</button>
-              <img src={modalImage} alt="Event Flyer" className="weekly-events-modal-image" />
-              <Link href="/schedule" className="weekly-events-modal-link">
-                SCHEDULE
-              </Link>
-            </div>
-          </div>
-        )}
-
-        {/* 商品オーバーレイ */}
-        {showProductOverlay && (
-          <div className="product-overlay">
-            <div className="product-overlay-content">
-              <button className="product-overlay-close" onClick={closeProductOverlay}>×</button>
-              <div className="product-overlay-inner">
-                <div className="product-overlay-image">
-                  {/* プロトタイプ用のプレースホルダー画像 */}
-                  <div className="product-placeholder">
-                    <img src="/towel.jpg" alt="" />
-                  </div>
-                </div>
-                <div className="product-overlay-info">
-                  <h3 className="product-overlay-title">NEW ITEM</h3>
-                  <p className="product-overlay-description">TEAM44BLOX FACETOWEL</p>
-                  <a href="https://shop.lb-2.com/items/142339254" className="product-overlay-btn" target="_blank" rel="noopener noreferrer">VIEW DETAILS</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        <WeeklyEventsSlider events={weeklyEvents} />
+        <ProductOverlay isOpen={showProductOverlay} onClose={() => setShowProductOverlay(false)} />
       </section>
     </div>
   );

@@ -1,10 +1,8 @@
 'use client';
-import '@splidejs/splide/dist/css/splide.min.css';
 import "../../styles/svg.css";
 import "../../styles/styles.css"
 //import { useEffect } from "react";
-import { Splide, SplideSlide } from '@splidejs/react-splide';
-import type { SplideProps } from '@splidejs/react-splide';
+import { Carousel, CarouselSlide } from "@/components/ui/Carousel";
 import { motion, AnimatePresence, useMotionValue } from "framer-motion";
 import { TypingText } from "@/components/TypingText";
 import Image from 'next/image'
@@ -39,18 +37,6 @@ export default function Shop() {
     }
   };
 
-  // Splide の基本オプション
-  const options: SplideProps['options'] = {
-    type: 'fade',
-    perPage: 1,        // 1枚ずつ表示
-    autoplay: true,    // 自動再生
-    interval: 3500,    // ミリ秒
-    speed: 800,        // アニメーション速度
-    gap: '1.5rem',     // スライド間余白
-    arrows: true,
-    pagination: false,
-    rewind: true,
-  };
   return (
     <div>
       <section className="shop fixed">
@@ -60,8 +46,8 @@ export default function Shop() {
             <Image src="/lantern.png" className="" alt="Team 44 Blox" width={400} height={400} />
           </picture>
         </div>
-        <Splide aria-label="Shop items" options={options}>
-          <SplideSlide>
+        <Carousel ariaLabel="Shop items" options={{ arrows: true, gap: '1.5rem' }}>
+          <CarouselSlide>
             <div className="box">
               <div className="tomiken">
                 <picture>
@@ -83,8 +69,8 @@ export default function Shop() {
                 <a href="https://shop.lb-2.com/" className="btn btn-flat fc" target="_blank" rel="noopener"><span>shop.lb-2.com</span></a>
               </div>
             </div>
-          </SplideSlide>
-          <SplideSlide>
+          </CarouselSlide>
+          <CarouselSlide>
             <div className="box">
               <div className="tomiken">
                 <picture>
@@ -106,8 +92,8 @@ export default function Shop() {
                 <a href="https://thedoghousemusic.stores.jp/" className="btn btn-flat tdhm" target="_blank" rel="noopener"><span>thedoghousemusic.stores.jp</span></a>
               </div>
             </div>
-          </SplideSlide>
-          <SplideSlide>
+          </CarouselSlide>
+          <CarouselSlide>
             <div className="box">
               <div className="tomiken">
                 <picture>
@@ -129,8 +115,8 @@ export default function Shop() {
                 <a href="https://pylorhythm.official.ec/" className="btn btn-flat pylo" target="_blank" rel="noopener"><span>pylorhythm.official.ec</span></a>
               </div>
             </div>
-          </SplideSlide>
-        </Splide>
+          </CarouselSlide>
+        </Carousel>
         <div className='coment'>
           <AnimatePresence mode="wait">
             <motion.div
