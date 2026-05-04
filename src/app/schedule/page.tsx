@@ -4,6 +4,7 @@ import { createClient } from 'microcms-js-sdk';
 import './schedule.css';
 import "../../styles/styles.css"
 import type { FlyerEvent, CalendarDay } from "@/types/events";
+import { Modal } from "@/components/ui/Modal";
 
 const client = createClient({
   serviceDomain: 'theam44blox',
@@ -148,26 +149,21 @@ export default function SchedulePage() {
         </div>
       </div>
 
-      {showModal && (
-        <div className="modal-overlay" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeModal}>✕</button>
-            <div className="flyer-gallery">
-              {selectedEvents.map((event, eventIndex) => (
-                <div key={event.id} className="event-group">
-                  {event.images && event.images.url && (
-                    <img
-                      src={event.images.url}
-                      alt={event.title}
-                      className="flyer-image"
-                    />
-                  )}
-                </div>
-              ))}
+      <Modal isOpen={showModal} onClose={closeModal}>
+        <div className="flyer-gallery">
+          {selectedEvents.map((event) => (
+            <div key={event.id} className="event-group">
+              {event.images && event.images.url && (
+                <img
+                  src={event.images.url}
+                  alt={event.title}
+                  className="flyer-image"
+                />
+              )}
             </div>
-          </div>
+          ))}
         </div>
-      )}
+      </Modal>
     </div>
   );
 }

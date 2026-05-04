@@ -1,8 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Splide, SplideSlide } from '@splidejs/react-splide';
-import '@splidejs/react-splide/css';
+import '@splidejs/splide/dist/css/splide.min.css';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);

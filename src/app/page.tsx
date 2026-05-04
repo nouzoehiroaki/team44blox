@@ -1,14 +1,13 @@
 "use client";
 import "../styles/svg.css";
 import "../styles/styles.css"
-import '@splidejs/splide/dist/css/splide.min.css';
 import { useEffect, useState } from "react";
 import Image from 'next/image'
 import { createClient } from 'microcms-js-sdk';
-import { Splide, SplideSlide } from '@splidejs/react-splide';
-import type { SplideProps } from '@splidejs/react-splide';
 import Link from "next/link";
 import type { FlyerEvent } from "@/types/events";
+import { Modal } from "@/components/ui/Modal";
+import { Carousel, CarouselSlide } from "@/components/ui/Carousel";
 
 const client = createClient({
   serviceDomain: 'theam44blox',
@@ -30,17 +29,6 @@ export default function Home() {
 
   const closeProductOverlay = () => {
     setShowProductOverlay(false);
-  };
-
-  const splideOptions: SplideProps['options'] = {
-    type: 'fade',
-    perPage: 1,
-    autoplay: true,
-    interval: 4000,
-    speed: 800,
-    arrows: false,
-    pagination: false,
-    rewind: true,
   };
 
   const toLocalDateString = (date: Date): string => {
@@ -184,9 +172,9 @@ export default function Home() {
         {weeklyEvents.length > 0 && (
           <div className="weekly-events">
             <h3 className="weekly-events-title">This Week's Events</h3>
-            <Splide aria-label="This Week's Events" options={splideOptions}>
+            <Carousel ariaLabel="This Week's Events" options={{ interval: 4000 }}>
               {weeklyEvents.map((event) => (
-                <SplideSlide key={event.id}>
+                <CarouselSlide key={event.id}>
                   {event.images && event.images.url && (
                     <img
                       src={event.images.url}
@@ -195,23 +183,25 @@ export default function Home() {
                       onClick={() => openModal(event.images.url)}
                     />
                   )}
-                </SplideSlide>
+                </CarouselSlide>
               ))}
-            </Splide>
+            </Carousel>
           </div>
         )}
 
-        {modalImage && (
-          <div className="weekly-events-modal" onClick={closeModal}>
-            <div className="weekly-events-modal-content" onClick={(e) => e.stopPropagation()}>
-              <button className="weekly-events-modal-close" onClick={closeModal}>×</button>
-              <img src={modalImage} alt="Event Flyer" className="weekly-events-modal-image" />
-              <Link href="/schedule" className="weekly-events-modal-link">
-                SCHEDULE
-              </Link>
-            </div>
-          </div>
-        )}
+        <Modal
+          isOpen={!!modalImage}
+          onClose={closeModal}
+          overlayClassName="weekly-events-modal"
+          contentClassName="weekly-events-modal-content"
+          closeClassName="weekly-events-modal-close"
+          closeLabel="×"
+        >
+          <img src={modalImage ?? ""} alt="Event Flyer" className="weekly-events-modal-image" />
+          <Link href="/schedule" className="weekly-events-modal-link">
+            SCHEDULE
+          </Link>
+        </Modal>
 
         {/* 商品オーバーレイ */}
         {showProductOverlay && (
