@@ -21,6 +21,7 @@ export type NewsItem = {
   content?: string;
   tag?: Tag[] | string[];
   publishedAt?: string;
+  date?: string;
 };
 
 export type ExternalLink = {

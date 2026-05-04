@@ -9,6 +9,12 @@ export function normalizeDate(dateString: string): string {
   return toLocalDateString(new Date(dateString));
 }
 
+export function getOneMonthAgo(): Date {
+  const date = new Date();
+  date.setMonth(date.getMonth() - 1);
+  return date;
+}
+
 export function getWeekRange(): { monday: Date; sunday: Date } {
   const today = new Date();
   const dayOfWeek = today.getDay();

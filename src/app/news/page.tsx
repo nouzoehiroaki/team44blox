@@ -3,6 +3,7 @@ import { client } from "../../../libs/client";
 import "../../styles/styles.css"
 import NewsTabs from "../../components/NewsTabs";
 import type { NewsItem, NewsResponse, CategoryResponse } from "@/types/news";
+import { getOneMonthAgo } from "@/lib/dateUtils";
 
 // ISR
 export const revalidate = 60; // 60 秒ごとに再生成
@@ -59,28 +60,50 @@ const externalLinks = [
   },
 ];
 
-export default async function NewsPage() {
-  const newsData: NewsResponse = await client.get({
-    endpoint: "news",
-    queries: {
-      limit: 100, // 全件取得のため増やす
-      fields: 'id,title,category,content,tag,publishedAt'
-    }
-  });
+const NEWS_FIELDS = 'id,title,category,content,tag,publishedAt,date';
 
+export default async function NewsPage() {
   const categoryData: CategoryResponse = await client.get({
     endpoint: "categories",
-    queries: {
-      limit: 100
-    }
+    queries: { limit: 100 },
   });
+  const liveCategory = categoryData.contents.find((cat) =>
+    cat.name.toLowerCase().includes('live info')
+  );
+  let newsContents: NewsItem[];
 
-  // カテゴリーごとにニュースをグループ化
-  const newsByCategory = newsData.contents.reduce((acc: Record<string, NewsItem[]>, item) => {
+  if (liveCategory) {
+    const oneMonthAgoISO = getOneMonthAgo().toISOString();
+    const [liveNewsData, otherNewsData] = await Promise.all([
+      client.get({
+        endpoint: "news",
+        queries: {
+          limit: 30,
+          fields: NEWS_FIELDS,
+          filters: `category[equals]${liveCategory.id}[and]date[greater_than]${oneMonthAgoISO}`,
+        },
+      }) as Promise<NewsResponse>,
+      client.get({
+        endpoint: "news",
+        queries: {
+          limit: 50,
+          fields: NEWS_FIELDS,
+          filters: `category[not_equals]${liveCategory.id}`,
+        },
+      }) as Promise<NewsResponse>,
+    ]);
+    newsContents = [...liveNewsData.contents, ...otherNewsData.contents];
+  } else {
+    const newsData: NewsResponse = await client.get({
+      endpoint: "news",
+      queries: { limit: 100, fields: NEWS_FIELDS },
+    });
+    newsContents = newsData.contents;
+  }
+
+  const newsByCategory = newsContents.reduce((acc: Record<string, NewsItem[]>, item) => {
     const categoryId = item.category?.id || 'uncategorized';
-    if (!acc[categoryId]) {
-      acc[categoryId] = [];
-    }
+    if (!acc[categoryId]) acc[categoryId] = [];
     acc[categoryId].push(item);
     return acc;
   }, {});
