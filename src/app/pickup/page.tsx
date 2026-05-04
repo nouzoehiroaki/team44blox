@@ -3,24 +3,9 @@ import { client } from "../../../libs/client"; // ルートエイリアスがな
 import "../../styles/styles.css"
 import './pickup.css';
 
+import type { PickupResponse } from "@/types/pickup";
+
 export const revalidate = 60;
-
-type PickupItem = {
-  id: string;
-  title: string;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  revisedAt: string;
-}
-
-type PickupResponse = {
-  contents: PickupItem[];
-  totalCount: number;
-  offset: number;
-  limit: number;
-}
 
 function extractYouTubeEmbedUrl(content: string): string | null {
   if (!content) return null;
