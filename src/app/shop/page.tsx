@@ -38,8 +38,8 @@ export default function Shop() {
 
   const shopItems = [
     {
-      imageWebp: '/lb-shop.webp',
-      imageSrc: '/lb-shop.jpg',
+      imageWebp: '/shop/lb-shop.webp',
+      imageSrc: '/shop/lb-shop.jpg',
       imageClass: 'jahgod',
       imageAlt: 'LB ONLINE',
       imageWidth: 500,
@@ -49,8 +49,8 @@ export default function Shop() {
       linkText: 'shop.lb-2.com',
     },
     {
-      imageWebp: '/mikris-shop.webp',
-      imageSrc: '/mikris-shop.jpg',
+      imageWebp: '/shop/mikris-shop.webp',
+      imageSrc: '/shop/mikris-shop.jpg',
       imageClass: 'madskill',
       imageAlt: 'THE DOG HOUSE MUSIC STORE',
       imageWidth: 400,
@@ -60,8 +60,8 @@ export default function Shop() {
       linkText: 'thedoghousemusic.stores.jp',
     },
     {
-      imageWebp: '/kge-shop.webp',
-      imageSrc: '/kge-shop.jpg',
+      imageWebp: '/shop/kge-shop.webp',
+      imageSrc: '/shop/kge-shop.jpg',
       imageClass: 'madskill',
       imageAlt: 'シャドメンのサイン付きCD屋さん',
       imageWidth: 400,
@@ -77,8 +77,8 @@ export default function Shop() {
       <section className="shop fixed">
         <div className="lantern">
           <picture>
-            <source srcSet="/lantern.webp" type="image/webp" />
-            <Image src="/lantern.png" className="" alt="TEAM44BLOX" width={400} height={400} />
+            <source srcSet="/shop/lantern.webp" type="image/webp" />
+            <Image src="/shop/lantern.png" className="" alt="TEAM44BLOX" width={400} height={400} />
           </picture>
         </div>
         <Carousel ariaLabel="Shop items" options={{ arrows: true, gap: '1.5rem' }}>
@@ -87,14 +87,14 @@ export default function Shop() {
               <div className="box">
                 <div className="tomiken">
                   <picture>
-                    <source srcSet="/tomiken.webp" type="image/webp" />
+                    <source srcSet="/shop/tomiken.webp" type="image/webp" />
                     <Image src="/tomiken.png" className="" alt="DJ TOMIKEN" width={400} height={400} />
                   </picture>
                 </div>
                 <div className="mailman">
                   <picture>
-                    <source srcSet="/mailman.webp" type="image/webp" />
-                    <Image src="/mailman.png" className="" alt="DJ MAILMAN" width={400} height={400} />
+                    <source srcSet="/shop/mailman.webp" type="image/webp" />
+                    <Image src="/shop/mailman.png" className="" alt="DJ MAILMAN" width={400} height={400} />
                   </picture>
                 </div>
                 <picture>

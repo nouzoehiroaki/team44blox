@@ -11,13 +11,13 @@ type Product = {
 
 const products: Product[] = [
   {
-    image: '/44-towel.webp',
+    image: '/product-overlay/44-towel.webp',
     alt: 'TEAM44BLOX FACETOWEL',
     description: 'TEAM44BLOX FACETOWEL',
     href: 'https://shop.lb-2.com/items/142339254',
   },
   {
-    image: '/mikris-towel.webp',
+    image: '/product-overlay/mikris-towel.webp',
     alt: 'TDHM LOGO 手拭い',
     description: 'TDHM LOGO 手拭い',
     href: 'https://thedoghousemusic.stores.jp/items/69eb606873db3d3c9d21b4d2',

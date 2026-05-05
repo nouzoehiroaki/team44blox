@@ -45,7 +45,7 @@ export function ParticleAnimation({ images, isActive }: ParticleAnimationProps) 
           <motion.div
             key="bg"
             className="about-bg"
-            style={{ backgroundImage: "url('/about-bg.webp')" }}
+            style={{ backgroundImage: "url('/about/about-bg.webp')" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.2, delay: 0.1 }}

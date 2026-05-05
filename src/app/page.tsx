@@ -100,8 +100,8 @@ export default function Home() {
         </div>
         <div className="beatkumiai">
           <picture>
-            <source srcSet="/beatkumiai.webp" type="image/webp" />
-            <Image src="/beatkumiai.png" className="" alt="BEAT組合" width={400} height={400} />
+            <source srcSet="/top/beatkumiai.webp" type="image/webp" />
+            <Image src="/top/beatkumiai.png" className="" alt="BEAT組合" width={400} height={400} />
           </picture>
         </div>
 
