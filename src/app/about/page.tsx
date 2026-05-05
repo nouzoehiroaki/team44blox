@@ -11,12 +11,12 @@ import { CustomCursor } from "@/components/CustomCursor";
 const profileText = `千葉、茨城など常磐線沿線を中心に結成されたHIPHOP SQUAD。\n TEAM44BLOXのメンバー紹介ページ。`;
 
 const memberImages = [
-  "/44.webp", "/44-2.webp", "/apogee.webp", "/aquarius.webp", "/bangblacks.webp",
-  "/bullcamp.webp", "/dabongs.webp", "/dabo.webp", "/deli.webp", "/deli02.webp",
-  "/jbm.webp", "/jobandope.webp", "/kge.webp", "/kge02.webp", "/kge03.webp",
-  "/marsmanie.webp", "/mikris.webp", "/mikris3.webp", "/mikris4.webp", "/mikris5.webp",
-  "/mfin.webp", "/sesame.webp", "/smithcn.webp", "/smithcn02.webp", "/smithcn03.webp",
-  "/snipe.webp", "/snipe02.webp", "/yakko.webp",
+  "/about/44.webp", "/about/44-2.webp", "/about/apogee.webp", "/about/aquarius.webp", "/about/bangblacks.webp",
+  "/about/bullcamp.webp", "/about/dabongs.webp", "/about/dabo.webp", "/about/deli.webp", "/about/deli02.webp",
+  "/about/jbm.webp", "/about/jobandope.webp", "/about/kge.webp", "/about/kge02.webp", "/about/kge03.webp",
+  "/about/marsmanie.webp", "/about/mikris.webp", "/about/mikris3.webp", "/about/mikris4.webp", "/about/mikris5.webp",
+  "/about/mfin.webp", "/about/sesame.webp", "/about/smithcn.webp", "/about/smithcn02.webp", "/about/smithcn03.webp",
+  "/about/snipe.webp", "/about/snipe02.webp", "/about/yakko.webp",
 ];
 
 export default function About() {
