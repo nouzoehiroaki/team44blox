@@ -8,7 +8,7 @@ import { MemberModal } from "@/components/MemberModal";
 import { ParticleAnimation } from "@/components/ParticleAnimation";
 import { CustomCursor } from "@/components/CustomCursor";
 
-const profileText = `千葉、茨城など常磐線沿線を中心に結成されたHIPHOP SQUAD。\n TEAM 44 BLOXのメンバー紹介ページ。`;
+const profileText = `千葉、茨城など常磐線沿線を中心に結成されたHIPHOP SQUAD。\n TEAM44BLOXのメンバー紹介ページ。`;
 
 const memberImages = [
   "/44.webp", "/44-2.webp", "/apogee.webp", "/aquarius.webp", "/bangblacks.webp",
