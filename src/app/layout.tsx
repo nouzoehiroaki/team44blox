@@ -17,14 +17,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Team 44 Blox Official Website",
-  description: "千葉、茨城など常磐線沿線を中心に結成されたHIPHOP SQUAD。TEAM 44 BLOXのオフィシャルウェブサイト",
+  title: "TEAM44BLOX Official Website",
+  description: "千葉、茨城など常磐線沿線を中心に結成されたHIPHOP SQUAD。TEAM44BLOXのオフィシャルウェブサイト",
   openGraph: {
     type: "website",
-    title: "Team 44 Blox official Website",
+    title: "TEAM44BLOX Official Website",
     description:
-      "千葉、茨城など常磐線沿線を中心に結成されたHIPHOP SQUAD。TEAM 44 BLOXのオフィシャルウェブサイト",
-    siteName: "Team 44 Blox Official Website",
+      "千葉、茨城など常磐線沿線を中心に結成されたHIPHOP SQUAD。TEAM44BLOXのオフィシャルウェブサイト",
+    siteName: "TEAM44BLOX Official Website",
     images: "/og.png",
     locale: "ja_JP",
   },

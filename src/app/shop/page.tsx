@@ -42,7 +42,7 @@ export default function Shop() {
         <div className="lantern">
           <picture>
             <source srcSet="/lantern.webp" type="image/webp" />
-            <Image src="/lantern.png" className="" alt="Team 44 Blox" width={400} height={400} />
+            <Image src="/lantern.png" className="" alt="TEAM44BLOX" width={400} height={400} />
           </picture>
         </div>
         <Carousel ariaLabel="Shop items" options={{ arrows: true, gap: '1.5rem' }}>
