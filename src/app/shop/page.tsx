@@ -36,6 +36,42 @@ export default function Shop() {
     }
   };
 
+  const shopItems = [
+    {
+      imageWebp: '/lb-shop.webp',
+      imageSrc: '/lb-shop.jpg',
+      imageClass: 'jahgod',
+      imageAlt: 'LB ONLINE',
+      imageWidth: 500,
+      imageHeight: 443,
+      linkHref: 'https://shop.lb-2.com/',
+      linkClass: 'btn btn-flat fc',
+      linkText: 'shop.lb-2.com',
+    },
+    {
+      imageWebp: '/mikris-shop.webp',
+      imageSrc: '/mikris-shop.jpg',
+      imageClass: 'madskill',
+      imageAlt: 'THE DOG HOUSE MUSIC STORE',
+      imageWidth: 400,
+      imageHeight: 400,
+      linkHref: 'https://thedoghousemusic.stores.jp/',
+      linkClass: 'btn btn-flat tdhm',
+      linkText: 'thedoghousemusic.stores.jp',
+    },
+    {
+      imageWebp: '/kge-shop.webp',
+      imageSrc: '/kge-shop.jpg',
+      imageClass: 'madskill',
+      imageAlt: 'シャドメンのサイン付きCD屋さん',
+      imageWidth: 400,
+      imageHeight: 400,
+      linkHref: 'https://pylorhythm.official.ec/',
+      linkClass: 'btn btn-flat pylo',
+      linkText: 'pylorhythm.official.ec',
+    },
+  ];
+
   return (
     <div>
       <section className="shop fixed">
@@ -46,75 +82,31 @@ export default function Shop() {
           </picture>
         </div>
         <Carousel ariaLabel="Shop items" options={{ arrows: true, gap: '1.5rem' }}>
-          <CarouselSlide>
-            <div className="box">
-              <div className="tomiken">
+          {shopItems.map((item) => (
+            <CarouselSlide key={item.linkHref}>
+              <div className="box">
+                <div className="tomiken">
+                  <picture>
+                    <source srcSet="/tomiken.webp" type="image/webp" />
+                    <Image src="/tomiken.png" className="" alt="DJ TOMIKEN" width={400} height={400} />
+                  </picture>
+                </div>
+                <div className="mailman">
+                  <picture>
+                    <source srcSet="/mailman.webp" type="image/webp" />
+                    <Image src="/mailman.png" className="" alt="DJ MAILMAN" width={400} height={400} />
+                  </picture>
+                </div>
                 <picture>
-                  <source srcSet="/tomiken.webp" type="image/webp" />
-                  <Image src="/tomiken.png" className="" alt="DJ TOMIKEN" width={400} height={400} />
+                  <source srcSet={item.imageWebp} type="image/webp" />
+                  <Image src={item.imageSrc} className={item.imageClass} alt={item.imageAlt} width={item.imageWidth} height={item.imageHeight} />
                 </picture>
+                <div className='position'>
+                  <a href={item.linkHref} className={item.linkClass} target="_blank" rel="noopener"><span>{item.linkText}</span></a>
+                </div>
               </div>
-              <div className="mailman">
-                <picture>
-                  <source srcSet="/mailman.webp" type="image/webp" />
-                  <Image src="/mailman.png" className="" alt="DJ MAILMAN" width={400} height={400} />
-                </picture>
-              </div>
-              <picture>
-                <source srcSet="/lb-shop.webp" type="image/webp" />
-                <Image src="/lb-shop.jpg" className="jahgod" alt="LB ONLINE" width={500} height={443} />
-              </picture>
-              <div className='position'>
-                <a href="https://shop.lb-2.com/" className="btn btn-flat fc" target="_blank" rel="noopener"><span>shop.lb-2.com</span></a>
-              </div>
-            </div>
-          </CarouselSlide>
-          <CarouselSlide>
-            <div className="box">
-              <div className="tomiken">
-                <picture>
-                  <source srcSet="/tomiken.webp" type="image/webp" />
-                  <Image src="/tomiken.png" className="" alt="DJ TOMIKEN" width={400} height={400} />
-                </picture>
-              </div>
-              <div className="mailman">
-                <picture>
-                  <source srcSet="/mailman.webp" type="image/webp" />
-                  <Image src="/mailman.png" className="" alt="DJ MAILMAN" width={400} height={400} />
-                </picture>
-              </div>
-              <picture>
-                <source srcSet="/mikris-shop.webp" type="image/webp" />
-                <Image src="/mikris-shop.jpg" className="madskill" alt="THE DOG HOUSE MUSIC STORE" width={400} height={400} />
-              </picture>
-              <div className='position'>
-                <a href="https://thedoghousemusic.stores.jp/" className="btn btn-flat tdhm" target="_blank" rel="noopener"><span>thedoghousemusic.stores.jp</span></a>
-              </div>
-            </div>
-          </CarouselSlide>
-          <CarouselSlide>
-            <div className="box">
-              <div className="tomiken">
-                <picture>
-                  <source srcSet="/tomiken.webp" type="image/webp" />
-                  <Image src="/tomiken.png" className="" alt="DJ TOMIKEN" width={400} height={400} />
-                </picture>
-              </div>
-              <div className="mailman">
-                <picture>
-                  <source srcSet="/mailman.webp" type="image/webp" />
-                  <Image src="/mailman.png" className="" alt="DJ MAILMAN" width={400} height={400} />
-                </picture>
-              </div>
-              <picture>
-                <source srcSet="/kge-shop.webp" type="image/webp" />
-                <Image src="/kge-shop.jpg" className="madskill" alt="シャドメンのサイン付きCD屋さん" width={400} height={400} />
-              </picture>
-              <div className='position'>
-                <a href="https://pylorhythm.official.ec/" className="btn btn-flat pylo" target="_blank" rel="noopener"><span>pylorhythm.official.ec</span></a>
-              </div>
-            </div>
-          </CarouselSlide>
+            </CarouselSlide>
+          ))}
         </Carousel>
         <div className='coment'>
           <AnimatePresence mode="wait">

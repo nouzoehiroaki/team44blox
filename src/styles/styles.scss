@@ -378,6 +378,15 @@ header{
         transform: scale(1) translateY(0);
       }
     }
+    .splide__arrow {
+      top:80%;
+      @media screen and (max-width: 585px) {
+        top:75%;
+      }
+      @media screen and (max-width: 400px) {
+         top:70%; 
+      }
+    }
   }
 
   .product-overlay-close {
