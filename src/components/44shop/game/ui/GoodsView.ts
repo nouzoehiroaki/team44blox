@@ -164,6 +164,11 @@ export class GoodsView extends Container {
       this.close();
       return true;
     }
+    // プレビュー画像 → EC遷移
+    if (Math.abs(lx - this.preview.x) <= 135 && Math.abs(ly - this.preview.y) <= 135) {
+      this.openEc(GOODS[this.selected]);
+      return true;
+    }
     // スクロール矢印
     if (this.hitText(this.upArrow, lx, ly)) {
       this.moveCursor(-1);
@@ -208,7 +213,14 @@ export class GoodsView extends Container {
 
   private openEc(item?: Goods) {
     if (!item) return;
-    window.open(item.ecUrl, '_blank', 'noopener,noreferrer');
+    // iOS Safari等のポップアップブロック回避のためanchorクリックで開く
+    const a = document.createElement('a');
+    a.href = item.ecUrl;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
   }
 
   private refresh() {
