@@ -1,5 +1,5 @@
 import { Assets, Container, Sprite, Text, Texture } from 'pixi.js';
-import { GAME_W, GAME_H, ASSETS, SceneName } from '../constants';
+import { GAME_W, GAME_H, ASSETS, SceneName, SceneData, DOT_FONT } from '../constants';
 import { Scene } from '../SceneManager';
 import { GameInput } from '../Input';
 import { Player } from '../Player';
@@ -30,7 +30,11 @@ export class OutsideScene implements Scene {
   private hintAge = 0;
   private age = 0;
 
-  constructor(private input: GameInput, private go: (name: SceneName) => void) {}
+  constructor(
+    private input: GameInput,
+    private go: (name: SceneName, data?: SceneData) => void,
+    private data?: SceneData,
+  ) {}
 
   async enter() {
     const tex: Texture = await Assets.load(ASSETS.shopBg);
@@ -40,6 +44,8 @@ export class OutsideScene implements Scene {
     this.view.addChild(bg);
 
     await this.player.load();
+    const spawn = this.data?.spawn ?? { x: 120, y: 800 };
+    this.player.place(spawn.x, spawn.y);
     this.view.addChild(this.player.view);
     this.view.addChild(this.bubble);
 
@@ -48,7 +54,7 @@ export class OutsideScene implements Scene {
       style: {
         fill: 0xffffff,
         fontSize: 24,
-        fontFamily: 'sans-serif',
+        fontFamily: DOT_FONT,
         stroke: { color: 0x000000, width: 5 },
       },
     });

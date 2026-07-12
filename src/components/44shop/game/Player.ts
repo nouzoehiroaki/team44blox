@@ -3,9 +3,9 @@ import { GAME_W, GROUND_TOP, GROUND_BOTTOM, ASSETS } from './constants';
 
 const SPEED = 300; // px/s（論理座標）
 const HEIGHT = 270; // 表示上の身長（基準スケール時）
-const MARGIN_X = 50;
 
 export type Vec = { x: number; y: number };
+export type Bounds = { minX: number; maxX: number; minY: number; maxY: number };
 
 /**
  * 操作キャラクター（KGE）
@@ -19,6 +19,7 @@ export class Player {
   x = 120;
   y = 800;
 
+  private bounds: Bounds = { minX: 50, maxX: GAME_W - 50, minY: GROUND_TOP + 15, maxY: GROUND_BOTTOM };
   private sprite?: Sprite;
   private target: Vec | null = null;
   private facing = 1;
@@ -48,6 +49,20 @@ export class Player {
     this.target = this.clamp(x, y);
   }
 
+  /** 可動範囲を差し替え（シーンごと） */
+  setBounds(b: Bounds) {
+    this.bounds = b;
+  }
+
+  /** 即時配置（スポーン） */
+  place(x: number, y: number) {
+    const p = this.clamp(x, y);
+    this.x = p.x;
+    this.y = p.y;
+    this.target = null;
+    this.apply();
+  }
+
   stop() {
     this.target = null;
   }
@@ -57,15 +72,18 @@ export class Player {
   }
 
   private clamp(x: number, y: number): Vec {
+    const b = this.bounds;
     return {
-      x: Math.min(GAME_W - MARGIN_X, Math.max(MARGIN_X, x)),
-      y: Math.min(GROUND_BOTTOM, Math.max(GROUND_TOP + 15, y)),
+      x: Math.min(b.maxX, Math.max(b.minX, x)),
+      y: Math.min(b.maxY, Math.max(b.minY, y)),
     };
   }
 
   private depth() {
     // 手前(下)ほど大きく
-    return 0.88 + 0.24 * ((this.y - GROUND_TOP) / (GROUND_BOTTOM - GROUND_TOP));
+    const b = this.bounds;
+    const t = (this.y - b.minY) / Math.max(1, b.maxY - b.minY);
+    return 0.85 + 0.27 * t;
   }
 
   /**

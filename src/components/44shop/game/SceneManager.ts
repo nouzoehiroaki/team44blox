@@ -1,5 +1,5 @@
 import { Application, Container, Graphics } from 'pixi.js';
-import { GAME_W, GAME_H, SceneName } from './constants';
+import { GAME_W, GAME_H, SceneName, SceneData } from './constants';
 
 export interface Scene {
   /** シーンの表示ツリールート */
@@ -10,7 +10,7 @@ export interface Scene {
   update(deltaMS: number): void;
 }
 
-export type SceneFactory = (name: SceneName) => Scene;
+export type SceneFactory = (name: SceneName, data?: SceneData) => Scene;
 
 /**
  * シーン管理（フェード付き切替）
@@ -37,7 +37,7 @@ export class SceneManager {
     return this.switching;
   }
 
-  async goTo(name: SceneName, fadeMs = 350): Promise<void> {
+  async goTo(name: SceneName, data?: SceneData, fadeMs = 350): Promise<void> {
     if (this.switching || this.destroyed) return;
     this.switching = true;
     try {
@@ -48,7 +48,7 @@ export class SceneManager {
         this.app.stage.removeChild(this.current.view);
         this.current.view.destroy({ children: true });
       }
-      const next = this.factory(name);
+      const next = this.factory(name, data);
       this.current = next;
       this.app.stage.addChildAt(next.view, 0);
       await next.enter();

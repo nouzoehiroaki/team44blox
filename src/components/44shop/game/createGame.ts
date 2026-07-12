@@ -1,5 +1,5 @@
 import { Application } from 'pixi.js';
-import { GAME_W, GAME_H, SceneName } from './constants';
+import { GAME_W, GAME_H, SceneName, SceneData } from './constants';
 import { GameInput } from './Input';
 import { SceneManager, Scene } from './SceneManager';
 import { OutsideScene } from './scenes/OutsideScene';
@@ -11,6 +11,13 @@ import { InsideScene } from './scenes/InsideScene';
  * @returns dispose 関数
  */
 export async function createGame(host: HTMLElement): Promise<() => void> {
+  // ドットフォントを先に読み込む（Pixi Textのラスタライズ前に必要）
+  try {
+    await document.fonts.load('30px "DotGothic16"');
+  } catch {
+    /* フォールバックフォントで続行 */
+  }
+
   const app = new Application();
   await app.init({
     width: GAME_W,
@@ -40,11 +47,11 @@ export async function createGame(host: HTMLElement): Promise<() => void> {
   fit();
 
   const input = new GameInput(app);
-  const manager: SceneManager = new SceneManager(app, (name: SceneName): Scene => {
-    const go = (n: SceneName) => void manager.goTo(n);
-    return name === 'outside' ? new OutsideScene(input, go) : new InsideScene(input, go);
+  const manager: SceneManager = new SceneManager(app, (name: SceneName, data?: SceneData): Scene => {
+    const go = (n: SceneName, d?: SceneData) => void manager.goTo(n, d);
+    return name === 'outside' ? new OutsideScene(input, go, data) : new InsideScene(input, go);
   });
-  void manager.goTo('outside', 0);
+  void manager.goTo('outside', undefined, 0);
 
   return () => {
     ro.disconnect();

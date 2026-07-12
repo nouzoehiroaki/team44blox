@@ -1,5 +1,6 @@
 import '../../styles/svg.css';
 import '../../styles/styles.css';
+import '@fontsource/dotgothic16';
 import type { Metadata } from 'next';
 import ShopGameLoader from '@/components/44shop/ShopGameLoader';
 
