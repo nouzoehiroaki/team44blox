@@ -213,14 +213,13 @@ export class GoodsView extends Container {
 
   private openEc(item?: Goods) {
     if (!item) return;
-    // iOS Safari等のポップアップブロック回避のためanchorクリックで開く
-    const a = document.createElement('a');
-    a.href = item.ecUrl;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+    // 別タブで開く。ポップアップブロック等で開けない環境（iOS/アプリ内ブラウザ）は同タブ遷移にフォールバック
+    const w = window.open(item.ecUrl, '_blank');
+    if (w) {
+      w.opener = null;
+    } else {
+      window.location.href = item.ecUrl;
+    }
   }
 
   private refresh() {
