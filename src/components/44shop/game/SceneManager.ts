@@ -51,7 +51,11 @@ export class SceneManager {
       const next = this.factory(name, data);
       this.current = next;
       this.app.stage.addChildAt(next.view, 0);
-      await next.enter();
+      try {
+        await next.enter();
+      } catch (e) {
+        console.error('[44shop] scene enter failed:', e);
+      }
       await this.fade(0, fadeMs);
     } finally {
       this.switching = false;
@@ -60,7 +64,13 @@ export class SceneManager {
 
   private fade(to: number, ms: number): Promise<void> {
     return new Promise((resolve) => {
-      const from = this.overlay.alpha;
+      if (ms <= 0) {
+        this.overlay.alpha = to;
+        resolve();
+        return;
+      }
+      // NaN汚染からの回復（保険）
+      const from = Number.isFinite(this.overlay.alpha) ? this.overlay.alpha : 1 - to;
       const start = performance.now();
       const step = () => {
         if (this.destroyed) return resolve();

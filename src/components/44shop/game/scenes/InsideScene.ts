@@ -5,7 +5,9 @@ import { GameInput } from '../Input';
 import { Player } from '../Player';
 import { IndicatorBubble } from '../ui/IndicatorBubble';
 import { DqWindow } from '../ui/DqWindow';
-import { REGI_DIALOGS, GOODS_PLACEHOLDER, CD_PLACEHOLDER } from '../dialogs';
+import { ChoiceWindow } from '../ui/ChoiceWindow';
+import { GoodsView } from '../ui/GoodsView';
+import { REGI_DIALOGS, CD_PLACEHOLDER } from '../dialogs';
 
 type SpotId = 'regi' | 'goods' | 'cd' | 'exit';
 
@@ -40,6 +42,8 @@ export class InsideScene implements Scene {
   private player = new Player();
   private bubble = new IndicatorBubble();
   private window = new DqWindow({ width: 1080, height: 250 });
+  private goodsView: GoodsView;
+  private goodsChoice: ChoiceWindow;
   private offTap?: () => void;
   private pending: SpotId | null = null;
   private leaving = false;
@@ -47,7 +51,14 @@ export class InsideScene implements Scene {
   private age = 0;
   private keyLatch = false;
 
-  constructor(private input: GameInput, private go: (name: SceneName, data?: SceneData) => void) {}
+  constructor(private input: GameInput, private go: (name: SceneName, data?: SceneData) => void) {
+    this.goodsView = new GoodsView(input);
+    this.goodsChoice = new ChoiceWindow(input);
+  }
+
+  private openGoodsChoice() {
+    this.goodsChoice.open('GOODSコーナーだ。', ['GOODSを みる', 'ほかを みる']);
+  }
 
   async enter() {
     const tex: Texture = await Assets.load(ASSETS.insideBg);
@@ -64,9 +75,27 @@ export class InsideScene implements Scene {
 
     this.window.position.set(GAME_W / 2, GAME_H - 170);
     this.view.addChild(this.window);
+    this.goodsChoice.position.set(GAME_W / 2, GAME_H - 150);
+    this.view.addChild(this.goodsChoice);
+    this.view.addChild(this.goodsView);
+
+    // 選択肢: 「GOODSを みる」→一覧 / 「ほかを みる」→閉じて歩行再開
+    this.goodsChoice.onChoose = (i) => {
+      if (i === 0) this.goodsView.open();
+    };
+    // 一覧を閉じたら選択肢に戻る
+    this.goodsView.onRequestClose = () => this.openGoodsChoice();
 
     this.offTap = this.input.onTap((p) => {
       if (this.leaving) return;
+      if (this.goodsView.isOpen) {
+        this.goodsView.handleTap(p.x, p.y);
+        return;
+      }
+      if (this.goodsChoice.isOpen) {
+        this.goodsChoice.handleTap(p.x, p.y);
+        return;
+      }
       // ウィンドウ表示中: 内側タップ=送り, 外側タップ=閉じる
       if (this.window.isOpen) {
         if (this.window.containsPoint(p.x, p.y)) this.window.advance();
@@ -104,7 +133,7 @@ export class InsideScene implements Scene {
         break;
       }
       case 'goods':
-        this.window.open(GOODS_PLACEHOLDER);
+        this.openGoodsChoice();
         break;
       case 'cd':
         this.window.open(CD_PLACEHOLDER);
@@ -119,6 +148,22 @@ export class InsideScene implements Scene {
   update(dtMs: number) {
     if (this.leaving) return;
     this.age += dtMs;
+
+    // グッズビュー表示中（入力はビュー側で処理）
+    if (this.goodsView.isOpen) {
+      this.goodsView.update(dtMs);
+      this.player.update(dtMs);
+      this.bubble.visible = false;
+      return;
+    }
+
+    // GOODS選択肢ウィンドウ表示中
+    if (this.goodsChoice.isOpen) {
+      this.goodsChoice.update(dtMs);
+      this.player.update(dtMs);
+      this.bubble.visible = false;
+      return;
+    }
 
     // モーダル中はキャラ操作停止。ESC/決定キー処理のみ
     if (this.window.isOpen) {

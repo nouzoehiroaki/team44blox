@@ -1,0 +1,90 @@
+[
+  {
+    "id": "TEAM44BLOX-FACETOWEL",
+    "name": "TEAM44BLOX FACETOWEL",
+    "image": "/44shop/goods/TEAM44BLOX-FACETOWEL.webp",
+    "price": 2000,
+    "ecUrl": "https://shop.lb-2.com/items/142339254",
+    "order": 0
+  },
+  {
+    "id": "FirstClass-Still-Right-Here-TEE",
+    "name": "FirstClass! Still Right Here TEE",
+    "image": "/44shop/goods/FirstClass-Still-Right-Here-TEE.webp",
+    "price": 4444,
+    "ecUrl": "https://shop.lb-2.com/items/43122626",
+    "order": 10
+  },
+  {
+    "id": "FirstClass-Team44Blox-Kamisama-Tee",
+    "name": "FirstClass! x Team44Blox \"Kamisama\" Tee",
+    "image": "/44shop/goods/FirstClass-Team44Blox-Kamisama-Tee.webp",
+    "price": 4400,
+    "ecUrl": "https://shop.lb-2.com/items/102178560",
+    "order": 15
+  },
+  {
+    "id": "FirstClass-ONE-Ringer-TEE",
+    "name": "FirstClass! \"ONE\" Ringer TEE",
+    "image": "/44shop/goods/FirstClass-ONE-Ringer-TEE.webp",
+    "price": 5000,
+    "ecUrl": "https://shop.lb-2.com/items/148449157",
+    "order": 20
+  },
+  {
+    "id": "CB3-Deluxe-Set-CD-T-Shirts",
+    "name": "CB$3 Deluxe Set ( CD+T-Shirts ) ",
+    "image": "/44shop/goods/CB3-Deluxe-Set-CD-T-Shirts.webp",
+    "price": 5200,
+    "ecUrl": "https://thedoghousemusic.stores.jp/items/6598db8823e1900a027026c8",
+    "order": 30
+  },
+  {
+    "id": "TDHM-TEAM-LOGO-SNAPBACK",
+    "name": "TDHM TEAM LOGO SNAPBACK",
+    "image": "/44shop/goods/TDHM-TEAM-LOGO-SNAPBACK.webp",
+    "price": 6000,
+    "ecUrl": "https://thedoghousemusic.stores.jp/items/69b162df6d15125f44b781d4",
+    "order": 40
+  },
+  {
+    "id": "FirstClass-YAKKO-tee",
+    "name": "FirstClass! \"YAKKO\" tee",
+    "image": "/44shop/goods/FirstClass-YAKKO-tee.webp",
+    "price": 6800,
+    "ecUrl": "https://shop.lb-2.com/items/142549914",
+    "order": 50
+  },
+  {
+    "id": "FirstClass-ONE-CAP-STRIPE",
+    "name": "FirstClass! \"ONE\" CAP　-STRIPE-",
+    "image": "/44shop/goods/FirstClass-ONE-CAP-STRIPE.webp",
+    "price": 5500,
+    "ecUrl": "https://shop.lb-2.com/items/148448462",
+    "order": 60
+  },
+  {
+    "id": "TCB3-T-Shirts",
+    "name": "CB$ 3 T-Shirts",
+    "image": "/44shop/goods/CB3-T-Shirts.webp",
+    "price": 3850,
+    "ecUrl": "https://thedoghousemusic.stores.jp/items/6598ce5e7ae1040c69647b9e",
+    "order": 70
+  },
+  {
+    "id": "TDHM-LOGO-Hand-Towel",
+    "name": "TDHM LOGO 手拭い",
+    "image": "/44shop/goods/TDHM-LOGO-Hand-Towel.webp",
+    "price": 2500,
+    "ecUrl": "https://thedoghousemusic.stores.jp/items/69eb606873db3d3c9d21b4d2",
+    "order": 80
+  },
+  {
+    "id": "Who's-The-MADSKILL!_-Special-Set",
+    "name": "Who's The MADSKILL!? Special Set",
+    "image": "/44shop/goods/Who's-The-MADSKILL!_-Special-Set.webp",
+    "price": 12000,
+    "ecUrl": "https://thedoghousemusic.stores.jp/items/64a3ea912514e8002d236177",
+    "order": 90
+  }
+]

@@ -1,5 +1,5 @@
-import { Application } from 'pixi.js';
-import { GAME_W, GAME_H, SceneName, SceneData } from './constants';
+import { Application, Assets } from 'pixi.js';
+import { GAME_W, GAME_H, ASSETS, SceneName, SceneData } from './constants';
 import { GameInput } from './Input';
 import { SceneManager, Scene } from './SceneManager';
 import { OutsideScene } from './scenes/OutsideScene';
@@ -45,6 +45,9 @@ export async function createGame(host: HTMLElement): Promise<() => void> {
   const ro = new ResizeObserver(fit);
   ro.observe(host);
   fit();
+
+  // シーンアセットを先読み（遷移時のデコードジャンクを防ぎ、フェードを常に一定にする）
+  await Assets.load(Object.values(ASSETS));
 
   const input = new GameInput(app);
   const manager: SceneManager = new SceneManager(app, (name: SceneName, data?: SceneData): Scene => {
