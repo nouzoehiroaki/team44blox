@@ -99,10 +99,10 @@ export default function Home() {
           <div className="shine-overlay"></div>
         </div>
         <div className="beatkumiai">
-          <picture>
+          {/* <picture>
             <source srcSet="/top/beatkumiai.webp" type="image/webp" />
             <Image src="/top/beatkumiai.png" className="" alt="BEAT組合" width={400} height={400} />
-          </picture>
+          </picture> */}
         </div>
 
         <WeeklyEventsSlider events={weeklyEvents} />
