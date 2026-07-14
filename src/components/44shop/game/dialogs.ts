@@ -1,3 +1,14 @@
+/** DJ MAILMAN（外観）会話。話しかけるたびに順番に切り替わる */
+export const MAILMAN_DIALOGS: string[][] = [
+  [
+    'わっさ！ おれが DJ MAILMAN。',
+    '今ちょうど音の配達中だ。',
+    '44SHOPのなかは、もうみたか？\nいい品が そろってるぜ！',
+  ],
+  ['あついなー きょうは。', 'レコードは ネットで かえる じだいか……\nいい じだいに なったもんだ。'],
+  ['まいど！ また あおうぜ！'],
+];
+
 /** レジ（店員）会話。開くたびに順番に切り替わる */
 export const REGI_DIALOGS: string[][] = [
   [
@@ -9,12 +20,3 @@ export const REGI_DIALOGS: string[][] = [
   ['毎度あり！\nまた 来てくれよな！'],
 ];
 
-export const GOODS_PLACEHOLDER: string[] = [
-  'グッズコーナーだ。',
-  'ならんだグッズは Phase 3 で\n公開予定だぜ。おたのしみに！',
-];
-
-export const CD_PLACEHOLDER: string[] = [
-  'CDコーナーだ。',
-  'AからZまで 44bloxの CDが\nズラリとならぶ予定…… Phase 4を まて！',
-];

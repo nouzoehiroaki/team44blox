@@ -1,0 +1,114 @@
+[
+  {
+    "id": "aquarius",
+    "title": "Aquarius",
+    "artistId": "aquarius",
+    "jacket": "/44shop/jackets/aquarius.webp",
+    "ecUrl": "https://www.discogs.com/shop/item/387944499",
+    "releaseYear": 2000
+  },
+  {
+    "id": "bass-da-bongz",
+    "title": "DAッて DABONGZ DAもん",
+    "artistId": "bass-da-bongz",
+    "jacket": "/44shop/jackets/dabongs.webp",
+    "ecUrl": "https://diskunion.net/clubh/ct/detail/080403HH004",
+    "releaseYear": 2008
+  },
+  {
+    "id": "bull-camp",
+    "title": "Travel Record",
+    "artistId": "bull-camp",
+    "jacket": "/44shop/jackets/BULL-CAMP.webp",
+    "ecUrl": "https://www.discogs.com/shop/item/4248459525",
+    "releaseYear": 2018
+  },
+  {
+    "id": "dabo-PLATINUM-TONGUE",
+    "title": "PLATINUM TONGUE",
+    "artistId": "dabo",
+    "jacket": "/44shop/jackets/dabo.webp",
+    "ecUrl": "https://www.discogs.com/shop/item/1767660067",
+    "releaseYear": 2001
+  },
+  {
+    "id": "Deli-Delta-Express-Like-Illusion",
+    "title": "Delta Express Like Illusion",
+    "artistId": "deli",
+    "jacket": "/44shop/jackets/Deli-Delta-Express-Like-Illusion.webp",
+    "ecUrl": "https://www.discogs.com/shop/item/2827898743",
+    "releaseYear": 2001
+  },
+  {
+    "id": "dj-mailman-CHAMPION-SOUND-ROUND",
+    "title": "CHAMPION SOUND ROUND 12",
+    "artistId": "dj-mailman",
+    "jacket": "/44shop/jackets/CHAMPION-SOUND-ROUND.webp",
+    "ecUrl": "https://diskunion.net/clubh/ct/detail/051116HH002",
+    "releaseYear": 2005
+  },
+  {
+    "id": "dj-tomiken-RIDIN",
+    "title": "CRIDIN'11",
+    "artistId": "dj-tomiken",
+    "jacket": "/44shop/jackets/RIDIN.webp",
+    "ecUrl": "https://diskunion.net/clubh/ct/detail/120123HH010",
+    "releaseYear": 2012
+  },
+  {
+    "id": "gocci-Apogee-Motors",
+    "title": "Apogee Motors - Majestic Two",
+    "artistId": "gocci",
+    "jacket": "/44shop/jackets/Apogee-Motors.webp",
+    "ecUrl": "https://www.discogs.com/shop/item/3246940364",
+    "releaseYear": 2003
+  },
+  {
+    "id": "jah-god-da-bongz",
+    "title": "DAッて DABONGZ DAもん",
+    "artistId": "jah-god",
+    "jacket": "/44shop/jackets/dabongs.webp",
+    "ecUrl": "https://diskunion.net/clubh/ct/detail/080403HH004",
+    "releaseYear": 2008
+  },
+  {
+    "id": "jbm-laud",
+    "title": "LOUD",
+    "artistId": "jbm",
+    "jacket": "/44shop/jackets/JBM-Loud.webp",
+    "ecUrl": "https://www.discogs.com/shop/item/3012851795",
+    "releaseYear": 2010
+  },
+  {
+    "id": "kge-newgigante",
+    "title": "NEW GIGANTE",
+    "artistId": "kge-the-shadowmen",
+    "jacket": "/44shop/jackets/kge02.webp",
+    "ecUrl": "https://www.discogs.com/shop/item/4073063494",
+    "releaseYear": 2009
+  },
+  {
+    "id": "kge-himuki-local-family",
+    "title": "Local Famiry",
+    "artistId": "kge-and-himuki",
+    "jacket": "/44shop/jackets/kge03.webp",
+    "ecUrl": "https://www.discogs.com/shop/item/3212163479",
+    "releaseYear": 2010
+  },
+  {
+    "id": "mars-manie-block-to-block",
+    "title": "Block To Block",
+    "artistId": "mars-manie",
+    "jacket": "/44shop/jackets/marsmanie.webp",
+    "ecUrl": "https://www.discogs.com/shop/item/1667951554",
+    "releaseYear": 2010
+  },
+  {
+    "id": "mikris-mad",
+    "title": "M.A.D",
+    "artistId": "mikris",
+    "jacket": "/44shop/jackets/mikris.webp",
+    "ecUrl": "https://www.discogs.com/ja/release/12309400-Mikris-MAD",
+    "releaseYear": 2005
+  }
+]

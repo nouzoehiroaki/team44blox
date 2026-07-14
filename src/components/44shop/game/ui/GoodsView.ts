@@ -2,6 +2,7 @@ import { Assets, Container, Graphics, Sprite, Text, Texture } from 'pixi.js';
 import { DOT_FONT, GAME_W, GAME_H } from '../constants';
 import { GameInput } from '../Input';
 import { GOODS, Goods } from '@/data/44shop';
+import { openEcUrl } from '../openEc';
 
 const BOX_W = 1120;
 const BOX_H = 600;
@@ -13,6 +14,7 @@ const PREVIEW_X = BOX_W / 2 - 300;
 const OPEN_MS = 140;
 
 const yen = (n?: number) => (n === undefined ? '' : `${n.toLocaleString('ja-JP')}円`);
+const SOLDOUT_IMG = '/44shop/goods/soldout.png';
 
 /**
  * グッズコーナー（DQ道具屋風）
@@ -28,6 +30,7 @@ export class GoodsView extends Container {
   private selected = 0;
   private scrollTop = 0;
   private preview: Sprite;
+  private rowSoldouts: Sprite[] = [];
   private previewName: Text;
   private previewPrice: Text;
   private backBtn: Container;
@@ -86,6 +89,24 @@ export class GoodsView extends Container {
     this.preview.anchor.set(0.5);
     this.preview.position.set(PREVIEW_X + 10, LIST_Y + 130);
     this.addChild(this.preview);
+
+    // SOLD OUT スタンプ（リストの商品名に重ねる。行の高さに収まるサイズ）
+    for (let i = 0; i < VISIBLE; i++) {
+      const sp = new Sprite(Texture.EMPTY);
+      sp.anchor.set(0.5);
+      sp.rotation = -0.2;
+      sp.visible = false;
+      this.rowSoldouts.push(sp);
+      this.addChild(sp);
+    }
+    void Assets.load(SOLDOUT_IMG)
+      .then((tex: Texture) => {
+        this.rowSoldouts.forEach((sp) => {
+          sp.texture = tex;
+          sp.scale.set(70 / tex.height); // 高さ70px（行の高さ62pxを少し上回る）
+        });
+      })
+      .catch(() => {});
 
     this.previewName = new Text({
       text: '',
@@ -213,13 +234,7 @@ export class GoodsView extends Container {
 
   private openEc(item?: Goods) {
     if (!item) return;
-    // 別タブで開く。ポップアップブロック等で開けない環境（iOS/アプリ内ブラウザ）は同タブ遷移にフォールバック
-    const w = window.open(item.ecUrl, '_blank');
-    if (w) {
-      w.opener = null;
-    } else {
-      window.location.href = item.ecUrl;
-    }
+    openEcUrl(item.ecUrl);
   }
 
   private refresh() {
@@ -231,10 +246,18 @@ export class GoodsView extends Container {
       const item = GOODS[this.scrollTop + i];
       if (!item) {
         this.rows[i].text = '';
+        this.rowSoldouts[i].visible = false;
         continue;
       }
       this.rows[i].text = item.name;
       this.rows[i].alpha = this.scrollTop + i === this.selected ? 1 : 0.75;
+      // 売り切れ: 商品名の上にスタンプを重ねる
+      const so = this.rowSoldouts[i];
+      so.visible = !!item.soldOut;
+      if (so.visible) {
+        const r = this.rows[i];
+        so.position.set(r.x + Math.min(r.width, 440) / 2, r.y + ROW_H / 2 - 8);
+      }
     }
     const visRow = this.selected - this.scrollTop;
     this.cursorMark.position.set(LIST_X, LIST_Y + visRow * ROW_H);
