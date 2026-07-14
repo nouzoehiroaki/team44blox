@@ -7,7 +7,8 @@ import { IndicatorBubble } from '../ui/IndicatorBubble';
 import { DqWindow } from '../ui/DqWindow';
 import { ChoiceWindow } from '../ui/ChoiceWindow';
 import { GoodsView } from '../ui/GoodsView';
-import { REGI_DIALOGS, CD_PLACEHOLDER } from '../dialogs';
+import { CdView } from '../ui/CdView';
+import { REGI_DIALOGS } from '../dialogs';
 
 type SpotId = 'regi' | 'goods' | 'cd' | 'exit';
 
@@ -44,6 +45,8 @@ export class InsideScene implements Scene {
   private window = new DqWindow({ width: 1080, height: 250 });
   private goodsView: GoodsView;
   private goodsChoice: ChoiceWindow;
+  private cdView: CdView;
+  private cdChoice: ChoiceWindow;
   private offTap?: () => void;
   private pending: SpotId | null = null;
   private leaving = false;
@@ -54,10 +57,16 @@ export class InsideScene implements Scene {
   constructor(private input: GameInput, private go: (name: SceneName, data?: SceneData) => void) {
     this.goodsView = new GoodsView(input);
     this.goodsChoice = new ChoiceWindow(input);
+    this.cdView = new CdView(input);
+    this.cdChoice = new ChoiceWindow(input);
   }
 
   private openGoodsChoice() {
     this.goodsChoice.open('GOODSコーナーだ。', ['GOODSを みる', 'ほかを みる']);
+  }
+
+  private openCdChoice() {
+    this.cdChoice.open('CDコーナーだ。', ['CDを みる', 'ほかを みる']);
   }
 
   async enter() {
@@ -78,6 +87,9 @@ export class InsideScene implements Scene {
     this.goodsChoice.position.set(GAME_W / 2, GAME_H - 150);
     this.view.addChild(this.goodsChoice);
     this.view.addChild(this.goodsView);
+    this.cdChoice.position.set(GAME_W / 2, GAME_H - 150);
+    this.view.addChild(this.cdChoice);
+    this.view.addChild(this.cdView);
 
     // 選択肢: 「GOODSを みる」→一覧 / 「ほかを みる」→閉じて歩行再開
     this.goodsChoice.onChoose = (i) => {
@@ -85,6 +97,12 @@ export class InsideScene implements Scene {
     };
     // 一覧を閉じたら選択肢に戻る
     this.goodsView.onRequestClose = () => this.openGoodsChoice();
+
+    // CDコーナーも同じフロー
+    this.cdChoice.onChoose = (i) => {
+      if (i === 0) this.cdView.open();
+    };
+    this.cdView.onRequestClose = () => this.openCdChoice();
 
     this.offTap = this.input.onTap((p) => {
       if (this.leaving) return;
@@ -94,6 +112,14 @@ export class InsideScene implements Scene {
       }
       if (this.goodsChoice.isOpen) {
         this.goodsChoice.handleTap(p.x, p.y);
+        return;
+      }
+      if (this.cdView.isOpen) {
+        this.cdView.handleTap(p.x, p.y);
+        return;
+      }
+      if (this.cdChoice.isOpen) {
+        this.cdChoice.handleTap(p.x, p.y);
         return;
       }
       // ウィンドウ表示中: 内側タップ=送り, 外側タップ=閉じる
@@ -136,7 +162,7 @@ export class InsideScene implements Scene {
         this.openGoodsChoice();
         break;
       case 'cd':
-        this.window.open(CD_PLACEHOLDER);
+        this.openCdChoice();
         break;
       case 'exit':
         this.leaving = true;
@@ -160,6 +186,15 @@ export class InsideScene implements Scene {
     // GOODS選択肢ウィンドウ表示中
     if (this.goodsChoice.isOpen) {
       this.goodsChoice.update(dtMs);
+      this.player.update(dtMs);
+      this.bubble.visible = false;
+      return;
+    }
+
+    // CDビュー／CD選択肢ウィンドウ表示中
+    if (this.cdView.isOpen || this.cdChoice.isOpen) {
+      this.cdView.update(dtMs);
+      this.cdChoice.update(dtMs);
       this.player.update(dtMs);
       this.bubble.visible = false;
       return;

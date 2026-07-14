@@ -2,6 +2,7 @@ import { Assets, Container, Graphics, Sprite, Text, Texture } from 'pixi.js';
 import { DOT_FONT, GAME_W, GAME_H } from '../constants';
 import { GameInput } from '../Input';
 import { GOODS, Goods } from '@/data/44shop';
+import { openEcUrl } from '../openEc';
 
 const BOX_W = 1120;
 const BOX_H = 600;
@@ -213,13 +214,7 @@ export class GoodsView extends Container {
 
   private openEc(item?: Goods) {
     if (!item) return;
-    // 別タブで開く。ポップアップブロック等で開けない環境（iOS/アプリ内ブラウザ）は同タブ遷移にフォールバック
-    const w = window.open(item.ecUrl, '_blank');
-    if (w) {
-      w.opener = null;
-    } else {
-      window.location.href = item.ecUrl;
-    }
+    openEcUrl(item.ecUrl);
   }
 
   private refresh() {

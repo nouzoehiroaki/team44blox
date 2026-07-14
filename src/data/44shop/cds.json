@@ -1,0 +1,20 @@
+[
+  {
+    "id": "bass-da-bongz",
+    "title": "DAッて DABONGZ DAもん",
+    "artistId": "bass-da-bongz",
+    "jacket": "/44shop/jackets/dabongs.webp",
+    "price": 2409,
+    "ecUrl": "https://diskunion.net/clubh/ct/detail/080403HH004",
+    "releaseYear": 2008
+  },
+  {
+    "id": "dabo-PLATINUM-TONGUE",
+    "title": "PLATINUM TONGUE",
+    "artistId": "dabo",
+    "jacket": "/44shop/jackets/dabo.webp",
+    "price": 2980,
+    "ecUrl": "https://diskunion.net/clubh/ct/detail/1001024044",
+    "releaseYear": 2021
+  }
+]

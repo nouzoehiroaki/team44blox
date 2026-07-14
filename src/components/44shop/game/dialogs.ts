@@ -9,12 +9,3 @@ export const REGI_DIALOGS: string[][] = [
   ['毎度あり！\nまた 来てくれよな！'],
 ];
 
-export const GOODS_PLACEHOLDER: string[] = [
-  'グッズコーナーだ。',
-  'ならんだグッズは Phase 3 で\n公開予定だぜ。おたのしみに！',
-];
-
-export const CD_PLACEHOLDER: string[] = [
-  'CDコーナーだ。',
-  'AからZまで 44bloxの CDが\nズラリとならぶ予定…… Phase 4を まて！',
-];

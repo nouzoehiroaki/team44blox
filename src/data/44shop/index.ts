@@ -4,6 +4,8 @@
  * 不正データ（必須欠落・型不一致・参照切れ）はモジュール読込時に例外で検知する。
  */
 import goodsJson from './goods.json';
+import artistsJson from './artists.json';
+import cdsJson from './cds.json';
 
 export type Goods = {
   id: string;
@@ -61,3 +63,64 @@ function validateGoods(raw: unknown): Goods[] {
 export const GOODS: Goods[] = validateGoods(goodsJson).sort(
   (a, b) => (a.order ?? 999) - (b.order ?? 999),
 );
+
+function validateArtists(raw: unknown): Artist[] {
+  req(Array.isArray(raw), 'artists.json は配列である必要があります');
+  const ids = new Set<string>();
+  return raw.map((a, i) => {
+    const item = a as Artist;
+    req(typeof item.id === 'string' && item.id.length > 0, `artists[${i}]: id が必要です`);
+    req(!ids.has(item.id), `artists: id "${item.id}" が重複しています`);
+    ids.add(item.id);
+    req(typeof item.name === 'string' && item.name.length > 0, `artists[${item.id}]: name が必要です`);
+    req(
+      typeof item.initial === 'string' && /^[A-Z#]$/.test(item.initial),
+      `artists[${item.id}]: initial は A-Z または # が必要です`,
+    );
+    return item;
+  });
+}
+
+function validateCds(raw: unknown, artists: Artist[]): Cd[] {
+  req(Array.isArray(raw), 'cds.json は配列である必要があります');
+  const ids = new Set<string>();
+  const artistIds = new Set(artists.map((a) => a.id));
+  return raw.map((c, i) => {
+    const item = c as Cd;
+    req(typeof item.id === 'string' && item.id.length > 0, `cds[${i}]: id が必要です`);
+    req(!ids.has(item.id), `cds: id "${item.id}" が重複しています`);
+    ids.add(item.id);
+    req(typeof item.title === 'string' && item.title.length > 0, `cds[${item.id}]: title が必要です`);
+    req(
+      artistIds.has(item.artistId),
+      `cds[${item.id}]: artistId "${item.artistId}" が artists.json に存在しません`,
+    );
+    req(
+      typeof item.jacket === 'string' && item.jacket.startsWith('/'),
+      `cds[${item.id}]: jacket は "/" 始まりのパスが必要です`,
+    );
+    req(
+      typeof item.ecUrl === 'string' && /^https?:\/\//.test(item.ecUrl),
+      `cds[${item.id}]: ecUrl は http(s) URLが必要です`,
+    );
+    return item;
+  });
+}
+
+export const ARTISTS: Artist[] = validateArtists(artistsJson).sort(
+  (a, b) => (a.order ?? 999) - (b.order ?? 999),
+);
+export const CDS: Cd[] = validateCds(cdsJson, ARTISTS).sort(
+  (a, b) => (a.releaseYear ?? 9999) - (b.releaseYear ?? 9999),
+);
+
+/** 頭文字 → アーティスト一覧（A-Z順の全26文字＋#） */
+export const INITIALS: string[] = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ#'];
+
+export function artistsByInitial(initial: string): Artist[] {
+  return ARTISTS.filter((a) => a.initial === initial);
+}
+
+export function cdsByArtist(artistId: string): Cd[] {
+  return CDS.filter((c) => c.artistId === artistId);
+}
