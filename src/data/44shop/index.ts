@@ -14,6 +14,8 @@ export type Goods = {
   price?: number;
   ecUrl: string;
   order?: number;
+  /** 売り切れフラグ（trueでSOLD OUT表示） */
+  soldOut?: boolean;
 };
 
 export type Artist = {
@@ -28,7 +30,6 @@ export type Cd = {
   title: string;
   artistId: string;
   jacket: string;
-  price?: number;
   ecUrl: string;
   releaseYear?: number;
 };
@@ -56,6 +57,10 @@ function validateGoods(raw: unknown): Goods[] {
     );
     req(item.price === undefined || typeof item.price === 'number', `goods[${item.id}]: price は数値`);
     req(item.order === undefined || typeof item.order === 'number', `goods[${item.id}]: order は数値`);
+    req(
+      item.soldOut === undefined || typeof item.soldOut === 'boolean',
+      `goods[${item.id}]: soldOut は真偽値`,
+    );
     return item;
   });
 }

@@ -8,12 +8,12 @@ import { SpeechBubble } from '../ui/SpeechBubble';
 import { DqWindow } from '../ui/DqWindow';
 import { MAILMAN_DIALOGS } from '../dialogs';
 
-// ドア（入口）の当たり・接近判定
+// ドア（入口）の当たり・接近判定（44 STORE: 中央のOPEN札のドア）
 const DOOR = {
-  centerX: 468,
-  rect: { x0: 284, x1: 652, y0: 200, y1: 716 }, // タップ判定（ドア全体）
-  frontY: 762, // ドア前に立つy
-  nearDist: 120, // 入店可能距離
+  centerX: 655,
+  rect: { x0: 548, x1: 770, y0: 350, y1: 745 }, // タップ判定（ドア全体）
+  frontY: 775, // ドア前に立つy
+  nearDist: 130, // 入店可能距離
 };
 
 // DJ MAILMAN イベント
@@ -21,7 +21,7 @@ const MAILMAN = {
   triggerX: 1020, // プレイヤーがこのxより右で発生
   speechMs: 1600, // 「暇だなー」表示時間
   standX: 1160,
-  standY: 792,
+  standY: 790,
   height: 260,
   walkSpeed: 240, // 登場時 px/s
   nearDist: 170,
@@ -74,7 +74,7 @@ export class OutsideScene implements Scene {
     this.view.addChild(bg);
 
     await this.player.load();
-    const spawn = this.data?.spawn ?? { x: 120, y: 800 };
+    const spawn = this.data?.spawn ?? { x: 150, y: 795 };
     this.player.place(spawn.x, spawn.y);
     this.player.view.zIndex = this.player.y;
     this.view.addChild(this.player.view);

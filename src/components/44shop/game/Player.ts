@@ -6,6 +6,7 @@ const HEIGHT = 270; // 表示上の身長（基準スケール時）
 
 export type Vec = { x: number; y: number };
 export type Bounds = { minX: number; maxX: number; minY: number; maxY: number };
+export type ObstacleRect = { x0: number; y0: number; x1: number; y1: number };
 
 /**
  * 操作キャラクター（KGE）
@@ -20,6 +21,7 @@ export class Player {
   y = 800;
 
   private bounds: Bounds = { minX: 50, maxX: GAME_W - 50, minY: GROUND_TOP + 15, maxY: GROUND_BOTTOM };
+  private obstacles: ObstacleRect[] = [];
   private sprite?: Sprite;
   private target: Vec | null = null;
   private facing = 1;
@@ -54,6 +56,29 @@ export class Player {
     this.bounds = b;
   }
 
+  /** 歩行不可の矩形（棚などの障害物）を設定 */
+  setObstacles(rects: ObstacleRect[]) {
+    this.obstacles = rects;
+  }
+
+  /** 障害物内にいたら最も近い辺へ押し出す */
+  private resolveObstacles(p: Vec): Vec {
+    for (const r of this.obstacles) {
+      if (p.x > r.x0 && p.x < r.x1 && p.y > r.y0 && p.y < r.y1) {
+        const dl = p.x - r.x0;
+        const dr = r.x1 - p.x;
+        const dt = p.y - r.y0;
+        const db = r.y1 - p.y;
+        const m = Math.min(dl, dr, dt, db);
+        if (m === dl) p = { ...p, x: r.x0 };
+        else if (m === dr) p = { ...p, x: r.x1 };
+        else if (m === dt) p = { ...p, y: r.y0 };
+        else p = { ...p, y: r.y1 };
+      }
+    }
+    return p;
+  }
+
   /** 即時配置（スポーン） */
   place(x: number, y: number) {
     const p = this.clamp(x, y);
@@ -73,10 +98,10 @@ export class Player {
 
   private clamp(x: number, y: number): Vec {
     const b = this.bounds;
-    return {
+    return this.resolveObstacles({
       x: Math.min(b.maxX, Math.max(b.minX, x)),
       y: Math.min(b.maxY, Math.max(b.minY, y)),
-    };
+    });
   }
 
   private depth() {
@@ -118,6 +143,12 @@ export class Player {
         this.y += (dy / dist) * step;
         this.moving = true;
       }
+    }
+    // 経路が障害物を横切った場合の押し出し
+    const resolved = this.resolveObstacles({ x: this.x, y: this.y });
+    if (resolved.x !== this.x || resolved.y !== this.y) {
+      this.x = resolved.x;
+      this.y = resolved.y;
     }
     this.apply();
   }

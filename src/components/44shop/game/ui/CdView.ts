@@ -22,8 +22,6 @@ const ROW_H = 62;
 const VISIBLE = 6;
 const PREVIEW_X = BOX_W / 2 - 300;
 
-const yen = (n?: number) => (n === undefined ? '' : `${n.toLocaleString('ja-JP')}円`);
-
 type Level = 'index' | 'artists' | 'cds';
 
 /**
@@ -48,7 +46,6 @@ export class CdView extends Container {
   private emptyText: Text;
   private preview: Sprite;
   private previewTitle: Text;
-  private previewPrice: Text;
   private backBtn: Container;
   private selected = 0;
   private scrollTop = 0;
@@ -139,13 +136,6 @@ export class CdView extends Container {
     this.previewTitle.anchor.set(0.5, 0);
     this.previewTitle.position.set(PREVIEW_X + 10, LIST_Y + 270);
     this.addChild(this.previewTitle);
-    this.previewPrice = new Text({
-      text: '',
-      style: { fill: 0xf5d442, fontSize: 28, fontFamily: DOT_FONT },
-    });
-    this.previewPrice.anchor.set(0.5, 0);
-    this.previewPrice.position.set(PREVIEW_X + 10, LIST_Y + 350);
-    this.addChild(this.previewPrice);
 
     // もどるボタン
     this.backBtn = new Container();
@@ -203,7 +193,6 @@ export class CdView extends Container {
   private setPreviewVisible(v: boolean) {
     this.preview.visible = v;
     this.previewTitle.visible = v;
-    this.previewPrice.visible = v;
   }
 
   private showIndex() {
@@ -238,7 +227,7 @@ export class CdView extends Container {
     this.title.text = `＊${artist.name}＊`;
     this.setIndexVisible(false);
     if (this.cds.length === 0) {
-      this.emptyText.text = 'CDは じゅんびちゅう……\nまた きてくれよな！';
+      this.emptyText.text = 'ただいま じゅんびちゅう……\nしばし おまちを！';
       this.setListVisible(false);
       this.setPreviewVisible(false);
       return;
@@ -289,7 +278,6 @@ export class CdView extends Container {
       const cd = this.cds[this.selected];
       if (cd) {
         this.previewTitle.text = cd.title + (cd.releaseYear ? `（${cd.releaseYear}）` : '');
-        this.previewPrice.text = yen(cd.price);
         void this.loadJacket(cd);
       }
     }

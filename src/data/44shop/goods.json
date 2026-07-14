@@ -13,7 +13,8 @@
     "image": "/44shop/goods/FirstClass-Still-Right-Here-TEE.webp",
     "price": 4444,
     "ecUrl": "https://shop.lb-2.com/items/43122626",
-    "order": 10
+    "order": 10,
+    "soldOut": true
   },
   {
     "id": "FirstClass-Team44Blox-Kamisama-Tee",
@@ -21,21 +22,14 @@
     "image": "/44shop/goods/FirstClass-Team44Blox-Kamisama-Tee.webp",
     "price": 4400,
     "ecUrl": "https://shop.lb-2.com/items/102178560",
-    "order": 15
-  },
-  {
-    "id": "FirstClass-ONE-Ringer-TEE",
-    "name": "FirstClass! \"ONE\" Ringer TEE",
-    "image": "/44shop/goods/FirstClass-ONE-Ringer-TEE.webp",
-    "price": 5000,
-    "ecUrl": "https://shop.lb-2.com/items/148449157",
-    "order": 20
+    "order": 20,
+    "soldOut": true
   },
   {
     "id": "CB3-Deluxe-Set-CD-T-Shirts",
     "name": "CB$3 Deluxe Set ( CD+T-Shirts ) ",
     "image": "/44shop/goods/CB3-Deluxe-Set-CD-T-Shirts.webp",
-    "price": 5200,
+    "price": 5250,
     "ecUrl": "https://thedoghousemusic.stores.jp/items/6598db8823e1900a027026c8",
     "order": 30
   },
@@ -45,7 +39,8 @@
     "image": "/44shop/goods/TDHM-TEAM-LOGO-SNAPBACK.webp",
     "price": 6000,
     "ecUrl": "https://thedoghousemusic.stores.jp/items/69b162df6d15125f44b781d4",
-    "order": 40
+    "order": 40,
+    "soldOut": true
   },
   {
     "id": "FirstClass-YAKKO-tee",
@@ -56,19 +51,19 @@
     "order": 50
   },
   {
-    "id": "FirstClass-ONE-CAP-STRIPE",
-    "name": "FirstClass! \"ONE\" CAP　-STRIPE-",
-    "image": "/44shop/goods/FirstClass-ONE-CAP-STRIPE.webp",
-    "price": 5500,
-    "ecUrl": "https://shop.lb-2.com/items/148448462",
-    "order": 60
-  },
-  {
     "id": "TCB3-T-Shirts",
     "name": "CB$ 3 T-Shirts",
     "image": "/44shop/goods/CB3-T-Shirts.webp",
     "price": 3850,
     "ecUrl": "https://thedoghousemusic.stores.jp/items/6598ce5e7ae1040c69647b9e",
+    "order": 60
+  },
+  {
+    "id": "FirstClass-ONE-Ringer-TEE",
+    "name": "FirstClass! \"ONE\" Ringer TEE",
+    "image": "/44shop/goods/FirstClass-ONE-Ringer-TEE.webp",
+    "price": 5000,
+    "ecUrl": "https://shop.lb-2.com/items/148449157",
     "order": 70
   },
   {
@@ -80,11 +75,19 @@
     "order": 80
   },
   {
+    "id": "FirstClass-ONE-CAP-STRIPE",
+    "name": "FirstClass! \"ONE\" CAP　-STRIPE-",
+    "image": "/44shop/goods/FirstClass-ONE-CAP-STRIPE.webp",
+    "price": 5500,
+    "ecUrl": "https://shop.lb-2.com/items/148448462",
+    "order": 90
+  },
+  {
     "id": "Who's-The-MADSKILL!_-Special-Set",
     "name": "Who's The MADSKILL!? Special Set",
     "image": "/44shop/goods/Who's-The-MADSKILL!_-Special-Set.webp",
     "price": 12000,
     "ecUrl": "https://thedoghousemusic.stores.jp/items/64a3ea912514e8002d236177",
-    "order": 90
+    "order": 100
   }
 ]

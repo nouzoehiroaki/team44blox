@@ -10,7 +10,7 @@ import { GoodsView } from '../ui/GoodsView';
 import { CdView } from '../ui/CdView';
 import { REGI_DIALOGS } from '../dialogs';
 
-type SpotId = 'regi' | 'goods' | 'cd' | 'exit';
+type SpotId = 'regi' | 'goods' | 'cd' | 'vinyl' | 'exit';
 
 type Spot = {
   id: SpotId;
@@ -27,6 +27,7 @@ const SPOTS: Spot[] = [
   { id: 'regi', standX: 184, standY: 460, rect: { x0: 48, y0: 190, x1: 320, y1: 370 }, nearDist: 130 },
   { id: 'goods', standX: 600, standY: 440, rect: { x0: 416, y0: 100, x1: 784, y1: 280 }, nearDist: 140 },
   { id: 'cd', standX: 1032, standY: 450, rect: { x0: 864, y0: 100, x1: 1200, y1: 295 }, nearDist: 140 },
+  { id: 'vinyl', standX: 780, standY: 650, rect: { x0: 820, y0: 485, x1: 1205, y1: 760 }, nearDist: 150 },
   { id: 'exit', standX: 624, standY: 790, rect: { x0: 548, y0: 740, x1: 700, y1: 832 }, nearDist: 90 },
 ];
 
@@ -77,6 +78,8 @@ export class InsideScene implements Scene {
     this.view.addChild(bg);
 
     this.player.setBounds(BOUNDS);
+    // レコード棚（RECORDS）の上は歩行不可
+    this.player.setObstacles([{ x0: 800, y0: 468, x1: 1215, y1: 775 }]);
     await this.player.load();
     this.player.place(624, 700); // 入口（EXITマット手前）
     this.view.addChild(this.player.view);
@@ -163,6 +166,9 @@ export class InsideScene implements Scene {
         break;
       case 'cd':
         this.openCdChoice();
+        break;
+      case 'vinyl':
+        this.window.open(['近日中に 44関連の バイナルが\n入荷されるらしいな。楽しみだ。']);
         break;
       case 'exit':
         this.leaving = true;
