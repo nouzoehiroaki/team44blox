@@ -10,6 +10,7 @@ import { GoodsView } from '../ui/GoodsView';
 import { CdView } from '../ui/CdView';
 import { cdsByArtist, recordsByArtist } from '@/data/44shop';
 import { REGI_DIALOGS } from '../dialogs';
+import { flyerBridge } from '../flyerBridge';
 
 type SpotId = 'regi' | 'goods' | 'cd' | 'vinyl' | 'exit';
 
@@ -51,6 +52,7 @@ export class InsideScene implements Scene {
   private cdChoice: ChoiceWindow;
   private recordsView: CdView;
   private recordsChoice: ChoiceWindow;
+  private flyerChoice: ChoiceWindow;
   private offTap?: () => void;
   private pending: SpotId | null = null;
   private leaving = false;
@@ -73,6 +75,7 @@ export class InsideScene implements Scene {
       emptyText: 'ただいま じゅんびちゅう……\nしばし おまちを！',
     });
     this.recordsChoice = new ChoiceWindow(input);
+    this.flyerChoice = new ChoiceWindow(input);
   }
 
   private openGoodsChoice() {
@@ -133,8 +136,19 @@ export class InsideScene implements Scene {
     };
     this.recordsView.onRequestClose = () => this.openRecordsChoice();
 
+    // レジ会話後のフライヤー選択肢（今月以降のイベントがある時のみ表示される）
+    this.flyerChoice.position.set(GAME_W / 2, GAME_H - 150);
+    this.view.addChild(this.flyerChoice);
+    this.flyerChoice.onChoose = (i) => {
+      if (i === 0) flyerBridge.open();
+    };
+
     this.offTap = this.input.onTap((p) => {
-      if (this.leaving) return;
+      if (this.leaving || flyerBridge.isOpen) return;
+      if (this.flyerChoice.isOpen) {
+        this.flyerChoice.handleTap(p.x, p.y);
+        return;
+      }
       if (this.goodsView.isOpen) {
         this.goodsView.handleTap(p.x, p.y);
         return;
@@ -190,9 +204,20 @@ export class InsideScene implements Scene {
     this.pending = null;
     switch (id) {
       case 'regi': {
-        const lines = REGI_DIALOGS[this.regiCount % REGI_DIALOGS.length];
+        const idx = this.regiCount % REGI_DIALOGS.length;
+        const lines = REGI_DIALOGS[idx];
         this.regiCount++;
-        this.window.open(lines);
+        // 初回セリフ（「…各ショップで購入できるよ！」を含む）の後にフライヤー選択肢。
+        // 今月以降のイベントが0件ならスキップして通常どおり閉じる。
+        if (idx === 0 && flyerBridge.hasEvents) {
+          this.window.open(lines.slice(0, -1));
+          this.window.onClosed = () => {
+            this.window.onClosed = undefined;
+            this.flyerChoice.open(lines[lines.length - 1], ['フライヤーを みる', 'ほかを みる']);
+          };
+        } else {
+          this.window.open(lines);
+        }
         break;
       }
       case 'goods':
@@ -214,6 +239,21 @@ export class InsideScene implements Scene {
   update(dtMs: number) {
     if (this.leaving) return;
     this.age += dtMs;
+
+    // フライヤーオーバーレイ（DOM）表示中はゲーム側の入力を止める
+    if (flyerBridge.isOpen) {
+      this.player.update(dtMs);
+      this.bubble.visible = false;
+      return;
+    }
+
+    // フライヤー選択肢ウィンドウ表示中
+    if (this.flyerChoice.isOpen) {
+      this.flyerChoice.update(dtMs);
+      this.player.update(dtMs);
+      this.bubble.visible = false;
+      return;
+    }
 
     // グッズビュー表示中（入力はビュー側で処理）
     if (this.goodsView.isOpen) {

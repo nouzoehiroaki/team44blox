@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { Carousel, CarouselSlide } from "@/components/ui/Carousel";
 import { Modal } from "@/components/ui/Modal";
+import { EventsSlider } from "@/components/EventsSlider";
 import type { FlyerEvent } from "@/types/events";
 
 type WeeklyEventsSliderProps = {
@@ -16,23 +16,14 @@ export function WeeklyEventsSlider({ events }: WeeklyEventsSliderProps) {
 
   return (
     <>
-      <div className="weekly-events">
-        <h3 className="weekly-events-title">This Week's Events</h3>
-        <Carousel ariaLabel="This Week's Events" options={{ interval: 4000 }}>
-          {events.map((event) => (
-            <CarouselSlide key={event.id}>
-              {event.images?.url && (
-                <img
-                  src={event.images.url}
-                  alt={event.title}
-                  className="weekly-events-image"
-                  onClick={() => setModalImage(event.images.url)}
-                />
-              )}
-            </CarouselSlide>
-          ))}
-        </Carousel>
-      </div>
+      <EventsSlider
+        title="This Week's Events"
+        events={events}
+        containerClassName="weekly-events"
+        titleClassName="weekly-events-title"
+        imageClassName="weekly-events-image"
+        onImageClick={setModalImage}
+      />
 
       <Modal
         isOpen={!!modalImage}
