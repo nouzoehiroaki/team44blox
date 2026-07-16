@@ -8,6 +8,7 @@ import { DqWindow } from '../ui/DqWindow';
 import { ChoiceWindow } from '../ui/ChoiceWindow';
 import { GoodsView } from '../ui/GoodsView';
 import { CdView } from '../ui/CdView';
+import { cdsByArtist, recordsByArtist } from '@/data/44shop';
 import { REGI_DIALOGS } from '../dialogs';
 
 type SpotId = 'regi' | 'goods' | 'cd' | 'vinyl' | 'exit';
@@ -48,6 +49,8 @@ export class InsideScene implements Scene {
   private goodsChoice: ChoiceWindow;
   private cdView: CdView;
   private cdChoice: ChoiceWindow;
+  private recordsView: CdView;
+  private recordsChoice: ChoiceWindow;
   private offTap?: () => void;
   private pending: SpotId | null = null;
   private leaving = false;
@@ -58,8 +61,18 @@ export class InsideScene implements Scene {
   constructor(private input: GameInput, private go: (name: SceneName, data?: SceneData) => void) {
     this.goodsView = new GoodsView(input);
     this.goodsChoice = new ChoiceWindow(input);
-    this.cdView = new CdView(input);
+    this.cdView = new CdView(input, {
+      heading: 'CDコーナー',
+      byArtist: cdsByArtist,
+      emptyText: 'ただいま じゅんびちゅう……\nしばし おまちを！',
+    });
     this.cdChoice = new ChoiceWindow(input);
+    this.recordsView = new CdView(input, {
+      heading: 'RECORDSコーナー',
+      byArtist: recordsByArtist,
+      emptyText: 'ただいま じゅんびちゅう……\nしばし おまちを！',
+    });
+    this.recordsChoice = new ChoiceWindow(input);
   }
 
   private openGoodsChoice() {
@@ -68,6 +81,10 @@ export class InsideScene implements Scene {
 
   private openCdChoice() {
     this.cdChoice.open('CDコーナーだ。', ['CDを みる', 'ほかを みる']);
+  }
+
+  private openRecordsChoice() {
+    this.recordsChoice.open('RECORDSコーナーだ。', ['レコードを みる', 'ほかを みる']);
   }
 
   async enter() {
@@ -107,6 +124,15 @@ export class InsideScene implements Scene {
     };
     this.cdView.onRequestClose = () => this.openCdChoice();
 
+    // RECORDSコーナーも同じフロー
+    this.recordsChoice.position.set(GAME_W / 2, GAME_H - 150);
+    this.view.addChild(this.recordsChoice);
+    this.view.addChild(this.recordsView);
+    this.recordsChoice.onChoose = (i) => {
+      if (i === 0) this.recordsView.open();
+    };
+    this.recordsView.onRequestClose = () => this.openRecordsChoice();
+
     this.offTap = this.input.onTap((p) => {
       if (this.leaving) return;
       if (this.goodsView.isOpen) {
@@ -123,6 +149,14 @@ export class InsideScene implements Scene {
       }
       if (this.cdChoice.isOpen) {
         this.cdChoice.handleTap(p.x, p.y);
+        return;
+      }
+      if (this.recordsView.isOpen) {
+        this.recordsView.handleTap(p.x, p.y);
+        return;
+      }
+      if (this.recordsChoice.isOpen) {
+        this.recordsChoice.handleTap(p.x, p.y);
         return;
       }
       // ウィンドウ表示中: 内側タップ=送り, 外側タップ=閉じる
@@ -168,7 +202,7 @@ export class InsideScene implements Scene {
         this.openCdChoice();
         break;
       case 'vinyl':
-        this.window.open(['近日中に 44関連の バイナルが\n入荷されるらしいな。楽しみだ。']);
+        this.openRecordsChoice();
         break;
       case 'exit':
         this.leaving = true;
@@ -201,6 +235,15 @@ export class InsideScene implements Scene {
     if (this.cdView.isOpen || this.cdChoice.isOpen) {
       this.cdView.update(dtMs);
       this.cdChoice.update(dtMs);
+      this.player.update(dtMs);
+      this.bubble.visible = false;
+      return;
+    }
+
+    // RECORDSビュー／選択肢ウィンドウ表示中
+    if (this.recordsView.isOpen || this.recordsChoice.isOpen) {
+      this.recordsView.update(dtMs);
+      this.recordsChoice.update(dtMs);
       this.player.update(dtMs);
       this.bubble.visible = false;
       return;
