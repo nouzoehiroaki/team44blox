@@ -76,19 +76,21 @@ export default function GameCanvas() {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: 20,
-            padding: 16,
+            gap: 12,
+            padding: 12,
+            overflowY: 'auto',
           }}
         >
           <MonthlyEventsSlider events={allEvents} />
           <button
             onClick={() => setShowFlyers(false)}
             style={{
+              flexShrink: 0,
               background: '#111',
               color: '#fff',
               border: '3px solid #fff',
-              padding: '10px 36px',
-              fontSize: 18,
+              padding: '8px 32px',
+              fontSize: 16,
               letterSpacing: 2,
               cursor: 'pointer',
               fontFamily: '"DotGothic16", sans-serif',
