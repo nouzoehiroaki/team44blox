@@ -31,8 +31,14 @@ export class GoodsView extends Container {
   private scrollTop = 0;
   private preview: Sprite;
   private rowSoldouts: Sprite[] = [];
-  private previewName: Text;
   private previewPrice: Text;
+  // 指スクロール・タップ判定（リスト領域）
+  private pendingTapRow: number | null = null;
+  private dragStartY = 0;
+  private dragLastY = 0;
+  private dragAccum = 0;
+  private dragging = false;
+  private prevDown = false;
   private backBtn: Container;
   private state: 'closed' | 'opening' | 'open' | 'closing' = 'closed';
   private animT = 0;
@@ -108,23 +114,12 @@ export class GoodsView extends Container {
       })
       .catch(() => {});
 
-    this.previewName = new Text({
-      text: '',
-      style: {
-        fill: 0xffffff, fontSize: 26, fontFamily: DOT_FONT,
-        wordWrap: true, wordWrapWidth: 300, breakWords: true, align: 'center',
-      },
-    });
-    this.previewName.anchor.set(0.5, 0);
-    this.previewName.position.set(PREVIEW_X + 10, LIST_Y + 285);
-    this.addChild(this.previewName);
-
     this.previewPrice = new Text({
       text: '',
       style: { fill: 0xf5d442, fontSize: 28, fontFamily: DOT_FONT },
     });
     this.previewPrice.anchor.set(0.5, 0);
-    this.previewPrice.position.set(PREVIEW_X + 10, LIST_Y + 350);
+    this.previewPrice.position.set(PREVIEW_X + 10, LIST_Y + 300);
     this.addChild(this.previewPrice);
 
     // もどるボタン（下中央・大きめタップ領域）
@@ -199,15 +194,14 @@ export class GoodsView extends Container {
       this.moveCursor(1);
       return true;
     }
-    // リスト行
+    // リスト行: 押下時点では確定せず、指を離した時に確定（スワイプスクロールと両立）
     const row = this.rowAt(lx, ly);
     if (row !== null) {
-      const idx = this.scrollTop + row;
-      if (idx === this.selected) this.openEc(GOODS[idx]); // 選択中を再押下→EC
-      else {
-        this.selected = idx;
-        this.refresh();
-      }
+      this.pendingTapRow = row;
+      this.dragStartY = py;
+      this.dragLastY = py;
+      this.dragAccum = 0;
+      this.dragging = false;
     }
     return true;
   }
@@ -229,7 +223,14 @@ export class GoodsView extends Container {
 
   private moveCursor(d: number) {
     this.selected = Math.min(GOODS.length - 1, Math.max(0, this.selected + d));
+    // 選択が見える位置までスクロール
+    if (this.selected < this.scrollTop) this.scrollTop = this.selected;
+    if (this.selected >= this.scrollTop + VISIBLE) this.scrollTop = this.selected - VISIBLE + 1;
     this.refresh();
+  }
+
+  private maxScrollTop() {
+    return Math.max(0, GOODS.length - VISIBLE);
   }
 
   private openEc(item?: Goods) {
@@ -238,10 +239,6 @@ export class GoodsView extends Container {
   }
 
   private refresh() {
-    // スクロール位置調整
-    if (this.selected < this.scrollTop) this.scrollTop = this.selected;
-    if (this.selected >= this.scrollTop + VISIBLE) this.scrollTop = this.selected - VISIBLE + 1;
-
     for (let i = 0; i < VISIBLE; i++) {
       const item = GOODS[this.scrollTop + i];
       if (!item) {
@@ -259,13 +256,14 @@ export class GoodsView extends Container {
         so.position.set(r.x + Math.min(r.width, 440) / 2, r.y + ROW_H / 2 - 8);
       }
     }
+    // 選択行が画面外にスクロールされている場合はカーソルを隠す
     const visRow = this.selected - this.scrollTop;
-    this.cursorMark.position.set(LIST_X, LIST_Y + visRow * ROW_H);
+    this.cursorMark.visible = visRow >= 0 && visRow < VISIBLE;
+    if (this.cursorMark.visible) this.cursorMark.position.set(LIST_X, LIST_Y + visRow * ROW_H);
     this.upArrow.visible = this.scrollTop > 0;
     this.downArrow.visible = this.scrollTop + VISIBLE < GOODS.length;
 
     const item = GOODS[this.selected];
-    this.previewName.text = item.name;
     this.previewPrice.text = item.price !== undefined ? yen(item.price) : '';
     void this.loadPreview(item);
   }
@@ -309,8 +307,51 @@ export class GoodsView extends Container {
     }
     if (this.state !== 'open') return;
 
-    // ホバーで▶移動（PC）
     const ptr = this.input.pointer;
+
+    // 指スクロール（リスト行を押下したままの上下ドラッグ）
+    if (ptr.down && this.pendingTapRow !== null) {
+      if (!this.dragging && Math.abs(ptr.y - this.dragStartY) > 14) this.dragging = true;
+      if (this.dragging) {
+        this.dragAccum += this.dragLastY - ptr.y; // 上へスワイプ→リストは下へ進む
+        this.dragLastY = ptr.y;
+        let changed = false;
+        while (this.dragAccum >= ROW_H && this.scrollTop < this.maxScrollTop()) {
+          this.scrollTop++;
+          this.dragAccum -= ROW_H;
+          changed = true;
+        }
+        while (this.dragAccum <= -ROW_H && this.scrollTop > 0) {
+          this.scrollTop--;
+          this.dragAccum += ROW_H;
+          changed = true;
+        }
+        if (changed) this.refresh();
+      } else {
+        this.dragLastY = ptr.y;
+      }
+    }
+
+    // 指を離した時にタップ確定（ドラッグしていなければ選択/EC遷移）
+    if (this.prevDown && !ptr.down) {
+      if (this.pendingTapRow !== null && !this.dragging) {
+        const idx = this.scrollTop + this.pendingTapRow;
+        const item = GOODS[idx];
+        if (item) {
+          if (idx === this.selected) this.openEc(item); // 選択中を再押下→EC
+          else {
+            this.selected = idx;
+            this.refresh();
+          }
+        }
+      }
+      this.pendingTapRow = null;
+      this.dragging = false;
+      this.dragAccum = 0;
+    }
+    this.prevDown = ptr.down;
+
+    // ホバーで▶移動（PC）
     const row = this.rowAt(ptr.x - this.x, ptr.y - this.y);
     if (row !== null && this.scrollTop + row !== this.selected && !ptr.down) {
       this.selected = this.scrollTop + row;

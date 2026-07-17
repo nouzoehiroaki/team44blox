@@ -1,8 +1,15 @@
 import { Assets, Container, Graphics, Sprite, Text, Texture } from 'pixi.js';
 import { DOT_FONT, GAME_W, GAME_H } from '../constants';
 import { GameInput } from '../Input';
-import { INITIALS, Artist, Cd, artistsByInitial, cdsByArtist } from '@/data/44shop';
+import { INITIALS, Artist, Cd, artistsByInitial } from '@/data/44shop';
 import { openEcUrl } from '../openEc';
+
+/** ビューのデータソース（CDコーナー / RECORDSコーナーで差し替え） */
+export type CdViewSource = {
+  heading: string; // 例: 'CDコーナー'
+  byArtist: (artistId: string) => Cd[];
+  emptyText: string; // 商品未登録アーティストの表示
+};
 
 const BOX_W = 1120;
 const BOX_H = 600;
@@ -57,7 +64,7 @@ export class CdView extends Container {
   private keyLatch = new Set<string>();
   private textures = new Map<string, Texture>();
 
-  constructor(private input: GameInput) {
+  constructor(private input: GameInput, private source: CdViewSource) {
     super();
 
     const g = new Graphics()
@@ -197,7 +204,7 @@ export class CdView extends Container {
 
   private showIndex() {
     this.level = 'index';
-    this.title.text = '＊CDコーナー＊';
+    this.title.text = `＊${this.source.heading}＊`;
     this.emptyText.text = '';
     this.setIndexVisible(true);
     this.setListVisible(false);
@@ -223,11 +230,11 @@ export class CdView extends Container {
   private showCds(artist: Artist) {
     this.level = 'cds';
     this.artist = artist;
-    this.cds = cdsByArtist(artist.id);
+    this.cds = this.source.byArtist(artist.id);
     this.title.text = `＊${artist.name}＊`;
     this.setIndexVisible(false);
     if (this.cds.length === 0) {
-      this.emptyText.text = 'ただいま じゅんびちゅう……\nしばし おまちを！';
+      this.emptyText.text = this.source.emptyText;
       this.setListVisible(false);
       this.setPreviewVisible(false);
       return;

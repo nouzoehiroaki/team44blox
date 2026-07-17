@@ -73,6 +73,12 @@ export class OutsideScene implements Scene {
     bg.zIndex = 0;
     this.view.addChild(bg);
 
+    // 歩行不可の障害物（02.png: A看板 / 01.png: 消火栓）
+    // y0=0 で上方向に無限に伸ばし、障害物の奥側（後ろ）には回り込めないようにする
+    this.player.setObstacles([
+      { x0: 175, y0: 0, x1: 300, y1: 795 }, // A看板（44 STORE CLOTHING RECORDS GOODS）
+      { x0: 1020, y0: 0, x1: 1115, y1: 793 }, // 消火栓
+    ]);
     await this.player.load();
     const spawn = this.data?.spawn ?? { x: 150, y: 795 };
     this.player.place(spawn.x, spawn.y);

@@ -6,6 +6,7 @@
 import goodsJson from './goods.json';
 import artistsJson from './artists.json';
 import cdsJson from './cds.json';
+import recordsJson from './records.json';
 
 export type Goods = {
   id: string;
@@ -33,6 +34,9 @@ export type Cd = {
   ecUrl: string;
   releaseYear?: number;
 };
+
+/** レコード（バイナル）。スキーマはCDと同一 */
+export type VinylRecord = Cd;
 
 function req(cond: boolean, msg: string): asserts cond {
   if (!cond) throw new Error(`[44shop data] ${msg}`);
@@ -86,27 +90,27 @@ function validateArtists(raw: unknown): Artist[] {
   });
 }
 
-function validateCds(raw: unknown, artists: Artist[]): Cd[] {
-  req(Array.isArray(raw), 'cds.json は配列である必要があります');
+function validateCds(raw: unknown, artists: Artist[], label: string): Cd[] {
+  req(Array.isArray(raw), `${label}.json は配列である必要があります`);
   const ids = new Set<string>();
   const artistIds = new Set(artists.map((a) => a.id));
   return raw.map((c, i) => {
     const item = c as Cd;
-    req(typeof item.id === 'string' && item.id.length > 0, `cds[${i}]: id が必要です`);
-    req(!ids.has(item.id), `cds: id "${item.id}" が重複しています`);
+    req(typeof item.id === 'string' && item.id.length > 0, `${label}[${i}]: id が必要です`);
+    req(!ids.has(item.id), `${label}: id "${item.id}" が重複しています`);
     ids.add(item.id);
-    req(typeof item.title === 'string' && item.title.length > 0, `cds[${item.id}]: title が必要です`);
+    req(typeof item.title === 'string' && item.title.length > 0, `${label}[${item.id}]: title が必要です`);
     req(
       artistIds.has(item.artistId),
-      `cds[${item.id}]: artistId "${item.artistId}" が artists.json に存在しません`,
+      `${label}[${item.id}]: artistId "${item.artistId}" が artists.json に存在しません`,
     );
     req(
       typeof item.jacket === 'string' && item.jacket.startsWith('/'),
-      `cds[${item.id}]: jacket は "/" 始まりのパスが必要です`,
+      `${label}[${item.id}]: jacket は "/" 始まりのパスが必要です`,
     );
     req(
       typeof item.ecUrl === 'string' && /^https?:\/\//.test(item.ecUrl),
-      `cds[${item.id}]: ecUrl は http(s) URLが必要です`,
+      `${label}[${item.id}]: ecUrl は http(s) URLが必要です`,
     );
     return item;
   });
@@ -115,7 +119,10 @@ function validateCds(raw: unknown, artists: Artist[]): Cd[] {
 export const ARTISTS: Artist[] = validateArtists(artistsJson).sort(
   (a, b) => (a.order ?? 999) - (b.order ?? 999),
 );
-export const CDS: Cd[] = validateCds(cdsJson, ARTISTS).sort(
+export const CDS: Cd[] = validateCds(cdsJson, ARTISTS, 'cds').sort(
+  (a, b) => (a.releaseYear ?? 9999) - (b.releaseYear ?? 9999),
+);
+export const RECORDS: VinylRecord[] = validateCds(recordsJson, ARTISTS, 'records').sort(
   (a, b) => (a.releaseYear ?? 9999) - (b.releaseYear ?? 9999),
 );
 
@@ -128,4 +135,8 @@ export function artistsByInitial(initial: string): Artist[] {
 
 export function cdsByArtist(artistId: string): Cd[] {
   return CDS.filter((c) => c.artistId === artistId);
+}
+
+export function recordsByArtist(artistId: string): VinylRecord[] {
+  return RECORDS.filter((c) => c.artistId === artistId);
 }
