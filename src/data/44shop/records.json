@@ -1,34 +1,10 @@
 [
   {
-    "id": "deli-aquarius-vinyl",
-    "title": "Aquarius LP（ダミー）",
-    "artistId": "deli",
-    "jacket": "/44shop/jackets/aquarius.webp",
-    "ecUrl": "https://example.com/44blox/vinyl/deli-aquarius",
-    "releaseYear": 2000
-  },
-  {
-    "id": "dabo-platinum-tongue-vinyl",
-    "title": "PLATINUM TONGUE 12inch（ダミー）",
-    "artistId": "dabo",
-    "jacket": "/44shop/jackets/dabo.webp",
-    "ecUrl": "https://example.com/44blox/vinyl/dabo-platinum-tongue",
-    "releaseYear": 2001
-  },
-  {
-    "id": "kge-newgigante-vinyl",
-    "title": "NEW GIGANTE EP（ダミー）",
-    "artistId": "kge-the-shadowmen",
-    "jacket": "/44shop/jackets/kge02.webp",
-    "ecUrl": "https://example.com/44blox/vinyl/kge-newgigante",
-    "releaseYear": 2009
-  },
-  {
-    "id": "mikris-mad-vinyl",
-    "title": "M.A.D 12inch（ダミー）",
-    "artistId": "mikris",
-    "jacket": "/44shop/jackets/mikris.webp",
-    "ecUrl": "https://example.com/44blox/vinyl/mikris-mad",
-    "releaseYear": 2005
+    "id": "block-buster-ep",
+    "title": "BLOCK BUSTER EP",
+    "artistId": "team-44-blox",
+    "jacket": "/44shop/jackets/block-buster-ep.webp",
+    "ecUrl": "https://www.discogs.com/shop/item/2829644692",
+    "releaseYear": 2007
   }
 ]
