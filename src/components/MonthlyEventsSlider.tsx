@@ -44,10 +44,21 @@ export function MonthlyEventsSlider({ events }: MonthlyEventsSliderProps) {
         }
         .monthly-events-image {
           max-width: 100%;
-          max-height: 62vh;
+          /* タイトル・もどるボタン・余白分を差し引いた高さに収める（スマホの縦不足対策） */
+          max-height: min(62vh, calc(100dvh - 340px));
           object-fit: contain;
           margin: 0 auto;
           display: block;
+        }
+        @media (max-width: 600px) {
+          .monthly-events-title {
+            font-size: 15px;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+          }
+          .monthly-events-image {
+            max-height: calc(100dvh - 300px);
+          }
         }
       `}</style>
     </div>
