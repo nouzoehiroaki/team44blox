@@ -8,13 +8,16 @@
     "postbuild": "next-sitemap --config next-sitemap.config.js",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "dev:webpack": "next dev --webpack",
+    "contact:reset": "node scripts/reset-contact-limits.mjs"
   },
   "dependencies": {
     "@fontsource/dotgothic16": "^5.2.8",
     "@next/third-parties": "^16.1.1",
     "@splidejs/react-splide": "^0.7.12",
     "@splidejs/splide": "^4.1.4",
+    "@vercel/kv": "^3.0.0",
     "microcms-js-sdk": "^3.2.0",
     "motion": "^12.12.1",
     "next": "^16.2.10",
@@ -22,6 +25,7 @@
     "pixi.js": "8.6.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "redis": "^6.1.0",
     "sass": "^1.87.0"
   },
   "devDependencies": {
