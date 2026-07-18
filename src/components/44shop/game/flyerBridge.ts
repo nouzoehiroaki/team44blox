@@ -10,3 +10,9 @@ export const flyerBridge = {
   /** オーバーレイを開く（React側で差し替えられる） */
   open: () => {},
 };
+
+/** メッセージフォーム（ポスト）用ブリッジ */
+export const contactBridge = {
+  isOpen: false,
+  open: () => {},
+};

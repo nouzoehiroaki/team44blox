@@ -1,5 +1,5 @@
-import { Assets, Container, Sprite, Texture } from 'pixi.js';
-import { GAME_W, GAME_H, ASSETS, SceneName, SceneData, OUTSIDE_DOOR_SPAWN } from '../constants';
+import { Assets, Container, Graphics, Sprite, Text, Texture } from 'pixi.js';
+import { GAME_W, GAME_H, ASSETS, DOT_FONT, SceneName, SceneData, OUTSIDE_DOOR_SPAWN } from '../constants';
 import { Scene } from '../SceneManager';
 import { GameInput } from '../Input';
 import { Player } from '../Player';
@@ -10,9 +10,9 @@ import { GoodsView } from '../ui/GoodsView';
 import { CdView } from '../ui/CdView';
 import { cdsByArtist, recordsByArtist } from '@/data/44shop';
 import { REGI_DIALOGS } from '../dialogs';
-import { flyerBridge } from '../flyerBridge';
+import { flyerBridge, contactBridge } from '../flyerBridge';
 
-type SpotId = 'regi' | 'goods' | 'cd' | 'vinyl' | 'exit';
+type SpotId = 'regi' | 'goods' | 'cd' | 'vinyl' | 'post' | 'exit';
 
 type Spot = {
   id: SpotId;
@@ -30,6 +30,7 @@ const SPOTS: Spot[] = [
   { id: 'goods', standX: 600, standY: 440, rect: { x0: 416, y0: 100, x1: 784, y1: 280 }, nearDist: 140 },
   { id: 'cd', standX: 1032, standY: 450, rect: { x0: 864, y0: 100, x1: 1200, y1: 295 }, nearDist: 140 },
   { id: 'vinyl', standX: 780, standY: 650, rect: { x0: 820, y0: 485, x1: 1205, y1: 760 }, nearDist: 150 },
+  { id: 'post', standX: 410, standY: 480, rect: { x0: 368, y0: 330, x1: 452, y1: 445 }, nearDist: 120 },
   { id: 'exit', standX: 624, standY: 790, rect: { x0: 548, y0: 740, x1: 700, y1: 832 }, nearDist: 90 },
 ];
 
@@ -53,6 +54,7 @@ export class InsideScene implements Scene {
   private recordsView: CdView;
   private recordsChoice: ChoiceWindow;
   private flyerChoice: ChoiceWindow;
+  private postChoice: ChoiceWindow;
   private offTap?: () => void;
   private pending: SpotId | null = null;
   private leaving = false;
@@ -76,6 +78,14 @@ export class InsideScene implements Scene {
     });
     this.recordsChoice = new ChoiceWindow(input);
     this.flyerChoice = new ChoiceWindow(input);
+    this.postChoice = new ChoiceWindow(input);
+  }
+
+  private openPostChoice() {
+    this.postChoice.open('メッセージポストだ。\nアーティストに てがみを おくれるらしい。', [
+      'てがみを かく',
+      'やめておく',
+    ]);
   }
 
   private openGoodsChoice() {
@@ -100,6 +110,29 @@ export class InsideScene implements Scene {
     this.player.setBounds(BOUNDS);
     // レコード棚（RECORDS）の上は歩行不可
     this.player.setObstacles([{ x0: 800, y0: 468, x1: 1215, y1: 775 }]);
+
+    // メッセージポスト（DQ風の赤いポスト。壁際に設置）
+    const post = new Graphics()
+      .rect(-30, -104, 60, 56)
+      .fill(0xd42a1e)
+      .stroke({ color: 0x1a1512, width: 4 })
+      .rect(-20, -92, 40, 8)
+      .fill(0x1a1512)
+      .rect(-8, -48, 16, 34)
+      .fill(0x3a3430)
+      .stroke({ color: 0x1a1512, width: 3 })
+      .rect(-18, -14, 36, 8)
+      .fill(0x2a2522);
+    post.position.set(410, 432);
+    this.view.addChild(post);
+    const postLabel = new Text({
+      text: '〒',
+      style: { fill: 0xffffff, fontSize: 26, fontFamily: DOT_FONT, fontWeight: '900' },
+    });
+    postLabel.anchor.set(0.5);
+    postLabel.position.set(410, 432 - 76);
+    this.view.addChild(postLabel);
+
     await this.player.load();
     this.player.place(624, 700); // 入口（EXITマット手前）
     this.view.addChild(this.player.view);
@@ -143,10 +176,21 @@ export class InsideScene implements Scene {
       if (i === 0) flyerBridge.open();
     };
 
+    // ポスト（メッセージフォーム）
+    this.postChoice.position.set(GAME_W / 2, GAME_H - 150);
+    this.view.addChild(this.postChoice);
+    this.postChoice.onChoose = (i) => {
+      if (i === 0) contactBridge.open();
+    };
+
     this.offTap = this.input.onTap((p) => {
-      if (this.leaving || flyerBridge.isOpen) return;
+      if (this.leaving || flyerBridge.isOpen || contactBridge.isOpen) return;
       if (this.flyerChoice.isOpen) {
         this.flyerChoice.handleTap(p.x, p.y);
+        return;
+      }
+      if (this.postChoice.isOpen) {
+        this.postChoice.handleTap(p.x, p.y);
         return;
       }
       if (this.goodsView.isOpen) {
@@ -229,6 +273,9 @@ export class InsideScene implements Scene {
       case 'vinyl':
         this.openRecordsChoice();
         break;
+      case 'post':
+        this.openPostChoice();
+        break;
       case 'exit':
         this.leaving = true;
         this.go('outside', { spawn: OUTSIDE_DOOR_SPAWN });
@@ -240,16 +287,17 @@ export class InsideScene implements Scene {
     if (this.leaving) return;
     this.age += dtMs;
 
-    // フライヤーオーバーレイ（DOM）表示中はゲーム側の入力を止める
-    if (flyerBridge.isOpen) {
+    // DOMオーバーレイ（フライヤー／メッセージフォーム）表示中はゲーム側の入力を止める
+    if (flyerBridge.isOpen || contactBridge.isOpen) {
       this.player.update(dtMs);
       this.bubble.visible = false;
       return;
     }
 
-    // フライヤー選択肢ウィンドウ表示中
-    if (this.flyerChoice.isOpen) {
+    // フライヤー／ポスト選択肢ウィンドウ表示中
+    if (this.flyerChoice.isOpen || this.postChoice.isOpen) {
       this.flyerChoice.update(dtMs);
+      this.postChoice.update(dtMs);
       this.player.update(dtMs);
       this.bubble.visible = false;
       return;

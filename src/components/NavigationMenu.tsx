@@ -16,6 +16,7 @@ export function NavigationMenu({ isOpen, onClose }: NavigationMenuProps) {
         <li><Link href="/44shop" onClick={onClose}>44 STORE</Link></li>
         <li><Link href="/news" onClick={onClose}>NEWS</Link></li>
         <li><Link href="/schedule" onClick={onClose}>SCHEDULE</Link></li>
+        <li><Link href="/contact" onClick={onClose}>MESSAGE</Link></li>
       </ul>
     </nav>
   );
