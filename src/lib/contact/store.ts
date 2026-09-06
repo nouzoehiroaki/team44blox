@@ -16,10 +16,21 @@ const PENDING_TTL = 60 * 60 * 24 * 7; // 7日
 const IP_LIMIT = 2; // 件/時
 const GLOBAL_LIMIT = 20; // 件/日
 
+/**
+ * Redis接続URL
+ * Upstash（Vercel Integration・プレフィックス KV_REDIS）が発行する
+ * KV_REDIS_REDIS_URL を優先し、旧構成の変数名も後方互換で受ける。
+ */
+const REDIS_URL =
+  process.env.KV_REDIS_REDIS_URL ??
+  process.env.KV_REDIS_KV_URL ??
+  process.env.KV_REDIS_URL ??
+  process.env.REDIS_URL;
+
 /** Redis接続情報の有無（ローカル開発ではない場合がある） */
-const kvAvailable = !!process.env.KV_REDIS_URL;
+const kvAvailable = !!REDIS_URL;
 if (!kvAvailable) {
-  console.warn('[contact] KV_REDIS_URL未設定のためフォールバックモードで動作します（レート制限等は無効）');
+  console.warn('[contact] Redis接続URL未設定のためフォールバックモードで動作します（レート制限等は無効）');
 }
 
 // サーバーレスのウォーム間で使い回すシングルトン接続
@@ -29,7 +40,7 @@ let clientPromise: Promise<RedisClient> | null = null;
 function getRedis(): Promise<RedisClient> {
   if (!clientPromise) {
     const client = createClient({
-      url: process.env.KV_REDIS_URL,
+      url: REDIS_URL,
       socket: {
         // 接続不能時に待たせ続けない（フォームのハング防止）
         connectTimeout: 3000,

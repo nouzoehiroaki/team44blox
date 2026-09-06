@@ -5,14 +5,22 @@
 import { readFileSync, existsSync } from 'fs';
 import { createClient } from 'redis';
 
+// store.ts と同じ優先順位（Upstash Integration → 旧構成）
+const URL_KEYS = ['KV_REDIS_REDIS_URL', 'KV_REDIS_KV_URL', 'KV_REDIS_URL', 'REDIS_URL'];
+
 function loadUrl() {
-  if (process.env.KV_REDIS_URL) return process.env.KV_REDIS_URL;
-  if (existsSync('.env.local')) {
-    const env = readFileSync('.env.local', 'utf8');
-    const m = env.match(/^KV_REDIS_URL\s*=\s*"?([^"\r\n]+)"?/m);
-    if (m) return m[1];
+  for (const key of URL_KEYS) {
+    if (process.env[key]) return process.env[key];
   }
-  throw new Error('KV_REDIS_URL が見つかりません（.env.local を確認してください）');
+  for (const file of ['.env.local', '.env.development.local']) {
+    if (!existsSync(file)) continue;
+    const env = readFileSync(file, 'utf8');
+    for (const key of URL_KEYS) {
+      const m = env.match(new RegExp(`^${key}\\s*=\\s*"?([^"\\r\\n]+)"?`, 'm'));
+      if (m) return m[1];
+    }
+  }
+  throw new Error(`Redis接続URLが見つかりません（${URL_KEYS.join(' / ')} のいずれかを .env.local に設定してください）`);
 }
 
 const client = createClient({ url: loadUrl() });
