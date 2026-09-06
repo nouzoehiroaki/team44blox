@@ -39,9 +39,16 @@ export function ContactForm({ variant = 'page' }: ContactFormProps) {
   // ワンタイムトークン取得
   const fetchToken = useCallback(async () => {
     try {
-      const res = await fetch('/api/contact/token');
+      // サーバー側が応答しない場合でも画面を固まらせない
+      const res = await fetch('/api/contact/token', { signal: AbortSignal.timeout(8000) });
       if (res.status === 503) {
-        setStatus('paused');
+        const data = (await res.json().catch(() => ({}))) as { paused?: boolean };
+        if (data.paused) {
+          setStatus('paused');
+        } else {
+          setStatus('error');
+          setErrorMsg('ただいま送信を受け付けられません。時間をおいてお試しください。');
+        }
         return;
       }
       const data = (await res.json()) as { token: string };

@@ -6,9 +6,15 @@ export const dynamic = 'force-dynamic';
 
 /** フォーム表示時に呼ぶワンタイムトークン発行（15分有効） */
 export async function GET() {
-  if (await isPaused()) {
-    return NextResponse.json({ paused: true }, { status: 503 });
+  try {
+    if (await isPaused()) {
+      return NextResponse.json({ paused: true }, { status: 503 });
+    }
+    const token = await issueToken();
+    return NextResponse.json({ token });
+  } catch (e) {
+    // Redis障害時などはハングさせず、明示的にエラーを返す
+    console.error('[contact] token issue failed:', e);
+    return NextResponse.json({ error: 'unavailable' }, { status: 503 });
   }
-  const token = await issueToken();
-  return NextResponse.json({ token });
 }

@@ -28,9 +28,23 @@ let clientPromise: Promise<RedisClient> | null = null;
 
 function getRedis(): Promise<RedisClient> {
   if (!clientPromise) {
-    const client = createClient({ url: process.env.KV_REDIS_URL });
+    const client = createClient({
+      url: process.env.KV_REDIS_URL,
+      socket: {
+        // 接続不能時に待たせ続けない（フォームのハング防止）
+        connectTimeout: 3000,
+        reconnectStrategy: (retries) => (retries > 1 ? false : 300),
+      },
+    });
     client.on('error', (e) => console.error('[contact] redis error:', e));
-    clientPromise = client.connect().then(() => client) as Promise<RedisClient>;
+    clientPromise = client
+      .connect()
+      .then(() => client)
+      .catch((e) => {
+        // 失敗したPromiseをキャッシュし続けないよう破棄（次回リトライ可能に）
+        clientPromise = null;
+        throw e;
+      }) as Promise<RedisClient>;
   }
   return clientPromise;
 }

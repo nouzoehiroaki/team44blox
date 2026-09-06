@@ -52,6 +52,16 @@ async function verifyTurnstile(token: string | undefined, ip: string): Promise<b
 }
 
 export async function POST(req: NextRequest) {
+  try {
+    return await handlePost(req);
+  } catch (e) {
+    // Redis障害などの想定外エラーはハングさせず明示的に返す
+    console.error('[contact] unexpected error:', e);
+    return err('unavailable', 'ただいま送信を受け付けられません。時間をおいてお試しください。', 503);
+  }
+}
+
+async function handlePost(req: NextRequest) {
   // キルスイッチ
   if (await isPaused()) {
     return err('paused', 'ただいま受付を一時停止しています。', 503);
