@@ -32,7 +32,15 @@ function err(code: string, message: string, status = 400) {
 
 async function verifyTurnstile(token: string | undefined, ip: string): Promise<boolean> {
   const secret = process.env.TURNSTILE_SECRET_KEY;
-  if (!secret) return true; // 未設定環境（ローカル等）はスキップ
+  if (!secret) {
+    // 本番でキー未設定なら素通りさせない（フェイルクローズ）。ローカル開発のみスキップ
+    if (process.env.NODE_ENV === 'production') {
+      console.error('[contact] TURNSTILE_SECRET_KEY が未設定のため送信を拒否しました');
+      return false;
+    }
+    console.warn('[contact] TURNSTILE_SECRET_KEY 未設定のため検証をスキップします（開発環境）');
+    return true;
+  }
   if (!token) return false;
   const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
     method: 'POST',
