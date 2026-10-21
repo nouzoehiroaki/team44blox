@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -32,11 +32,15 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     images: "/og.png",
   },
-  viewport: "width=device-width, initial-scale=1",
   metadataBase: new URL("https://team44blox.com"),
   alternates: {
     canonical: "/",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
